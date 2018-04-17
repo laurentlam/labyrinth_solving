@@ -6,28 +6,13 @@ import time
 
 class Environment:
 
-	LEFT = 0
+	UP = 0
 	RIGHT = 1
-	UP = 2
-	DOWN = 3
+	DOWN = 2
+	LEFT = 3
 
 	def __init__(self):
 
-		pass
-
-	def step(self, action):
-		"""Project environment one step into the future.
-
-         Given an action, compute the reward and next state, and whether next_state is terminal
-
-         Args:
-             action : The action the agent is performing
-
-         Returns:
-			next_state : an observation of the next state
-			reward : the reward the agent receives for performing action in the current state
-			is_done = if the next_state is a terminal state
-        """
 		self.num_states = int(params['num_cells'])
 
         # Check if there are enough cells
@@ -43,6 +28,21 @@ class Environment:
         self.terminal_state = 0 # arbitrary
 
         self.viewer = None
+
+	def step(self, action):
+		"""Project environment one step into the future.
+
+         Given an action, compute the reward and next state, and whether next_state is terminal
+
+         Args:
+             action : The action the agent is performing
+
+         Returns:
+			next_state : an observation of the next state
+			reward : the reward the agent receives for performing action in the current state
+			is_done = if the next_state is a terminal state
+        """
+
 		raise NotImplementedError('subclasses must override step()!')
 
 	def render(self):
