@@ -6,14 +6,14 @@ import time
 
 class State:
 
-	def __init__(self):
+	def __init__(self,empty,top_wall,right_wall,bottom_wall,left_wall):
 		#self.x = 0
 		#self.y = 0
-		self.empty = True
-		self.top_wall = False
-		self.right_wall = False
-		self.bottom_wall = False
-		self.left_wall = False
+		self.empty = empty
+		self.top_wall = top_wall
+		self.right_wall = right_wall
+		self.bottom_wall = bottom_wall
+		self.left_wall = left_wall
 
 
 class Environment:
