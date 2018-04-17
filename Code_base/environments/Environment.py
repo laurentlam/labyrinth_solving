@@ -4,6 +4,18 @@ __credits__ = ["Florence Carton", "Freek Stulp", "Antonin Raffin"]
 import random
 import time
 
+class State:
+
+	def __init__(self):
+		#self.x = 0
+		#self.y = 0
+		self.empty = True
+		self.top_wall = False
+		self.right_wall = False
+		self.bottom_wall = False
+		self.left_wall = False
+
+
 class Environment:
 
 	UP = 0
@@ -42,6 +54,30 @@ class Environment:
 			reward : the reward the agent receives for performing action in the current state
 			is_done = if the next_state is a terminal state
         """
+		# Decrease agent_cell by 1 if you go left, but only if you are not
+        # in the left-most cell already
+        if action==Environment.LEFT:
+            if self.current_state>0:
+                self.current_state -= 1
+
+        # Increase agent_cell by 1 if you go right, but only if you are not
+        # in the right-most cell already
+        if action==EnvironmentGrid1D.RIGHT:
+            if self.current_state<(self.num_states-1):
+                self.current_state += 1
+
+        is_done = self.current_state == self.terminal_state
+
+        if is_done:
+            # If you are in the terminal state, you've found the exit: reward!
+            reward = 100
+        else:
+            # Still wandering around: -1 penalty for each move
+            reward = -1
+
+        next_state = self.current_state
+
+        return [next_state,reward,is_done]
 
 		raise NotImplementedError('subclasses must override step()!')
 
