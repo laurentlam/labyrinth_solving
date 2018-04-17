@@ -11,9 +11,9 @@ class AgentRandom:
 		...
 		return(states[0])
 
-	def startState(self, laby):
-        states=laby.initialStates();
+	def nextAction(self, laby):
+        """Description de la methode"""
+        #Utiliser random
+        #actions=laby.possibleActions();
 		...
-		# pos=random(0,size(states)-1)
-		
-		return(states[pos])
+		return(actions[0])
