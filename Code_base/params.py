@@ -4,7 +4,7 @@ __author__ = "Florence Carton"
 def default_params():
 	""" Default parameters function
 
-	Return : 
+	Return :
 		params_dict : dictionnary of parameters
 	"""
 
@@ -13,10 +13,10 @@ def default_params():
 	## Agent parameters
 	'agent': 'AgentRandom',
 
-	
+
 	## Environment parameters"
-	'env':'EnvironmentGrid1D',
-	'num_cells_grid1D': 10, 
+	'env':'Environment',
+	'num_cells': 100, 
 
 
 	## Training parameters

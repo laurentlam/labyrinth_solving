@@ -1,14 +1,14 @@
 __author__ = "Florence Carton"
 
 import sys
-from environments.EnvironmentGrid1D import EnvironmentGrid1D
+from environments.Environment import Environment
 
 
 
 def make_env(env_name, params):
 
 	list_environments = {
-	'EnvironmentGrid1D':EnvironmentGrid1D(params)
+	'Environment':Environment(params)
 	}
 
 	try:
@@ -18,4 +18,3 @@ def make_env(env_name, params):
 		sys.exit()
 
 	return env
-

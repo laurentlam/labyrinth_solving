@@ -4,6 +4,7 @@ __credits__ = ["Florence Carton", "Freek Stulp", "Antonin Raffin"]
 import random
 import time
 from math import sqrt
+import numpy as np
 
 class State:
 
@@ -20,9 +21,19 @@ class Environment:
 	DOWN = 2
 	LEFT = 3
 
-	def __init__(self,params):
 
-		self.num_states = int(sqrt(params['num_cells']))
+	def __init__(self,params):
+		self.wide = sqrt(num_states)
+		cell_x = random.randint(0,self.wide-1)
+		cell_y = random.randint(0,self.wide-1)
+        while cell_x == self.terminal_state_x:
+            cell = random.randint(0,self.num_states-1)
+        self.current_state_x = cell
+
+        # Return first observed state
+        return self.current_state
+
+		self.num_states = int(params['num_cells'])
 
         # Check if there are enough cells
         assert self.num_states>1, "Number of cells must be 2 or larger"
@@ -35,6 +46,7 @@ class Environment:
 
         # end state
         self.terminal_state = 0 # arbitrary
+
 
         self.viewer = None
 
@@ -94,6 +106,14 @@ class Environment:
          Returns:
 			first_state : the first state
         """
+		cell = random.randint(0,self.num_states-1)
+		while cell == self.terminal_state:
+			cell = random.randint(0,self.num_states-1)
+		self.current_state = cell
+
+		# Return first observed state
+		return self.current_state
+
 		raise NotImplementedError('subclasses must override render()!')
 
 
