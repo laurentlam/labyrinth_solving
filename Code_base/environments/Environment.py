@@ -3,13 +3,15 @@ __credits__ = ["Florence Carton", "Freek Stulp", "Antonin Raffin"]
 
 import random
 import time
+from math import sqrt
 
 class State:
 
-	def __init__(self,empty,reward):
+	def __init__(self,x,y,empty,reward):
+		self.x = x
+		self.y = y
 		self.empty = empty
 		self.reward = reward
-
 
 class Environment:
 
@@ -18,9 +20,9 @@ class Environment:
 	DOWN = 2
 	LEFT = 3
 
-	def __init__(self):
+	def __init__(self,params):
 
-		self.num_states = int(params['num_cells'])
+		self.num_states = int(sqrt(params['num_cells']))
 
         # Check if there are enough cells
         assert self.num_states>1, "Number of cells must be 2 or larger"
@@ -50,16 +52,16 @@ class Environment:
 			is_done = if the next_state is a terminal state
         """
 		# Decrease agent_cell by 1 if you go left, but only if you are not
-        # in the left-most cell already
-        if action==Environment.LEFT:
-            if self.current_state>0:
-                self.current_state -= 1
+        # in the left-most cell already and there is no wall ahead
+        if action==Environment.UP:
+            if (self.y<self.num_states-1)and(self.empty==True):
+				self.y -= 1
 
         # Increase agent_cell by 1 if you go right, but only if you are not
         # in the right-most cell already
         if action==EnvironmentGrid1D.RIGHT:
-            if self.current_state<(self.num_states-1):
-                self.current_state += 1
+            if (self.x<self.num_states-1)and(self.empty==True):
+				self.x -= 1
 
         is_done = self.current_state == self.terminal_state
 
