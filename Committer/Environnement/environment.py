@@ -41,17 +41,15 @@ class ENV:
         #Simple matrix plotting
         print(ENV().states)
 
-    def create_random_ENV():
+    def create_random_ENV(self):
         #The goal is to create a "random" matrix with only states for the List_of_states in the state class,
         #   in accordance with restrictions mentionned above the document.
-
-        random_ENV = ENV()
 
         #Dimensions of the Environment
         width = random.randint(3,10) #1 Dimension for now
         length = random.randint(3,10)
-        random_ENV.width=width
-        random_ENV.length=length
+        self.width=width
+        self.length=length
 
         #List of states
         states=numpy.zeros(width,length)
@@ -76,5 +74,8 @@ class ENV:
         states[i,j]="a" #arrival can now be put there
 
         #States of the environment are now fully randomly created
+        self.states=states
 
-        return random_ENV
+random_environment=ENV()
+random_environment.create_random_ENV()
+random_environment.Visualise()
