@@ -7,7 +7,7 @@ import random
 #Restrictions for states in the maze:
 #    - A "start" or an "arrival" state is on the border of the maze.
 #    - an "arrival" state is unique in a maze.
-#Reminder : List_of_states=["o","x","s","a"], respectively hole, wall, start and arrival
+#Reminder : List_of_states=["o","x","s","e"], respectively hole, wall, start and arrival
 
 class state:
     def __init__(self,name_index):
@@ -40,20 +40,23 @@ class state:
 
 class ENV:
     def __init__(self,height,length,states,current_position):
-        """An environment is defined by its shape (width and length) and its states,
-        wich is a numpy matrix (array) of indexes of states (name_index of each state)"""
+        """An environment is defined by its shape (width and length) ,
+        its states wich is a numpy matrix (array) of indexes of states (name_index of each state),
+        and the current position of the agent."""
 
         #Dimensions of the environment
         self.height=height
         self.length=length
         #List of states of the environment where there is a hole, a wall, a start or an end.
         self.states=states
-
+        #current position of the agent
+        self.current_position=current_position
 
     def show(self):
         """This method prints on the screen the matrix of states of the environment.
         For this, the matrix of states has to be created from the matrix of name_index of states (self.states).
-        The transition can be done with the List_of_states."""
+        The transition can be done with the List_of_states.
+        Plus, the current position of the agent is visualised"""
 
         #5 states exists : hole (can go), wall (can't go), start and end as :
         List_of_states=["o","x","s","e"]
@@ -65,16 +68,12 @@ class ENV:
         str = (self.length+2)*'-'
         print(str)
         for x in range(self.height):
-            if (x == i):
                 for y in range(self.length):
-                    if (y == j):
+                    if (x == i) and (y == j):
                         List_to_print[x][y] = "A"
                     else:
                         List_to_print[x][y] = List_of_states[List_to_print[x][y]]
-            else:
-                for y in range(self.length):
-                    List_to_print[x][y] = List_of_states[List_to_print[x][y]]
-            #the state has become its character value instead of the index
+                        #the state we print has become its character value instead of the index
             print('|' + List_to_print[x] + '|')
         print(str)
 
@@ -164,12 +163,16 @@ class ENV:
 
 
     def possibleActions(self):
-         """Description de la methode"""
-        #NOT FINISHED
+         """ Finds all possible motions (actions) from the current position of the agent."""
+
         possible_actions=[]
         current_state=self.currentState()
+
+        #checking if there is no misplacement of the agent
         if current_state==1 or current_state==3:
-            return
+            return (NULL)
+            #NULL value is chosen because empty list is for another error case (see above at next return)
+
         #North and South
         j=0
         for i in [-1,1]:
@@ -181,9 +184,11 @@ class ENV:
         for j in [-1,1]  :
             if states[self.current_position[0],self.current_position[1]+j]!=1:
                 possible_actions.append([i,j])
-        #['N', 'S', 'O', 'E'] corresponds to [[-1,0],[1,0],[0,-1],[0,1]]
-		return(possible_actions)
 
+        #['N', 'S', 'O', 'E'] corresponds to [[-1,0],[1,0],[0,-1],[0,1]]
+        #which are relative motions from the current position
+		return(possible_actions)
+        #Note : if possible_actions is empty, the agent is blocked and the maze can't be solved --> error case.
 
 
 #testing environment initialization and plotting
