@@ -123,7 +123,7 @@ class ENV:
         initStates = []
         for i in range(self.length):
             for j in range(self.width):
-                if self.isInitialState(states[i][j]):
+                if self.isInitialState(self.states[i][j]):
                    initStates.append(self.states[i][j])
 		return(initStates)
 
@@ -141,7 +141,7 @@ class ENV:
         termStates = []
         for i in range(self.length):
             for j in range(self.width):
-                if self.isTerminalState(states[i][j]):
+                if self.isTerminalState(self.states[i][j]):
                    termStates.append(self.states[i][j])
 		return(termStates)
 
