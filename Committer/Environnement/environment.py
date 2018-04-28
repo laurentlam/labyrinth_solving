@@ -58,7 +58,7 @@ class ENV:
         #4 states exists : hole (can go), wall (can't go), start and arrival, as :
         List_of_states=["o","x","s","a"]
         #conversion to python classical matrix
-        List_to_print=self.states.tolist()*
+        List_to_print=self.states.tolist()
         #conversion of each state to its associated character
         for x in List_to_print:
             #x corresponds to each different list of states
@@ -146,21 +146,34 @@ class ENV:
                    termStates.append(self.states[i][j])
 		return(termStates)
 
+
     def currentState(self):
         """Returns the name_index of the current state, meaning the state of the current position"""
-        #TO DO --> need to have the position of the current state as an argument
 		current_state=self.states[self.current_position]
+        #if current_state is a state value (4 for example), then currentState will become currentPosition.
 		return(current_state)
+
 
     def possibleActions(self):
          """Description de la methode"""
-         #NOT FINISHED
+        #NOT FINISHED
         possible_actions=[]
         current_state=self.currentState()
         if current_state==1 or current_state==3:
             return
+        #North and South
+        j=0
+        for i in [-1,1]:
+            if states[self.current_position[0]+i,self.current_position[1]]!=1:
+                possible_actions.append([i,j])
 
-		return(['N', 'S', 'E', 'O'])
+        #West and East
+        i=0
+        for j in [-1,1]  :
+            if states[self.current_position[0],self.current_position[1]+j]!=1:
+                possible_actions.append([i,j])
+        #['N', 'S', 'O', 'E'] corresponds to [[-1,0],[1,0],[0,-1],[0,1]]
+		return(possible_actions)
 
 #testing environment initialization and plotting
 random_environment=ENV(1,1,numpy.zeros((1,1)))
