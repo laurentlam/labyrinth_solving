@@ -4,14 +4,12 @@ class labyrinthe:
     """Votre description"""
 
     def __init__(self,longueur,largeur):
-<<<<<<< HEAD
         """Description de l'initialisation"""
         #DONE --> Added "states" attribut
         #Dimensions of the environment
         self.width = largeur
         self.length = longueur
         self.states = environment.create_random_ENV(width,length)
->>>>>>> 6ba381a80c6f30c639b05eddd0701a3b416cd64e
 
     def show(self):
         """Description de la methode d'affichage choisie"""
@@ -28,30 +26,38 @@ class labyrinthe:
 
 
      def isInitialState(self, state):
-        """Description de la methode"""
-        #TO DO --> easy : find the "s" states, meaning with a name_index of 2
-        ...
-		return(false)
+        """Check whether state is a starting position, return a boolean"""
+		if (state.name_index!=2):
+		    return(False)
+        else:
+            return(True)
 
     def initialStates(self):
-        """Description de la methode"""
-        #TO DO --> easy : lists positions of "s" states (can use isInitialState)
-		...
-		return([])
-
+        """Return list of all possible starting positions"""
+        initStates = []
+        for i in range(length):
+            for j in range(width):
+                if isInitialState(self.states[i][j]):
+                   initStates+=self.states[i][j]
+		return(initStates)
 
     def isTerminalState(self, state):
-        """Description de la methode"""
-        #TO DO --> easy : find the "a" (unique) state, meaning with a name_index of 3
-		...
-		return(false)
+        """Check whether state is a finish position, return a boolean"""
+		if (state.name_index!="3"):
+		    return(False)
+        else:
+            return(True)
+
 
     def terminalStates(self):
-        """Description de la methode"""
-        #TO DO --> easy : lists positions of "a" states (can use isTerminalState)
-        #Note : arrival state is unique in this modelization
-		...
-		return([])
+        """Return list of all possible starting positions"""
+        termStates = []
+        for i in range(length):
+            for j in range(width):
+                if isTerminalState(self.states[i][j]):
+                   termStates+=self.states[i][j]
+		return(termStates)
+
 
 
 =======
