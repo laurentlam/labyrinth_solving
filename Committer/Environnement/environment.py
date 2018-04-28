@@ -175,6 +175,8 @@ class ENV:
         #['N', 'S', 'O', 'E'] corresponds to [[-1,0],[1,0],[0,-1],[0,1]]
 		return(possible_actions)
 
+
+
 #testing environment initialization and plotting
 random_environment=ENV(1,1,numpy.zeros((1,1)))
 random_environment.create_random_environment()
