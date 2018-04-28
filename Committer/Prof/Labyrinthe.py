@@ -19,7 +19,6 @@ class labyrinthe:
 
     def states(self):
         """Description de la methode"""
-<<<<<<< HEAD
         #NOT NEEDED --> states is now an attribut
 		...
 		return([])
@@ -58,48 +57,6 @@ class labyrinthe:
                    termStates+=self.states[i][j]
 		return(termStates)
 
-
-
-=======
-		states = self.states
-		return(states)
-
-
-     def isInitialState(self, state):
-        """Check whether state is a starting position, return a boolean"""
-		if (state.name!="s"):
-		    return(False)
-        else:
-            return(True)
-
-    def initialStates(self):
-        """Return list of all possible starting positions"""
-        initStates = []
-        for i in range(length):
-            for j in range(width):
-                if isInitialState(self.states[i][j]):
-                   initStates+=self.states[i][j]
-		return(initStates)
-
-
-    def isTerminalState(self, state):
-        """Check whether state is a finish position, return a boolean"""
-		if (state.name!="a"):
-		    return(False)
-        else:
-            return(True)
-
-    def terminalStates(self):
-        """Return list of all possible starting positions"""
-        termStates = []
-        for i in range(length):
-            for j in range(width):
-                if isTerminalState(self.states[i][j]):
-                   termStates+=self.states[i][j]
-		return(termStates)
-
-
->>>>>>> 6ba381a80c6f30c639b05eddd0701a3b416cd64e
 	def currentState(self):
         """Description de la methode"""
         #TO DO --> need to have the position (global variable ?) of the current state
