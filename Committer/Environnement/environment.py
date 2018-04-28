@@ -9,27 +9,27 @@ import random
 #    - an "arrival" state is unique in a maze.
 
 class state:
-    def __init__(self,name):
-        self.name=name
+    def __init__(self,name_index):
+        self.name_index=name_index
 
     def arrival_state(self):
-        self.name="a"
+        self.name_index=3
 
     #definition of random functions, according to restrictions of a maze.
 
     def random_intern_state(self):
-        #4 states exists : hole (can go), wall (can't go), start and arrival, as :
-        List_of_states=["o","x","s","a"]
-        #picking a random state allowed within the maze
+        #4 states exists : hole (can go), wall (can't go), start and arrival, indexed as :
+        #   0,1,2,3 respectively
+        #picking a random state allowed within the maze, meaning "o" or "x", meaning 0 or 1
         dice=random.randint(0,1)
-        self.name=List_of_states[dice]
+        self.name_index=dice
 
     def random_extern_state(self):
-        #4 states exists : hole (can go), wall (can't go), start and arrival, as :
-        List_of_states=["o","x","s","a"]
+        #4 states exists : hole (can go), wall (can't go), start and arrival, indexed as :
+        #   0,1,2,3 respectively
         #picking a random state allowed on the border of the maze, but not an arrival as it is unique.
         dice=random.randint(0,2)
-        self.name=List_of_states[dice]
+        self.name_index=dice
 
 
 class ENV:
@@ -41,6 +41,16 @@ class ENV:
         self.states=states
 
     def Visualise(self):
+        #4 states exists : hole (can go), wall (can't go), start and arrival, as :
+        List_of_states=["o","x","s","a"]
+
+        # STILL TO COMPLETE
+        # SCHEME :
+        # plotting matrix by replacing numpy integer matrix by char matrix
+        # with corresponding indices given by List_of_states
+
+
+
         #Simple matrix plotting
         print(ENV().states)
 
@@ -59,26 +69,32 @@ class ENV:
         #creation of states within the maze
         for i in range (width-1):
             for j in range (length-1):
-                states[i,j]=state.random_intern_state(state)
+                states[i,j]=state(0)
+                states[i,j].random_intern_state()
 
         #creation of states around the maze
         for j in range(length):
-            states[-1,j]=state.random_extern_state(state)
-            states[0,j]=state.random_extern_state(state)
+            states[-1,j]=state(0)
+            states[-1,j].random_extern_state()
+            states[0,j]=state(0)
+            states[0,j].random_extern_state()
         for i in range(1,-1): # specific borns to exclude already assigned states
-            states[i,-1]=state.random_extern_state(state)
-            states[i,0]=state.random_extern_state(state)
+            states[i,-1]=state(0)
+            states[i,-1].random_extern_state()
+            states[i,0]=state(0)
+            states[i,0].random_extern_state()
 
         #creation of the arrival (substitution to an external state)
         bool_border=-random.randint(0,1) #to get 0 or -1
         [i,j]=[bool_border,bool_border]
         I_OR_J=random.randint(0,1)
         [i,j][1-I_OR_J]=random.randint(1,states.shape[1-I_OR_J]) #randomizing again on whole dimension the unchosen border
-        states[i,j]=states[i,j].arrival_state(state) #arrival can now be put there
+        states[i,j]=state(0)
+        states[i,j].arrival_state() #arrival can now be put there
 
-        #States of the environment are now fully randomly created
+        #States of the environment are now fully randomly created in accordance with every restriction
         self.states=states
 
-random_environment=ENV(None,None,[None])
+random_environment=ENV(1,1,numpy.zeros((1,1)))
 random_environment.create_random_ENV()
 random_environment.Visualise()
