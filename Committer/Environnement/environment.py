@@ -190,6 +190,21 @@ class ENV:
 		return(possible_actions)
         #Note : if possible_actions is empty, the agent is blocked and the maze can't be solved --> error case.
 
+    def runStep(self, action):
+         """Description de la methode"""
+         #Scheme
+         #Checking if the action is in the possible_actions
+         if action not in self.possibleActions():
+             return NULL
+         #Doing the action :
+         # 1) Moving the agent to its new position
+         self.current_position=
+         # 2) Changing reward
+
+         #TO DO
+         reward=0
+        ...
+        return (self.currentState(), reward)
 
 #testing environment initialization and plotting
 random_environment=ENV(1,1,numpy.zeros((1,1)))
