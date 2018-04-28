@@ -17,7 +17,7 @@ class AgentRandom:
 
         states=laby.initialStates();
 
-		return(states[0])
+		return(states[random.randint(0,len(states)-1)])
 
 	def nextAction(self, laby):
         """One step of the random agent
