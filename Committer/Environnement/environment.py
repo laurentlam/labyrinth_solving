@@ -43,16 +43,17 @@ class ENV:
     def Visualise(self):
         #4 states exists : hole (can go), wall (can't go), start and arrival, as :
         List_of_states=["o","x","s","a"]
-
-        # STILL TO COMPLETE
-        # SCHEME :
-        # plotting matrix by replacing numpy integer matrix by char matrix
-        # with corresponding indices given by List_of_states
-
-
-
-        #Simple matrix plotting
-        print(ENV().states)
+        #conversion to python classical matrix
+        List_to_print=self.states.tolist()*
+        #conversion of each state to its associated character
+        for x in List_to_print:
+            #x corresponds to each different list of states
+            for y in x:
+                #y corresponds to each different state in a list of states
+                y=List_of_states[y]
+                #the state has become its character value instead of the index
+        #The matrix is now fully converted
+        print(List_to_print)
 
     def create_random_ENV(self):
         #The goal is to create a "random" matrix with only states for the List_of_states in the state class,
