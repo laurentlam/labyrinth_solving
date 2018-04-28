@@ -7,7 +7,7 @@ class labyrinthe:
 
     def show(self):
         """Description de la methode d'affichage choisie"""
-        #DONE
+        #TO CHANGE --> need to print agent in Matrix
 		...
 		print("Mon labyrinthe de maniere ostensible mais simple")
 
@@ -44,20 +44,21 @@ class labyrinthe:
 
 	def currentState(self):
         """Description de la methode"""
-        #TO DO --> need to have the position of the current state as an argument
+        #DONE --> added current_position attribut to ENV class.
 		...
 		return(self.currentState)
 
 
 	def possibleActions(self):
          """Description de la methode"""
-         #TO DO --> Need to find the currentState first
+         #DOING
 		...
 		return(['N', 'S', 'E', 'O'])
 
 
 	def runStep(self, action):
          """Description de la methode"""
+         #TO DO
 		 reward=0
 		...
 		return (self.currentState, reward)
@@ -65,16 +66,19 @@ class labyrinthe:
 
     def transition(self):
         """Description de la methode"""
+        #TO DO
 		...
 		return([])
 
 	def possibleTransitions(self):
          """Description de la methode"""
+         #TO DO
 		...
 		return(['N', 'S', 'E', 'O'])
 
 	def runTransition(self, action):
          """Description de la methode"""
+         #TO DO
 		 reward=0
 		...
-		return (self.currentState, rewward)
+		return (self.currentState, reward)

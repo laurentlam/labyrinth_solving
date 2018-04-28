@@ -7,6 +7,7 @@ import random
 #Restrictions for states in the maze:
 #    - A "start" or an "arrival" state is on the border of the maze.
 #    - an "arrival" state is unique in a maze.
+#Reminder : List_of_states=["o","x","s","a"], respectively hole, wall, start and arrival
 
 class state:
     def __init__(self,name_index):
@@ -38,7 +39,7 @@ class state:
 
 
 class ENV:
-    def __init__(self,width,length,states):
+    def __init__(self,width,length,states,current_position):
         """An environment is defined by its shape (width and length) and its states,
         wich is a numpy matrix (array) of indexes of states (name_index of each state)"""
 
@@ -145,6 +146,21 @@ class ENV:
                    termStates.append(self.states[i][j])
 		return(termStates)
 
+    def currentState(self):
+        """Returns the name_index of the current state, meaning the state of the current position"""
+        #TO DO --> need to have the position of the current state as an argument
+		current_state=self.states[self.current_position]
+		return(current_state)
+
+    def possibleActions(self):
+         """Description de la methode"""
+         #NOT FINISHED
+        possible_actions=[]
+        current_state=self.currentState()
+        if current_state==1 or current_state==3:
+            return
+
+		return(['N', 'S', 'E', 'O'])
 
 #testing environment initialization and plotting
 random_environment=ENV(1,1,numpy.zeros((1,1)))
