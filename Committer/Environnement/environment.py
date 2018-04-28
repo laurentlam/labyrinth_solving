@@ -109,6 +109,44 @@ class ENV:
         #States of the environment are now fully randomly created in accordance with every restriction
         self.states=states
 
+
+     def isInitialState(self, state):
+        """Check whether state is a starting position, return a boolean"""
+		if (state.name_index!=2):
+		    return(False)
+        else:
+            return(True)
+
+
+    def initialStates(self):
+        """Return list of all possible starting positions"""
+        initStates = []
+        for i in range(self.length):
+            for j in range(self.width):
+                if self.isInitialState(states[i][j]):
+                   initStates.append(self.states[i][j])
+		return(initStates)
+
+
+    def isTerminalState(self, state):
+        """Check whether state is a finish position, return a boolean"""
+		if (state.name_index!=3):
+		    return(False)
+        else:
+            return(True)
+
+
+    def terminalStates(self):
+        """Return list of all possible starting positions"""
+        termStates = []
+        for i in range(self.length):
+            for j in range(self.width):
+                if self.isTerminalState(states[i][j]):
+                   termStates.append(self.states[i][j])
+		return(termStates)
+
+
+#testing environment initialization and plotting
 random_environment=ENV(1,1,numpy.zeros((1,1)))
 random_environment.create_random_environment()
 random_environment.show()

@@ -5,11 +5,7 @@ class labyrinthe:
 
     def __init__(self,longueur,largeur):
         """Description de l'initialisation"""
-        #DONE --> Added "states" attribut
-        #Dimensions of the environment
-        self.width = largeur
-        self.length = longueur
-        self.states = environment.create_random_ENV(width,length)
+        #DONE --> Added "states" attribut though
 
     def show(self):
         """Description de la methode d'affichage choisie"""
@@ -19,43 +15,34 @@ class labyrinthe:
 
     def states(self):
         """Description de la methode"""
-        #NOT NEEDED --> states is now an attribut
+        #NOT NEEDED ? --> states is now an attribut
 		...
 		return([])
 
 
-     def isInitialState(self, state):
-        """Check whether state is a starting position, return a boolean"""
-		if (state.name_index!=2):
-		    return(False)
-        else:
-            return(True)
+    def isInitialState(self, state):
+            """Description de la methode"""
+            #DONE
+    		...
+    		return(false)
 
     def initialStates(self):
-        """Return list of all possible starting positions"""
-        initStates = []
-        for i in range(length):
-            for j in range(width):
-                if isInitialState(self.states[i][j]):
-                   initStates+=self.states[i][j]
-		return(initStates)
+            """Description de la methode"""
+            #DONE
+    		...
+    		return([])
 
     def isTerminalState(self, state):
-        """Check whether state is a finish position, return a boolean"""
-		if (state.name_index!="3"):
-		    return(False)
-        else:
-            return(True)
-
+        """Description de la methode"""
+        #DONE
+		...
+		return(false)
 
     def terminalStates(self):
-        """Return list of all possible starting positions"""
-        termStates = []
-        for i in range(length):
-            for j in range(width):
-                if isTerminalState(self.states[i][j]):
-                   termStates+=self.states[i][j]
-		return(termStates)
+        """Description de la methode"""
+        #DONE
+		...
+		return([])
 
 	def currentState(self):
         """Description de la methode"""
