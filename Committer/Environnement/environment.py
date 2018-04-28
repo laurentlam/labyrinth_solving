@@ -10,37 +10,50 @@ import random
 
 class state:
     def __init__(self,name_index):
+        """ A state is defined by its name_index, meaning the index corresponds to a state (see List_of_states)"""
+
         self.name_index=name_index
 
     def arrival_state(self):
+        """ This method makes the state an arrival stateself.
+        The arrival state has its name_index to 3 (see List_of_states)"""
+
         self.name_index=3
 
     #definition of random functions, according to restrictions of a maze.
 
     def random_intern_state(self):
-        #4 states exists : hole (can go), wall (can't go), start and arrival, indexed as :
-        #   0,1,2,3 respectively
-        #picking a random state allowed within the maze, meaning "o" or "x", meaning 0 or 1
+        """This method randomly creates a state of the inside of the maze in accordance with restrictions.
+        The intern possible states are holes and walls, corresponding to a name_index of 0 or 1 (see List_of_states)"""
+
         dice=random.randint(0,1)
         self.name_index=dice
 
     def random_extern_state(self):
-        #4 states exists : hole (can go), wall (can't go), start and arrival, indexed as :
-        #   0,1,2,3 respectively
-        #picking a random state allowed on the border of the maze, but not an arrival as it is unique.
+        """This method randomly creates a state of the border of the maze in accordance with restrictions.
+        We intentionally forget the (unique) arrival state (name_index of 4, see List_of_states) to add it in the end"""
+
         dice=random.randint(0,2)
         self.name_index=dice
 
 
 class ENV:
     def __init__(self,width,length,states):
+        """An environment is defined by its shape (width and length) and its states,
+        wich is a numpy matrix (array) of indexes of states (name_index of each state)"""
+
         #Dimensions of the environment
         self.width=width
         self.length=length
         #List of states of the environment where there is a hole, a wall, a start or an end.
         self.states=states
 
-    def Visualise(self):
+
+    def show(self):
+        """This method prints on the screen the matrix of states of the environment.
+        For this, the matrix of states has to be created from the matrix of name_index of states (self.states).
+        The transition can be done with the List_of_states."""
+
         #4 states exists : hole (can go), wall (can't go), start and arrival, as :
         List_of_states=["o","x","s","a"]
         #conversion to python classical matrix
@@ -55,9 +68,9 @@ class ENV:
         #The matrix is now fully converted
         print(List_to_print)
 
-    def create_random_ENV(self):
-        #The goal is to create a "random" matrix with only states for the List_of_states in the state class,
-        #   in accordance with restrictions mentionned above the document.
+
+    def create_random_environment(self):
+        """ This method initializes an environment randomly, according to the assumed restrictions"""
 
         #Dimensions of the Environment
         width = random.randint(3,10) #1 Dimension for now
@@ -97,5 +110,5 @@ class ENV:
         self.states=states
 
 random_environment=ENV(1,1,numpy.zeros((1,1)))
-random_environment.create_random_ENV()
-random_environment.Visualise()
+random_environment.create_random_environment()
+random_environment.show()
