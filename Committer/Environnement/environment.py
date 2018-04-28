@@ -39,12 +39,12 @@ class state:
 
 
 class ENV:
-    def __init__(self,width,length,states,current_position):
+    def __init__(self,height,length,states,current_position):
         """An environment is defined by its shape (width and length) and its states,
         wich is a numpy matrix (array) of indexes of states (name_index of each state)"""
 
         #Dimensions of the environment
-        self.width=width
+        self.height=height
         self.length=length
         #List of states of the environment where there is a hole, a wall, a start or an end.
         self.states=states
@@ -55,19 +55,28 @@ class ENV:
         For this, the matrix of states has to be created from the matrix of name_index of states (self.states).
         The transition can be done with the List_of_states."""
 
-        #4 states exists : hole (can go), wall (can't go), start and arrival, as :
-        List_of_states=["o","x","s","a"]
+        #5 states exists : hole (can go), wall (can't go), start and end as :
+        List_of_states=["o","x","s","e"]
         #conversion to python classical matrix
         List_to_print=self.states.tolist()
         #conversion of each state to its associated character
-        for x in List_to_print:
-            #x corresponds to each different list of states
-            for y in x:
-                #y corresponds to each different state in a list of states
-                y=List_of_states[y]
-                #the state has become its character value instead of the index
-        #The matrix is now fully converted
-        print(List_to_print)
+        (i,j) = self.current_position
+
+        str = (self.length+2)*'-'
+        print(str)
+        for x in range(self.height):
+            if (x == i):
+                for y in range(self.length):
+                    if (y == j):
+                        List_to_print[x][y] = "A"
+                    else:
+                        List_to_print[x][y] = List_of_states[List_to_print[x][y]]
+            else:
+                for y in range(self.length):
+                    List_to_print[x][y] = List_of_states[List_to_print[x][y]]
+            #the state has become its character value instead of the index
+            print('|' + List_to_print[x] + '|')
+        print(str)
 
 
     def create_random_environment(self):
