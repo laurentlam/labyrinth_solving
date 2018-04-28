@@ -21,14 +21,14 @@ class state:
         #4 states exists : hole (can go), wall (can't go), start and arrival, as :
         List_of_states=["o","x","s","a"]
         #picking a random state allowed within the maze
-        dice=random.randint(1,2)
+        dice=random.randint(0,1)
         self.name=List_of_states[dice]
 
     def random_extern_state(self):
         #4 states exists : hole (can go), wall (can't go), start and arrival, as :
         List_of_states=["o","x","s","a"]
         #picking a random state allowed on the border of the maze, but not an arrival as it is unique.
-        dice=random.randint(1,3)
+        dice=random.randint(0,2)
         self.name=List_of_states[dice]
 
 
