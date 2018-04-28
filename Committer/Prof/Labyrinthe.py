@@ -1,5 +1,3 @@
-import ENV from environment
-
 class labyrinthe:
     """Votre description"""
 
@@ -46,7 +44,7 @@ class labyrinthe:
 
 	def currentState(self):
         """Description de la methode"""
-        #TO DO --> need to have the position (global variable ?) of the current state
+        #TO DO --> need to have the position of the current state as an argument
 		...
 		return(self.currentState)
 
@@ -77,6 +75,6 @@ class labyrinthe:
 
 	def runTransition(self, action):
          """Description de la methode"""
-		 rewward=0
+		 reward=0
 		...
 		return (self.currentState, rewward)
