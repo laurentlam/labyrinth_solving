@@ -11,15 +11,23 @@ import random
 
 class state:
     def __init__(self,name_index):
-        """ A state is defined by its name_index, meaning the index corresponds to a state (see List_of_states)"""
+         """ A state is defined by its name_index, meaning the index corresponds to a state (see List_of_states)"""
 
-        self.name_index=name_index
+         self.name_index=name_index
+
+    def reward(self):
+         """ Calculates the reward of the Agent going to this state.
+         We assume here that to a state is given a unique reward.
+         That can be done with the List_of_Rewards below """
+
+         List_of_Rewards=[2,-numpy.inf(),1,+numpy.inf()]
+         return (List_of_Rewards[self.name_index])
 
     def arrival_state(self):
-        """ This method makes the state an arrival stateself.
-        The arrival state has its name_index to 3 (see List_of_states)"""
+         """ This method makes the state an arrival stateself.
+         The arrival state has its name_index to 3 (see List_of_states)"""
 
-        self.name_index=3
+         self.name_index=3
 
     #definition of random functions, according to restrictions of a maze.
 
@@ -190,21 +198,19 @@ class ENV:
 		return(possible_actions)
         #Note : if possible_actions is empty, the agent is blocked and the maze can't be solved --> error case.
 
-    def runStep(self, action):
-         """Description de la methode"""
-         #Scheme
-         #Checking if the action is in the possible_actions
-         if action not in self.possibleActions():
-             return NULL
-         #Doing the action :
-         # 1) Moving the agent to its new position
-         self.current_position=
-         # 2) Changing reward
+    def runStep(self, next_action):
+         """Calculates reward and next position for a next action chosen"""
 
-         #TO DO
+         #Checking if the action is in the possible_actions
+         if next_action not in self.possibleActions():
+             return NULL
+         # 1) Next position of the agent
+         next_position=self.current_position+next_action
+         # 2) Reward
          reward=0
-        ...
-        return (self.currentState(), reward)
+         reward+=next_state.reward()
+         return (next_position, reward)
+
 
 #testing environment initialization and plotting
 random_environment=ENV(1,1,numpy.zeros((1,1)))
