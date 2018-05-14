@@ -82,38 +82,8 @@ class ENV:
                     else:
                         List_to_print[x][y] = List_of_states[List_to_print[x][y]]
                         #the state we print has become its character value instead of the index
-            print('|' + List_to_print[x] + '|')
+                print('|' + List_to_print[x] + '|')
         print(str)
-
-
-    def create_random_environment(self):
-        """ This method initializes an environment randomly, according to the assumed restrictions"""
-
-        #Dimensions of the Environment
-        width = random.randint(3,10) #1 Dimension for now
-        length = random.randint(3,10)
-        self.width=width
-        self.length=length
-
-        #List of states
-        states=numpy.zeros((width,length))
-        #creation of states within the maze
-        for i in range (width-1):
-            for j in range (length-1):
-                states[i,j]=state(0)
-                states[i,j].random_intern_state()
-
-        #creation of states around the maze
-        for j in range(length):
-            states[-1,j]=state(0)
-            states[-1,j].random_extern_state()
-            states[0,j]=state(0)
-            states[0,j].random_extern_state()
-        for i in range(1,-1): # specific borns to exclude already assigned states
-            states[i,-1]=state(0)
-            states[i,-1].random_extern_state()
-            states[i,0]=state(0)
-            states[i,0].random_extern_state()
 
         #creation of the arrival (substitution to an external state)
         bool_border=-random.randint(0,1) #to get 0 or -1
@@ -127,10 +97,10 @@ class ENV:
         self.states=states
 
 
-     def isInitialState(self, state):
+    def isInitialState(self, state):
         """Check whether state is a starting position, return a boolean"""
-		if (state.name_index!=2):
-		    return(False)
+        if (state.name_index!=2):
+            return(False)
         else:
             return(True)
 
@@ -142,13 +112,13 @@ class ENV:
             for j in range(self.width):
                 if self.isInitialState(self.states[i][j]):
                    initStates.append(self.states[i][j])
-		return(initStates)
+        return(initStates)
 
 
     def isTerminalState(self, state):
         """Check whether state is a finish position, return a boolean"""
-		if (state.name_index!=3):
-		    return(False)
+        if (state.name_index!=3):
+            return(False)
         else:
             return(True)
 
@@ -160,24 +130,24 @@ class ENV:
             for j in range(self.width):
                 if self.isTerminalState(self.states[i][j]):
                    termStates.append(self.states[i][j])
-		return(termStates)
+        return(termStates)
 
 
     def currentState(self):
         """Returns the name_index of the current state, meaning the state of the current position"""
-		current_state=self.states[self.current_position]
+        current_state=self.states[self.current_position]
         #if current_state is a state value (4 for example), then currentState will become currentPosition.
-		return(current_state)
+        return(current_state)
 
 
     def possibleActions(self):
-         """ Finds all possible motions (actions) from the current position of the agent."""
+        """ Finds all possible motions (actions) from the current position of the agent."""
 
         possible_actions=[]
         current_state=self.currentState()
 
         #checking if there is no misplacement of the agent
-        if current_state==1 or current_state==3:
+        if (current_state==1) or (current_state==3):
             return (NULL)
             #NULL value is chosen because empty list is for another error case (see above at next return)
 
@@ -195,7 +165,7 @@ class ENV:
 
         #['N', 'S', 'O', 'E'] corresponds to [[-1,0],[1,0],[0,-1],[0,1]]
         #which are relative motions from the current position
-		return(possible_actions)
+        return(possible_actions)
         #Note : if possible_actions is empty, the agent is blocked and the maze can't be solved --> error case.
 
     def runStep(self, next_action):
@@ -211,8 +181,43 @@ class ENV:
          reward+=next_state.reward()
          return (next_position, reward)
 
+    def create_random_environment(self):
+        """ This method initializes an environment randomly, according to the assumed restrictions"""
+
+        #Dimensions of the Environment
+        width = random.randint(3,10) #1 Dimension for now
+        length = random.randint(3,10)
+        self.width=width
+        self.length=length
+
+        #List of states
+        states=numpy.zeros((width,length))
+        #creation of states within the maze
+        for i in range (width-1):
+            for j in range (length-1):
+                state_temp = state(0)
+                states[i,j]=state_temp.name_index
+                states[i,j].random_intern_state()
+
+        #creation of states around the maze
+        for j in range(length):
+            states[-1,j]=state(0)
+            states[-1,j].random_extern_state()
+            states[0,j]=state(0)
+            states[0,j].random_extern_state()
+        for i in range(1,-1): # specific borns to exclude already assigned states
+            states[i,-1]=state(0)
+            states[i,-1].random_extern_state()
+            states[i,0]=state(0)
+            states[i,0].random_extern_state()
+
+        #
+        initialStates_list = self.initialStates()
+        self.current_position = initialStates_list[random(len(initialStates_list))]
+
+
 
 #testing environment initialization and plotting
-random_environment=ENV(1,1,numpy.zeros((1,1)))
+random_environment=ENV(1,1,numpy.zeros((1,1)),[0,0])
 random_environment.create_random_environment()
 random_environment.show()
