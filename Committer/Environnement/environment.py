@@ -55,7 +55,7 @@ class ENV:
         #Dimensions of the environment
         self.height=height
         self.length=length
-        #List of states of the environment where there is a hole, a wall, a start or an end (numbers from 0 to 3)
+        #List of states of the environment where there is a hole, a wall, a start or an end.
         self.states=states
         #current position of the agent
         self.current_position=current_position
@@ -197,21 +197,22 @@ class ENV:
             for j in range (length-1):
                 state_temp = state(0)
                 state_temp.random_intern_state()
-                states[i,j]=state_temp.name_index
+                states[i,j] = state_temp.name_index
 
         #creation of states around the maze
         for j in range(length):
-            states[-1,j]=state(0)
-            states[-1,j].random_extern_state()
-            states[0,j]=state(0)
-            states[0,j].random_extern_state()
+            state_temp.random_extern_state()
+            states[-1,j] = state_temp.name_index
+            state_temp.random_extern_state()
+            states[0,j] = state_temp.name_index
         for i in range(1,-1): # specific borns to exclude already assigned states
-            states[i,-1]=state(0)
-            states[i,-1].random_extern_state()
-            states[i,0]=state(0)
-            states[i,0].random_extern_state()
+            state_temp.random_extern_state()
+            states[i,-1] = state_temp.name_index
+            state_temp.random_extern_state
+            states[i,0] = state_temp.name_index
 
-        #
+        #Creation of a list of the initial states
+        #Choosing a random initial state to start with
         initialStates_list = self.initialStates()
         self.current_position = initialStates_list[random(len(initialStates_list))]
 
