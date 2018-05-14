@@ -42,18 +42,18 @@ class state:
         """This method randomly creates a state of the border of the maze in accordance with restrictions.
         We intentionally forget the (unique) arrival state (name_index of 4, see List_of_states) to add it in the end"""
 
-        dice=random.randint(0,2)
+        dice=random.randint(1,2)
         self.name_index=dice
 
 
 class ENV:
-    def __init__(self,height,length,states,current_position):
+    def __init__(self,width,length,states,current_position):
         """An environment is defined by its shape (width and length) ,
         its states wich is a numpy matrix (array) of indexes of states (name_index of each state),
         and the current position of the agent."""
 
         #Dimensions of the environment
-        self.height=height
+        self.width=width
         self.length=length
         #List of states of the environment where there is a hole, a wall, a start or an end.
         self.states=states
@@ -107,11 +107,17 @@ class ENV:
 
     def initialStates(self):
         """Return list of all possible starting positions"""
+
         initStates = []
+        count=0
         for i in range(self.length):
             for j in range(self.width):
-                if self.isInitialState(self.states[i][j]):
-                   initStates.append(self.states[i][j])
+                count+=1
+                print(count)
+                state_temp=state(self.states[i][j])
+                print(state_temp.name_index)
+                if self.isInitialState(state_temp):
+                   initStates.append([i,j])
         return(initStates)
 
 
@@ -128,8 +134,9 @@ class ENV:
         termStates = []
         for i in range(self.length):
             for j in range(self.width):
-                if self.isTerminalState(self.states[i][j]):
-                   termStates.append(self.states[i][j])
+                state_temp=state(self.states[i][j])
+                if self.isTerminalState(state_temp):
+                   termStates.append([i,j])
         return(termStates)
 
 
@@ -184,41 +191,52 @@ class ENV:
     def create_random_environment(self):
         """ This method initializes an environment randomly, according to the assumed restrictions"""
 
-        #Dimensions of the Environment
-        width = random.randint(3,10) #1 Dimension for now
-        length = random.randint(3,10)
-        self.width=width
-        self.length=length
+        print(self.width,self.length)
 
         #List of states
+        width=self.width
+        length=self.length
         states=numpy.zeros((width,length))
+        ####
+        print(states)
+        ####
         #creation of states within the maze
-        for i in range (width-1):
-            for j in range (length-1):
+        for i in range (1,width-1):
+            for j in range (1,length-1):
                 state_temp = state(0)
                 state_temp.random_intern_state()
                 states[i,j] = state_temp.name_index
-
+        ####
+        print(states)
+        ####
         #creation of states around the maze
         for j in range(length):
             state_temp.random_extern_state()
             states[-1,j] = state_temp.name_index
             state_temp.random_extern_state()
             states[0,j] = state_temp.name_index
-        for i in range(1,-1): # specific borns to exclude already assigned states
+        for i in range(1,width-1): # specific borns to exclude already assigned states
             state_temp.random_extern_state()
             states[i,-1] = state_temp.name_index
             state_temp.random_extern_state
             states[i,0] = state_temp.name_index
-
+        ####
+        print(states)
+        ####
         #Creation of a list of the initial states
-        #Choosing a random initial state to start with
+
         initialStates_list = self.initialStates()
-        self.current_position = initialStates_list[random(len(initialStates_list))]
+        ####
+        print(initialStates_list)
+        ####
+        #Choosing a random initial state to start with
+        self.current_position = initialStates_list[random.randint(0,len(initialStates_list)-1)]
+        #Choosing a random ending state to end with
+        #TO DO
 
 
 
 #testing environment initialization and plotting
-random_environment=ENV(1,1,numpy.zeros((1,1)),[0,0])
+random_environment=ENV(5,5,numpy.zeros((5,5)),[0,0])
 random_environment.create_random_environment()
 random_environment.show()
