@@ -70,11 +70,9 @@ class ENV:
         List_of_states=["o","x","s","e"]
         #conversion to python classical matrix
         List_to_print=self.states.tolist()
-        print("List_to_print",List_to_print)
         #conversion of each state to its associated character
         (i,j) = self.current_position
-        print("i,j =",i,j)
-        str = (self.length+2)*'-'
+        str = (self.length+1)*' -'
         print(str)
         for x in range(self.width):
                 for y in range(self.length):
@@ -83,7 +81,7 @@ class ENV:
                     else:
                         List_to_print[x][y] = List_of_states[int(List_to_print[x][y])]
                         #the state we print has become its character value instead of the index
-                print('|',List_to_print[x] ,'|')
+                print('|',' '.join(List_to_print[x]) ,'|')
         print(str)
 
 
@@ -99,13 +97,9 @@ class ENV:
         """Return list of all possible starting positions"""
 
         initStates = []
-        count=0
         for i in range(self.length):
             for j in range(self.width):
-                count+=1
-                print(count)
                 state_temp=state(self.states[i][j])
-                print(state_temp.name_index)
                 if self.isInitialState(state_temp):
                    initStates.append([i,j])
         return(initStates)
@@ -180,9 +174,7 @@ class ENV:
 
     def create_random_environment(self):
         """ This method initializes an environment randomly, according to the assumed restrictions"""
-
-        print(self.width,self.length)
-
+        
         #List of states
         width=self.width
         length=self.length
@@ -210,20 +202,23 @@ class ENV:
         self.states=states
 
         #Creation of a list of the initial states
-
         initialStates_list = self.initialStates()
-        ####
-        print(initialStates_list)
-        ####
+
         #Choosing a random initial state to start with
         random_index=random.randint(0,len(initialStates_list)-1)
         self.current_position = initialStates_list[random_index]
 
         #creation of the arrival (substitution to a starting state)
         initialStates_list.pop(random_index) #list of starts without the agent starting position
-        arrival_position=initialStates_list[random.randint(0,len(initialStates_list)-1)]
-        print("arrival_position",arrival_position)
-        states[arrival_position[0],arrival_position[1]]=3
+        random_index=random.randint(0,len(initialStates_list)-1)
+        arrival_position = initialStates_list[random_index]
+        states[arrival_position[0],arrival_position[1]] = 3
+
+        #Other unused initial states become a wall
+        initialStates_list.pop(random_index) #list of starts without the agent finish position
+        for position in initialStates_list:
+            states[position[0],position[1]] = 1
+        initialStates_list = []
         #States of the environment are now fully randomly created in accordance with every restriction
         self.states=states
 
