@@ -40,7 +40,7 @@ class state:
 
     def random_extern_state(self):
         """This method randomly creates a state of the border of the maze in accordance with restrictions.
-        We intentionally forget the (unique) arrival state (name_index of 4, see List_of_states) to add it in the end"""
+        We intentionally forget the (unique) arrival state (name_index of 3, see List_of_states) to add it in the end"""
 
         dice=random.randint(1,2)
         self.name_index=dice
@@ -70,31 +70,21 @@ class ENV:
         List_of_states=["o","x","s","e"]
         #conversion to python classical matrix
         List_to_print=self.states.tolist()
+        print("List_to_print",List_to_print)
         #conversion of each state to its associated character
         (i,j) = self.current_position
-
+        print("i,j =",i,j)
         str = (self.length+2)*'-'
         print(str)
-        for x in range(self.height):
+        for x in range(self.width):
                 for y in range(self.length):
                     if (x == i) and (y == j):
                         List_to_print[x][y] = "A"
                     else:
-                        List_to_print[x][y] = List_of_states[List_to_print[x][y]]
+                        List_to_print[x][y] = List_of_states[int(List_to_print[x][y])]
                         #the state we print has become its character value instead of the index
-                print('|' + List_to_print[x] + '|')
+                print('|',List_to_print[x] ,'|')
         print(str)
-
-        #creation of the arrival (substitution to an external state)
-        bool_border=-random.randint(0,1) #to get 0 or -1
-        [i,j]=[bool_border,bool_border]
-        I_OR_J=random.randint(0,1)
-        [i,j][1-I_OR_J]=random.randint(1,states.shape[1-I_OR_J]) #randomizing again on whole dimension the unchosen border
-        states[i,j]=state(0)
-        states[i,j].arrival_state() #arrival can now be put there
-
-        #States of the environment are now fully randomly created in accordance with every restriction
-        self.states=states
 
 
     def isInitialState(self, state):
@@ -197,18 +187,14 @@ class ENV:
         width=self.width
         length=self.length
         states=numpy.zeros((width,length))
-        ####
-        print(states)
-        ####
+
         #creation of states within the maze
         for i in range (1,width-1):
             for j in range (1,length-1):
                 state_temp = state(0)
                 state_temp.random_intern_state()
                 states[i,j] = state_temp.name_index
-        ####
-        print(states)
-        ####
+
         #creation of states around the maze
         for j in range(length):
             state_temp.random_extern_state()
@@ -220,9 +206,9 @@ class ENV:
             states[i,-1] = state_temp.name_index
             state_temp.random_extern_state
             states[i,0] = state_temp.name_index
-        ####
-        print(states)
-        ####
+
+        self.states=states
+
         #Creation of a list of the initial states
 
         initialStates_list = self.initialStates()
@@ -230,11 +216,16 @@ class ENV:
         print(initialStates_list)
         ####
         #Choosing a random initial state to start with
-        self.current_position = initialStates_list[random.randint(0,len(initialStates_list)-1)]
-        #Choosing a random ending state to end with
-        #TO DO
+        random_index=random.randint(0,len(initialStates_list)-1)
+        self.current_position = initialStates_list[random_index]
 
-
+        #creation of the arrival (substitution to a starting state)
+        initialStates_list.pop(random_index) #list of starts without the agent starting position
+        arrival_position=initialStates_list[random.randint(0,len(initialStates_list)-1)]
+        print("arrival_position",arrival_position)
+        states[arrival_position[0],arrival_position[1]]=3
+        #States of the environment are now fully randomly created in accordance with every restriction
+        self.states=states
 
 #testing environment initialization and plotting
 random_environment=ENV(5,5,numpy.zeros((5,5)),[0,0])
