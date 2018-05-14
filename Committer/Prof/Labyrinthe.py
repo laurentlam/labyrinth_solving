@@ -7,7 +7,7 @@ class labyrinthe:
 
     def show(self):
         """Description de la methode d'affichage choisie"""
-        #TO CHANGE --> need to print agent in Matrix
+        #DONE
 		...
 		print("Mon labyrinthe de maniere ostensible mais simple")
 
@@ -51,7 +51,7 @@ class labyrinthe:
 
 	def possibleActions(self):
          """Description de la methode"""
-         #DOING
+         #DONE
 		...
 		return(['N', 'S', 'E', 'O'])
 
