@@ -174,7 +174,7 @@ class ENV:
 
     def create_random_environment(self):
         """ This method initializes an environment randomly, according to the assumed restrictions"""
-        
+
         #List of states
         width=self.width
         length=self.length
@@ -184,7 +184,10 @@ class ENV:
         for i in range (1,width-1):
             for j in range (1,length-1):
                 state_temp = state(0)
+                #Having 1/4 probability to get a wall
                 state_temp.random_intern_state()
+                if (state_temp.name_index == 1):
+                    state_temp.random_intern_state()
                 states[i,j] = state_temp.name_index
 
         #creation of states around the maze
@@ -203,16 +206,42 @@ class ENV:
 
         #Creation of a list of the initial states
         initialStates_list = self.initialStates()
-
+        if (len(initialStates_list)<2):
+            return(NULL)
         #Choosing a random initial state to start with
         random_index=random.randint(0,len(initialStates_list)-1)
+        #Initial state not in a corner
+        while (initialStates_list[random_index]==[0,0]) or (initialStates_list[random_index]==[width-1,length-1]):
+            random_index=random.randint(0,len(initialStates_list)-1)
         self.current_position = initialStates_list[random_index]
+        start_position = self.current_position
+        #Making the initial state accessible
+        if (start_position[0]==0):
+            states[start_position[0]+1,start_position[1]]=0
+        if (start_position[0]==width-1):
+            states[start_position[0]-1,start_position[1]]=0
+        if (start_position[1]==0):
+            states[start_position[0],start_position[1]+1]=0
+        if (start_position[1]==length-1):
+            states[start_position[0],start_position[1]-1]=0
 
         #creation of the arrival (substitution to a starting state)
         initialStates_list.pop(random_index) #list of starts without the agent starting position
         random_index=random.randint(0,len(initialStates_list)-1)
+        #Terminal state not in a corner
+        while (initialStates_list[random_index]==[0,0]) or (initialStates_list[random_index]==[width-1,length-1]):
+            random_index=random.randint(0,len(initialStates_list)-1)
         arrival_position = initialStates_list[random_index]
         states[arrival_position[0],arrival_position[1]] = 3
+        #Making the terminal state accessible
+        if (arrival_position[0]==0):
+            states[arrival_position[0]+1,arrival_position[1]]=0
+        if (arrival_position[0]==width-1):
+            states[arrival_position[0]-1,arrival_position[1]]=0
+        if (arrival_position[1]==0):
+            states[arrival_position[0],arrival_position[1]+1]=0
+        if (arrival_position[1]==length-1):
+            states[arrival_position[0],arrival_position[1]-1]=0
 
         #Other unused initial states become a wall
         initialStates_list.pop(random_index) #list of starts without the agent finish position
@@ -223,6 +252,6 @@ class ENV:
         self.states=states
 
 #testing environment initialization and plotting
-random_environment=ENV(5,5,numpy.zeros((5,5)),[0,0])
+random_environment=ENV(10,10,numpy.zeros((10,10)),[0,0])
 random_environment.create_random_environment()
 random_environment.show()
