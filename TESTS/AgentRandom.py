@@ -29,7 +29,6 @@ class AgentRandom:
         state = laby.currentState();
         actions = laby.possibleActions();
         print(actions)
-        if len(actions)>0:
-            action = actions[random.randint(0,len(actions)-1)]; # Returns a random action
+        action = actions[random.randint(0,len(actions)-1)]; # Returns a random action
 
         return(action)

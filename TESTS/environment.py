@@ -21,6 +21,7 @@ class state:
          That can be done with the List_of_Rewards below """
 
          List_of_Rewards=[2,-1000,1,1000]
+         print("name_index",self.name_index)
          return (List_of_Rewards[int(self.name_index)])
 
     def arrival_state(self):
@@ -138,6 +139,8 @@ class ENV:
         current_state=self.currentState()
         states = self.states
         [x,y] = self.current_position
+        width = self.width
+        length = self.length
         #checking if there is no misplacement of the agent
         #if (current_state==1) or (current_state==3):
         #    return (NULL)
@@ -145,15 +148,23 @@ class ENV:
 
         #North and South
         j=0
-        if (x>0) and (y<self.width-1):
-            for i in [-1,1]:
+        if (x==0):
+            for i in [0,1]:
+                if (states[self.current_position[0]+i,self.current_position[1]]!=1):
+                    possible_actions.append([i,j])
+        if (x==width-1):
+            for i in [-1,0]:
                 if (states[self.current_position[0]+i,self.current_position[1]]!=1):
                     possible_actions.append([i,j])
 
         #West and East
         i=0
-        if (y>0) and (y<self.length-1):
-            for j in [-1,1]:
+        if (y==0):
+            for j in [0,1]:
+                if (states[self.current_position[0],self.current_position[1]+j]!=1):
+                    possible_actions.append([i,j])
+        if (y==length-1):
+            for j in [-1,0]:
                 if (states[self.current_position[0],self.current_position[1]+j]!=1):
                     possible_actions.append([i,j])
 
