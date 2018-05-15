@@ -1,8 +1,8 @@
 #INCLUDING AGENT FILES AND ENVIRONMENT FILES
 import numpy
-from environment import ENV
-from environment import state
-from AgentRandom import AgentRandom
+from Environnement.environment import ENV
+from Environnement.environment import state
+from Agent.AgentRandom import AgentRandom
 from system import System
 
 #Variables initialisations
