@@ -144,29 +144,39 @@ class ENV:
         #if (current_state==1) or (current_state==3):
         #    return (NULL)
             #NULL value is chosen because empty list is for another error case (see above at next return)
-
+        #if Agent on the boarder of the maze
+        if ((x==0) or (x==width-1) or (y==0) or (y==length-1)):
         #North and South
-        j=0
-        if (x==0):
-            for i in [0,1]:
-                if (states[self.current_position[0]+i,self.current_position[1]]!=1):
-                    possible_actions.append([i,j])
-        if (x==width-1):
-            for i in [-1,0]:
+            j=0
+            if (x==0):
+                if (states[self.current_position[0]+1,self.current_position[1]]!=1):
+                    possible_actions.append([1,j])
+            if (x==width-1):
+                if (states[self.current_position[0]-1,self.current_position[1]]!=1):
+                    possible_actions.append([-1,j])
+
+        #West and East
+            i=0
+            if (y==0):
+                if (states[self.current_position[0],self.current_position[1]+1]!=1):
+                    possible_actions.append([i,1])
+            if (y==length-1):
+                if (states[self.current_position[0],self.current_position[1]-1]!=1):
+                    possible_actions.append([i,-1])
+        #If the agent is within the maze
+        else:
+            j=0
+            for i in [-1,1]:
                 if (states[self.current_position[0]+i,self.current_position[1]]!=1):
                     possible_actions.append([i,j])
 
         #West and East
-        i=0
-        if (y==0):
-            for j in [0,1]:
-                if (states[self.current_position[0],self.current_position[1]+j]!=1):
-                    possible_actions.append([i,j])
-        if (y==length-1):
-            for j in [-1,0]:
+            i=0
+            for j in [-1,1]:
                 if (states[self.current_position[0],self.current_position[1]+j]!=1):
                     possible_actions.append([i,j])
 
+        print(possible_actions)
         #['N', 'S', 'O', 'E'] corresponds to [[-1,0],[1,0],[0,-1],[0,1]]
         #which are relative motions from the current position
         return(possible_actions)
@@ -184,11 +194,12 @@ class ENV:
          if next_action not in self.possibleActions():
              return NULL
          # 1) Next position of the agent
-         self.current_position+=next_action
+         self.current_position[0]+=next_action[0]
+         self.current_position[1]+=next_action[1]
          # 2) Reward
          reward=0
-         next_index = self.currentState()
-         next_state = state(next_index)
+         next_state_index = self.currentState()
+         next_state = state(next_state_index)
          reward+=next_state.reward()
 
          return (reward)
