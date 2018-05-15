@@ -277,7 +277,7 @@ class ENV:
         initialStates_list.pop(random_index) #list of starts without the agent finish position
         for position in initialStates_list:
             states[position[0],position[1]] = 1
-        initialStates_list = []
+        initialStates_list = [start_position[0],start_position[1]]
         #States of the environment are now fully randomly created in accordance with every restriction
         self.states=states
 
