@@ -21,7 +21,6 @@ class state:
          That can be done with the List_of_Rewards below """
 
          List_of_Rewards=[2,-1000,1,1000]
-         print("name_index",self.name_index)
          return (List_of_Rewards[int(self.name_index)])
 
     def arrival_state(self):
@@ -127,9 +126,9 @@ class ENV:
 
     def currentState(self):
         """Returns the name_index of the current state, meaning the state of the current position"""
-        current_state=self.states[self.current_position]
+        current_name_index=int(self.states[self.current_position[0],self.current_position[1]])
         #if current_state is a state value (4 for example), then currentState will become currentPosition.
-        return(current_state)
+        return(current_name_index)
 
 
     def possibleActions(self):
