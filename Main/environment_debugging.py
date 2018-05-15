@@ -19,7 +19,9 @@ random_environment.create_random_environment()
 agent = AgentRandom()
 New_system=System(random_environment,agent)
 
+
 #Testing ENV class
+
 #create_random_environment method is working because a new system has been created
 print("laby :\n",New_system.laby)
 print("debugging method by method in ENV class :\n")
@@ -43,19 +45,22 @@ print("Processing new step...\n")
 print("laby new_position :\n",New_system.laby.current_position)
 New_system.laby.show()
 
+
 #Testing state class
+
 #random_intern_state and random_extern_state are working because create_random_environment method is working
 tested_state=state(random.randint(0,3))
 print("state :\n",tested_state)
-print("name_index of tested_state :\n",state.name_index)
-print("reward of tested_state :\n", state.reward())
+print("name_index of tested_state :\n",tested_state.name_index)
+print("reward of tested_state :\n", tested_state.reward())
+
 #Test of arrival_state()
 tested_state=state(random.randint(0,2))
-current_name_index=state.name_index
+current_name_index=tested_state.name_index
 tested_state.arrival_state()
 print("processing arrival_state() ...")
-new_name_index=state.name_index
-if current_name_index==new_name_index:
+new_name_index=tested_state.name_index
+if new_name_index==3:
     print("arrival_state() is working")
 else:
     print("arrival_state() is not working")
