@@ -259,6 +259,3 @@ class ENV:
 
 
 #testing environment initialization and plotting
-random_environment=ENV(10,10,numpy.zeros((10,10)),[0,0])
-random_environment.create_random_environment()
-random_environment.show()
