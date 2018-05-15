@@ -1,3 +1,5 @@
+from environment import ENV
+
 class System:
     """System is the combination of an environment and an agent"""
 
@@ -14,7 +16,11 @@ class System:
 
         totalReward=0;
         ActionCount=0
-        while (ActionCount<maxActionCount) or (isTerminalState(self.laby.currentState())) :
+        state = self.laby.currentState()
+        laby=self.laby
+        WinningRewards=[]
+        while ((ActionCount<maxActionCount) and not(laby.isTerminalState(state))):
+            print("Step:",ActionCount)
             laby=self.laby
             agent=self.agent
             next_action=agent.nextAction(laby)
@@ -23,4 +29,8 @@ class System:
             #Don't forget the laby is actualized by runStep method
             #OR IS IT ? To verify because of self.laby class...
             ActionCount+=1
+            laby.show()
+        if (laby.isTerminalState(state)):
+            print("Victory!","Reward:",totalReward)
+            WinningRewards+=[totalReward]
         return(totalReward)
