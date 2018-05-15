@@ -58,7 +58,7 @@ class labyrinthe:
 
 	def runStep(self, action):
          """Description de la methode"""
-         #TO DO
+         #DONE
 		 reward=0
 		...
 		return (self.currentState, reward)

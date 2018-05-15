@@ -160,17 +160,23 @@ class ENV:
         #Note : if possible_actions is empty, the agent is blocked and the maze can't be solved --> error case.
 
     def runStep(self, next_action):
-         """Calculates reward and next position for a next action chosen"""
-
+         """Perform the action in the state to change the position and get the reward
+         Args:
+             action : The action to do at the current state
+         Returns:
+             The current position is updated
+             Return the total associated reward
+         """
          #Checking if the action is in the possible_actions
          if next_action not in self.possibleActions():
              return NULL
          # 1) Next position of the agent
-         next_position=self.current_position+next_action
+         self.current_position+=next_action
          # 2) Reward
          reward=0
          reward+=next_state.reward()
-         return (next_position, reward)
+
+         return (reward)
 
     def create_random_environment(self):
         """ This method initializes an environment randomly, according to the assumed restrictions"""
@@ -250,6 +256,7 @@ class ENV:
         initialStates_list = []
         #States of the environment are now fully randomly created in accordance with every restriction
         self.states=states
+
 
 #testing environment initialization and plotting
 random_environment=ENV(10,10,numpy.zeros((10,10)),[0,0])
