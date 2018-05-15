@@ -1,8 +1,8 @@
 #INCLUDING AGENT FILES AND ENVIRONMENT FILES
 import numpy
-from Environnement.environment import ENV
-from Environnement.environment import state
-from Agent.AgentRandom import AgentRandom
+from environment import ENV
+from environment import state
+from AgentRandom import AgentRandom
 from system import System
 
 #Variables initialisations
@@ -17,8 +17,8 @@ maxActionCount=100
 random_environment=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
 random_environment.create_random_environment()
 random_environment.show()
-
-New_system=System(random_environment,AgentRandom)
+agent = AgentRandom()
+New_system=System(random_environment,agent)
 
 List_of_Total_Rewards=[]
 for i in range(Nb_episodes):

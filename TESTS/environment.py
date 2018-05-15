@@ -136,10 +136,11 @@ class ENV:
 
         possible_actions=[]
         current_state=self.currentState()
+        states = self.states
 
         #checking if there is no misplacement of the agent
-        if (current_state==1) or (current_state==3):
-            return (NULL)
+        #if (current_state==1) or (current_state==3):
+        #    return (NULL)
             #NULL value is chosen because empty list is for another error case (see above at next return)
 
         #North and South
@@ -174,6 +175,7 @@ class ENV:
          self.current_position+=next_action
          # 2) Reward
          reward=0
+         next_state = self.currentState()
          reward+=next_state.reward()
 
          return (reward)
