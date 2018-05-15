@@ -1,8 +1,8 @@
-import random
 
-class AgentRandom:
 
-    """Naive agent with pure random behaviour"""
+class AgentMC:
+
+    """Agent with Monte Carlo method behaviour"""
 
     def __init__(self):
         """ initializes a new random agent"""
@@ -17,7 +17,7 @@ class AgentRandom:
         """
         return(laby.current_position)
 
-    def nextAction(self, laby):
+	def nextAction(self, laby):
         """One step of the random agent
         Args:
             laby : The state at the current time step
@@ -25,8 +25,4 @@ class AgentRandom:
             The action returned for the state at the current time step
         """
 
-        state = laby.currentState();
-        actions = laby.possibleActions();
-        action = actions[random.randint(0,len(actions)-1)]; # Returns a random action
-
-    return(action)
+		return(action)
