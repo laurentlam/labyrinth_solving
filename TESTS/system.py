@@ -1,3 +1,5 @@
+from environment import ENV
+
 class System:
     """System is the combination of an environment and an agent"""
 
@@ -14,7 +16,8 @@ class System:
 
         totalReward=0;
         ActionCount=0
-        while (ActionCount<maxActionCount) or (isTerminalState(self.laby.currentState())) :
+        state = self.laby.currentState()
+        while ((ActionCount<maxActionCount) or (laby.isTerminalState(state))):
             laby=self.laby
             agent=self.agent
             next_action=agent.nextAction(laby)

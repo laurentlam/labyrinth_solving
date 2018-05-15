@@ -107,7 +107,7 @@ class ENV:
 
     def isTerminalState(self, state):
         """Check whether state is a finish position, return a boolean"""
-        if (state.name_index!=3):
+        if (state!=3):
             return(False)
         else:
             return(True)
@@ -175,8 +175,6 @@ class ENV:
             for j in [-1,1]:
                 if (states[self.current_position[0],self.current_position[1]+j]!=1):
                     possible_actions.append([i,j])
-
-        print(possible_actions)
         #['N', 'S', 'O', 'E'] corresponds to [[-1,0],[1,0],[0,-1],[0,1]]
         #which are relative motions from the current position
         return(possible_actions)
