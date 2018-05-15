@@ -20,7 +20,7 @@ class state:
          We assume here that to a state is given a unique reward.
          That can be done with the List_of_Rewards below """
 
-         List_of_Rewards=[2,-1000,1,1000]
+         List_of_Rewards=[2,-1000,-100,50000]
          return (List_of_Rewards[int(self.name_index)])
 
     def arrival_state(self):
