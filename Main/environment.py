@@ -114,7 +114,7 @@ class ENV:
 
 
     def terminalStates(self):
-        """Return list of all possible starting positions"""
+        """Return list of all possible finish positions"""
         termStates = []
         for i in range(self.length):
             for j in range(self.width):
@@ -196,9 +196,10 @@ class ENV:
          self.current_position[1]+=next_action[1]
          # 2) Reward
          reward=0
-         next_state_index = self.currentState()
-         next_state = state(next_state_index)
-         reward+=next_state.reward()
+         #next_state_index = self.currentState()
+         #next_state = state(next_state_index)
+         reward += self.rewards[self.current_position[0],self.current_position[1]]
+         #reward+=next_state.reward()
 
          return (reward)
 
@@ -280,6 +281,11 @@ class ENV:
         initialStates_list = [start_position[0],start_position[1]]
         #States of the environment are now fully randomly created in accordance with every restriction
         self.states=states
+
+        #Initialization of rewards by default
+        self.rewards = numpy.full((width,length),-1)
+        self.rewards[start_position[0],start_position[1]] = -10
+        self.rewards[arrival_position[0],arrival_position[1]] = 1000
 
 
 #testing environment initialization and plotting
