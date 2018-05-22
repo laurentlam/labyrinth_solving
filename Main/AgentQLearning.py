@@ -3,16 +3,6 @@ import random
 from environment import ENV
 from environment import state
 
-"""def QLearning(laby,width,length,Nb_episodes):
-    Q = numpy.zero(WIDTH,LENGTH)
-    for n in range(Nb_episodes):
-        lambda = 1
-        eps = 1
-        init_state_list = laby.initialStates()
-        state = init_state_list[0]
-        for i in range
-    """
-
 class AgentQLearning:
 
     """ QLearning Agent"""
@@ -27,17 +17,14 @@ class AgentQLearning:
         Quality = self.Quality.tolist()
         #Representing [N,E,S,W] Actions
         List_all_actions = [[0,1],[1,0],[0,-1],[-1,0]]
-        current_position = laby.current_position
         for i in range(width):
             for j in range(length):
-                laby.current_position = [i,j]
                 for k in range(4):
-                    if List_all_actions[k] in laby.possibleActions():
+                    if List_all_actions[k] in laby.possibleActions([i,j]):
                         Quality[i][j][k] = 0
                     else:
                         Quality[i][j][k] = -10
         self.Quality = Quality
-        laby.current_position = current_position
         self.Epsilon=Epsilon
         self.Lambda=Lambda
         self.Gamma = Gamma
@@ -72,7 +59,7 @@ class AgentQLearning:
         """ returns a, next action. s'=a(s) """
         List_all_actions=[[0,1],[1,0],[0,-1],[-1,0]] #North,East,South,West
         #Possible actions in Quality Matrix
-        actions = laby.possibleActions()
+        actions = laby.possibleActions(laby.current_position)
         random_value=random.random()
 
         if random_value<Epsilon:

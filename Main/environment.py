@@ -131,13 +131,12 @@ class ENV:
         return(current_name_index)
 
 
-    def possibleActions(self):
+    def possibleActions(self,position):
         """ Finds all possible motions (actions) from the current position of the agent."""
 
         possible_actions=[]
-        current_state=self.currentState()
         states = self.states
-        [x,y] = self.current_position
+        [x,y] = position
         width = self.width
         length = self.length
         #checking if there is no misplacement of the agent
@@ -149,31 +148,31 @@ class ENV:
         #North and South
             j=0
             if (x==0):
-                if (states[self.current_position[0]+1,self.current_position[1]]!=1):
+                if (states[position[0]+1,position[1]]!=1):
                     possible_actions.append([1,j])
             if (x==width-1):
-                if (states[self.current_position[0]-1,self.current_position[1]]!=1):
+                if (states[position[0]-1,position[1]]!=1):
                     possible_actions.append([-1,j])
 
         #West and East
             i=0
             if (y==0):
-                if (states[self.current_position[0],self.current_position[1]+1]!=1):
+                if (states[position[0],position[1]+1]!=1):
                     possible_actions.append([i,1])
             if (y==length-1):
-                if (states[self.current_position[0],self.current_position[1]-1]!=1):
+                if (states[position[0],position[1]-1]!=1):
                     possible_actions.append([i,-1])
         #If the agent is within the maze
         else:
             j=0
             for i in [-1,1]:
-                if (states[self.current_position[0]+i,self.current_position[1]]!=1):
+                if (states[position[0]+i,position[1]]!=1):
                     possible_actions.append([i,j])
 
         #West and East
             i=0
             for j in [-1,1]:
-                if (states[self.current_position[0],self.current_position[1]+j]!=1):
+                if (states[position[0],position[1]+j]!=1):
                     possible_actions.append([i,j])
         #['N', 'S', 'O', 'E'] corresponds to [[-1,0],[1,0],[0,-1],[0,1]]
         #which are relative motions from the current position
@@ -189,7 +188,7 @@ class ENV:
              Return the total associated reward
          """
          #Checking if the action is in the possible_actions
-         if next_action not in self.possibleActions():
+         if next_action not in self.possibleActions(self.current_position):
              return NULL
          # 1) Next position of the agent
          self.current_position[0]+=next_action[0]
