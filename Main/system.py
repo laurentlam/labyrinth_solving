@@ -26,9 +26,10 @@ class System:
             laby=self.laby
             agent=self.agent
             next_action=agent.nextAction(laby)
-            totalReward+=laby.runStep(next_action)
-            self.agent.ChangeParameters()
+            reward = laby.runStep(next_action)
+            totalReward+=reward
             self.laby=laby
+            self.agent.ChangeParameters(reward,laby)
             state = self.laby.currentState()
             #Don't forget the laby is actualized by runStep method
             ActionCount+=1
