@@ -285,7 +285,7 @@ class ENV:
         #Initialization of rewards by default
         self.rewards = numpy.full((width,length),-1)
         self.rewards[start_position[0],start_position[1]] = -10
-        self.rewards[arrival_position[0],arrival_position[1]] = 100
+        self.rewards[arrival_position[0],arrival_position[1]] = 1000
 
 
 #testing environment initialization and plotting

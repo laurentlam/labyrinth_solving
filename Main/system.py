@@ -21,15 +21,18 @@ class System:
         WinningRewards=[]
         while ((ActionCount<maxActionCount) and not(laby.isTerminalState(state))):
             print("Step:",ActionCount)
+            print(state)
             laby=self.laby
             agent=self.agent
             next_action=agent.nextAction(laby)
             totalReward+=laby.runStep(next_action)
             self.laby=laby
+            state = self.laby.currentState()
             #Don't forget the laby is actualized by runStep method
             #OR IS IT ? To verify because of self.laby class...
             ActionCount+=1
-            laby.show()
+            if (ActionCount%10 == 0):
+                laby.show()
         if (laby.isTerminalState(state)):
             print("Victory!","Reward:",totalReward)
             WinningRewards+=[totalReward]
