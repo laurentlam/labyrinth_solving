@@ -26,8 +26,8 @@ class AgentRandom:
             The action returned for the state at the current time step
         """
 
-        state = laby.currentState();
-        actions = laby.possibleActions();
-        action = actions[random.randint(0,len(actions)-1)]; # Returns a random action
+        state = laby.currentState()
+        actions = laby.possibleActions()
+        action = actions[random.randint(0,len(actions)-1)] # Returns a random action
 
         return(action)
