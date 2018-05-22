@@ -43,15 +43,16 @@ class AgentQLearning:
         """ returns (value,index(value) with best value for the current position in Quality matrix"""
         #amax,argmax
         current_position=self.startState(laby)
-        max_current_quality=max(self.Quality[current_position[0],current_position[1]])
-        index_max_current_quality=self.Quality[current_position[0],current_position[1]].index(max_current_quality)
-        return(max_current_quality,index_max_current_quality)
+        Quality=self.Quality
+        max_current_quality=Quality[current_position[0]][current_position[1]][0]
+        index_max_current_quality=0
+        for i in range(1,4):
+            if max_current_quality<Quality[current_position[0]][current_position[1]][i]:
+                max_current_quality=Quality[current_position[0]][current_position[1]][i]
+                index_max_current_quality=i
+        return([max_current_quality,index_max_current_quality])
 
-    def ChangeParameters(self,reward,laby):
-        current_position = self.startState(self.laby)
-        self.Quality[current_position[0],current_position[1]]=self.Lambda*(reward+self.Gamma*maxQuality(self.laby)[0]+(1-self.Lambda)*self.Quality[current_position[0],current_position[1]])
-        self.Epsilon = 0.99*self.Epsilon
-        self.Lambda = 0.99*self.Lambda
+
 
 
     def nextAction(self,laby):
@@ -74,6 +75,12 @@ class AgentQLearning:
         if action in actions:
             return (action)
 
+    def ChangeParameters(self,reward,laby,action):
+        current_position = self.startState(laby)
+        max_current_quality=self.maxQuality(laby)[0]
+        self.Quality[current_position[0]][current_position[1]][action_index]=self.Lambda*(reward+self.Gamma*max_current_quality[0]+(1-self.Lambda)*self.Quality[current_position[0][current_position[1]][action_index])
+        self.Epsilon = 0.99*self.Epsilon
+        self.Lambda = 0.99*self.Lambda
 #Architecture
     #Algorithm : Refreshing quality matrix step by step
 
