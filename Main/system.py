@@ -19,6 +19,7 @@ class System:
         state = self.laby.currentState()
         laby=self.laby
         WinningRewards=[]
+
         while ((ActionCount<maxActionCount) and not(laby.isTerminalState(state))):
             print("Step:",ActionCount)
             print(state)
@@ -29,7 +30,6 @@ class System:
             self.laby=laby
             state = self.laby.currentState()
             #Don't forget the laby is actualized by runStep method
-            #OR IS IT ? To verify because of self.laby class...
             ActionCount+=1
             if (ActionCount%10 == 0):
                 laby.show()
