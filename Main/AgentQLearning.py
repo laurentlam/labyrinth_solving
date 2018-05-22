@@ -17,13 +17,30 @@ class AgentQLearning:
 
     """ QLearning Agent"""
 
-    def __init__(self,Epsilon,Lambda,laby):
+    def __init__(self,Epsilon,Lambda,Gamma,laby):
 
         """ initializes a new Qagent"""
+        length=laby.length
+        width = laby.width
 
-        self.Quality=numpy.zeros(laby.width,laby.length).tolist()
+        self.Quality=numpy.zeros((laby.width,laby.length,4))
+        Quality = self.Quality.tolist()
+        #Representing [N,E,S,W] Actions
+        List_all_actions = [[0,1],[1,0],[0,-1],[-1,0]]
+        current_position = laby.current_position
+        for i in range(width):
+            for j in range(length):
+                laby.current_position = [i,j]
+                for k in range(4):
+                    if List_all_actions[k] in laby.possibleActions():
+                        Quality[i][j][k] = 0
+                    else:
+                        Quality[i][j][k] = -10
+        self.Quality = Quality
+        laby.current_position = current_position
         self.Epsilon=Epsilon
         self.Lambda=Lambda
+        self.Gamma = Gamma
 
     def startState(self, laby):
         """Start an episode with initial labyrinthe, return position of start
@@ -34,10 +51,15 @@ class AgentQLearning:
         """
         return(laby.current_position)
 
-    def ChangeQuality():
+    def ChangeParameters(self,Epsilon,Lambda,Gamma,reward):
+        Epsilon = 0.99*Epsilon
+        Lambda = 0.99*Lambda
+        current_position = self.startState(self.laby)
+        self.Quality[current_position[0],current_position[1]]=Lambda*(reward+Gamma*maxQuality(self.laby)[0]+(1-Lambda)*self.Quality[current_position[0],current_position[1]])
+        self.Epsilon=Epsilon
+        self.Lambda=Lambda
 
-
-    def nextAction(self,laby,epsilon,lambda):
+    def nextAction(self,laby,Epsilon,Lambda):
         #A tester
         actions = laby.possibleActions()
         random_value=random.random()
@@ -52,12 +74,9 @@ class AgentQLearning:
             current_position_indice=current_position[0]+width*current_position[1]
             #
 
-        self.ChangeQuality()
-        epsilon=0.99*epsilon
-        Lambda=0.99*Lambda
+        self.ChangeParameters()
 
         return (action)
-
 
 #Architecture
     #Creating quality matrix (size of environment)
