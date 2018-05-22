@@ -3,16 +3,6 @@ import random
 from environment import ENV
 from environment import state
 
-"""def QLearning(laby,width,length,Nb_episodes):
-    Q = numpy.zero(WIDTH,LENGTH)
-    for n in range(Nb_episodes):
-        lambda = 1
-        eps = 1
-        init_state_list = laby.initialStates()
-        state = init_state_list[0]
-        for i in range
-    """
-
 class AgentQLearning:
 
     """ QLearning Agent"""
@@ -21,23 +11,20 @@ class AgentQLearning:
 
         """ initializes a new Qagent"""
         length=laby.length
-        width = laby.width
-
+        width=laby.width
+        #Creating quality matrix (size of environment)
         self.Quality=numpy.zeros((laby.width,laby.length,4))
         Quality = self.Quality.tolist()
         #Representing [N,E,S,W] Actions
         List_all_actions = [[0,1],[1,0],[0,-1],[-1,0]]
-        current_position = laby.current_position
         for i in range(width):
             for j in range(length):
-                laby.current_position = [i,j]
                 for k in range(4):
-                    if List_all_actions[k] in laby.possibleActions():
+                    if List_all_actions[k] in laby.possibleActions([i,j]):
                         Quality[i][j][k] = 0
                     else:
                         Quality[i][j][k] = -10
         self.Quality = Quality
-        laby.current_position = current_position
         self.Epsilon=Epsilon
         self.Lambda=Lambda
         self.Gamma = Gamma
@@ -54,28 +41,27 @@ class AgentQLearning:
     def maxQuality(self,laby):
 
         """ returns (value,index(value) with best value for the current position in Quality matrix"""
+        #amax,argmax
         current_position=self.startState(laby)
         max_current_quality=max(self.Quality[current_position[0],current_position[1]])
         index_max_current_quality=self.Quality[current_position[0],current_position[1]].index(max_current_quality)
         return(max_current_quality,index_max_current_quality)
 
-    def ChangeParameters(self,Epsilon,Lambda,Gamma,reward):
-        Epsilon = 0.99*Epsilon
-        Lambda = 0.99*Lambda
+    def ChangeParameters(self,reward,laby):
         current_position = self.startState(self.laby)
-        self.Quality[current_position[0],current_position[1]]=Lambda*(reward+Gamma*maxQuality(self.laby)[0]+(1-Lambda)*self.Quality[current_position[0],current_position[1]])
-        self.Epsilon=Epsilon
-        self.Lambda=Lambda
+        self.Quality[current_position[0],current_position[1]]=self.Lambda*(reward+self.Gamma*maxQuality(self.laby)[0]+(1-self.Lambda)*self.Quality[current_position[0],current_position[1]])
+        self.Epsilon = 0.99*self.Epsilon
+        self.Lambda = 0.99*self.Lambda
 
 
     def nextAction(self,laby):
         """ returns a, next action. s'=a(s) """
         List_all_actions=[[0,1],[1,0],[0,-1],[-1,0]] #North,East,South,West
         #Possible actions in Quality Matrix
-        actions = laby.possibleActions()
+        actions = laby.possibleActions(laby.current_position)
         random_value=random.random()
 
-        if random_value<Epsilon:
+        if random_value<self.Epsilon:
             #Chosing random Action
             action = actions[random.randint(0,len(actions)-1)]
 
@@ -89,7 +75,6 @@ class AgentQLearning:
             return (action)
 
 #Architecture
-    #Creating quality matrix (size of environment)
     #Algorithm : Refreshing quality matrix step by step
 
         #Finding agent position (s)
@@ -101,7 +86,3 @@ class AgentQLearning:
             #Random value as 1>value>epsilon : Chosing acute action from s position to s' position with best quality Q(s,s')
 
             #REFRESHING PARAMETERS AND QUALITY MATRIX : ChangeParameters() method
-
-        #End of loop (Matrix should be complete and steady)
-
-    #End of Algorithm

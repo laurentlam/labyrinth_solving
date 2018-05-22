@@ -27,7 +27,8 @@ class AgentRandom:
         """
 
         state = laby.currentState()
-        actions = laby.possibleActions()
+        current_position=laby.current_position
+        actions = laby.possibleActions(current_position)
         action = actions[random.randint(0,len(actions)-1)] # Returns a random action
 
         return(action)
