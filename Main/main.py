@@ -3,6 +3,7 @@ import numpy
 from environment import ENV
 from environment import state
 from AgentQLearning import AgentQLearning
+from AgentRandom import AgentRandom
 from system import System
 
 #Variables initialisations

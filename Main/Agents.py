@@ -1,20 +1,54 @@
+#Import needed modules
+import numpy
+
+#Import all agents from agent files:
+from AgentQLearning import AgentQLearning
+from AgentRandom import AgentRandom
+
+#Import environment class
+from environment import ENV
+
 class Agent:
 
-    def __init__(self,arguments):
-        """ General class for agent : can contain parameters  """
-        self.parameters=arguments
+    """ General class for agent : attribute is an agent, unique method is nextAction."""
+
+    def __init__(self,agent_name,arguments):
+        """ General class for agent : contains an agent with its specific arguments  """
+        if arguments!=None:
+            self.agent=agent_name(*arguments)
+        else:
+            self.agent=agent_name()
+
+
+    def nextAction(self,laby):
+        """This method finds the nextAction according to the specific agent (self.agent) we use
+        There it means the nextAction() method of our specific agent (self.agent) is used"""
+
+        return self.agent.nextAction(laby)
 
 
 
-    class nextAction:
+#TESTING
 
-        """ To get nextAction, do Agent.nextAction.nextAction()"""
+if __name__=="__main__":
+    SIZE=10
+    laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
+    laby.create_random_environment()
 
-        def __init__(self):
+    #testing all agents:
 
-        def startState(self,laby):
-            return laby.current_position
+    #test with AgentRandom
+    Random_agent_class=Agent(AgentRandom,None)
+    print("\n General Agent Class: \n",Random_agent_class)
+    print("\n attributes of agent class :\n",vars(Random_agent_class))
+    print("\n next action:\n",Random_agent_class.nextAction(laby))
 
-        def nextAction(self):
-
-            return(action)
+    #test with AgentQLearning
+    Epsilon=1
+    Lambda=1
+    Gamma=0.3
+    #There will be a problem here because "arguments" is multiple objects
+    QLearning_agent_class=Agent(AgentQLearning,[Epsilon,Lambda,Gamma,laby])
+    print("\n General Agent Class: \n",QLearning_agent_class)
+    print("\n attributes of agent class :\n",vars(QLearning_agent_class))
+    print("\n next action:\n",QLearning_agent_class.nextAction(laby))

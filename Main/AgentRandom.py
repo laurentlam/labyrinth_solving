@@ -32,3 +32,9 @@ class AgentRandom:
         action = actions[random.randint(0,len(actions)-1)] # Returns a random action
 
         return(action)
+
+#TESTING
+
+if __name__=="__main__":
+
+    agent_random=AgentRandom()
