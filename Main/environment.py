@@ -160,19 +160,19 @@ class ENV:
         #North and South
 
             if (x==0):
-                if (states[x+1,y]!=1) and (states[x+1,y]!=3): # Not a wall or starting position in the South
+                if (states[x+1,y]!=1) and (states[x+1,y]!=2): # Not a wall or starting position in the South
                     possible_actions.append([1,0])
             if (x==width-1):
-                if (states[x-1,y]!=1) and (states[x-1,y]!=3): # Not a wall or starting position in the North
+                if (states[x-1,y]!=1) and (states[x-1,y]!=2): # Not a wall or starting position in the North
                     possible_actions.append([-1,0])
 
         #West and East
 
             if (y==0):
-                if (states[x,y+1]!=1) and (states[x,y+1]!=3): # Not a wall or starting position in the East
+                if (states[x,y+1]!=1) and (states[x,y+1]!=2): # Not a wall or starting position in the East
                     possible_actions.append([0,1])
             if (y==length-1):
-                if (states[x,y-1]!=1) and (states[x,y-1]!=3): # Not a wall or starting position in the West
+                if (states[x,y-1]!=1) and (states[x,y-1]!=2): # Not a wall or starting position in the West
                     possible_actions.append([0,-1])
 
         #If the agent is within the maze
