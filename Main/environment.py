@@ -190,7 +190,12 @@ class ENV:
 
     def next_position(self,next_action):
 
-        """ returns the next position of the agent if next_action is applied"""
+        """ returns the next position of the agent if next_action is applied
+        Args:
+            next_action : The action to do at the current state
+        Returns:
+            next_position : the position of the agent if the action was applied
+        """
 
         [i,j]=self.current_position
         i+=next_action[0]
@@ -201,7 +206,7 @@ class ENV:
 
          """Perform the action in the state to change the position and get the reward
          Args:
-             action : The action to do at the current state
+             next_action : The action to do at the current state
          Returns:
              The current position is updated
              Return the total associated reward
@@ -214,15 +219,18 @@ class ENV:
          self.current_position=self.next_position(next_action)
          # 2) Reward
          reward=0
-         #next_state_index = self.currentState()
-         #next_state = state(next_state_index)
-         reward += self.rewards[self.current_position[0],self.current_position[1]]
-         #reward+=next_state.reward()
+         reward+=state(self.State(self.current_position)).reward()
 
-         return (reward)
+         return reward
 
     def create_random_environment(self):
-        """ This method initializes an environment randomly, according to the assumed restrictions"""
+
+        """ This method initializes an environment randomly, according to the assumed restrictions
+        Args:
+            No arguments.
+        Returns:
+            self (the maze) is actualized : width, length, states and current position
+        """
 
         #List of states
         width=self.width
@@ -300,10 +308,12 @@ class ENV:
         #States of the environment are now fully randomly created in accordance with every restriction
         self.states=states
 
-        #Initialization of rewards by default
-        self.rewards = numpy.full((width,length),-1)
-        self.rewards[start_position[0],start_position[1]] = -10
-        self.rewards[arrival_position[0],arrival_position[1]] = 1000
+
+        #Warning : rewards() is a method on an ENV class, not an attribute : no initialization is necessary.
+        # #Initialization of rewards by default
+        # self.rewards = numpy.full((width,length),-1)
+        # self.rewards[start_position[0],start_position[1]] = -10
+        # self.rewards[arrival_position[0],arrival_position[1]] = 1000
 
 
 #testing environment initialization and plotting

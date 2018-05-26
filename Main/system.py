@@ -1,7 +1,7 @@
 from environment import ENV
 
 class System:
-    """System is the combination of an environment and an agent"""
+    """System is the combination of an environment (ENV class) and an agent (General Agent Class)"""
 
     def __init__(self,laby,agent):
         """The system contains the environment and the agent"""
@@ -24,12 +24,15 @@ class System:
             print("Step:",ActionCount)
             print(state)
             laby=self.laby
-            agent=self.agent
-            next_action=agent.nextAction(laby)
+            next_action=self.agent.nextAction(laby)
             reward = laby.runStep(next_action)
             totalReward+=reward
             self.laby=laby
-            self.agent.ChangeParameters(reward,laby)
+
+            self.agent.ChangeParameters(reward,laby,next_action)
+            #With General Agent Class :
+            #self.agent.updatePolicy(reward,next_action)
+
             state = self.laby.currentState()
             #Don't forget the laby is actualized by runStep method
             ActionCount+=1

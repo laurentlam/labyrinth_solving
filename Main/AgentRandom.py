@@ -33,6 +33,11 @@ class AgentRandom:
 
         return(action)
 
+    def updatePolicy():
+
+        """ This method changes the policy of a general agent (according to the General Agent Class)
+        Here the policy is constant (random)"""
+
 #TESTING
 
 if __name__=="__main__":

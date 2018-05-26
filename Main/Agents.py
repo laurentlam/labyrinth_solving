@@ -7,13 +7,16 @@ from AgentRandom import AgentRandom
 
 #Import environment class
 from environment import ENV
+from environment import State
 
 class Agent:
 
     """ General class for agent : attribute is an agent, unique method is nextAction."""
 
     def __init__(self,agent_name,arguments):
+
         """ General class for agent : contains an agent with its specific arguments  """
+
         if arguments!=None:
             self.agent=agent_name(*arguments)
         else:
@@ -21,11 +24,18 @@ class Agent:
 
 
     def nextAction(self,laby):
+
         """This method finds the nextAction according to the specific agent (self.agent) we use
         There it means the nextAction() method of our specific agent (self.agent) is used"""
 
         return self.agent.nextAction(laby)
 
+
+    def updatePolicy(self,reward,action):
+
+        """ This method updates the policy of the agent at a certain position, considering a given reward"""
+
+        self.agent.updatePolicy(reward,self.laby,action)
 
 
 #TESTING

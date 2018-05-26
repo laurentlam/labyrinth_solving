@@ -127,6 +127,11 @@ class AgentQLearning:
         self.Epsilon = 0.99*self.Epsilon
         self.Lambda = 0.99*self.Lambda
 
+    def updatePolicy(reward,laby,action):
+
+        """ This method changes the policy of a general agent (according to the General Agent Class)"""
+
+        self.ChangeParameters(reward,laby,action)
 
 #Architecture
     #Algorithm : Refreshing quality matrix step by step
@@ -145,6 +150,7 @@ class AgentQLearning:
 #TESTING
 
 if __name__=="__main__":
+
     SIZE=10
     Epsilon=1
     Lambda=1
@@ -178,7 +184,7 @@ if __name__=="__main__":
     next_position=laby.next_position(next_action)
     reward=state(laby.State(next_position)).reward()
     print("reward of next state:\n",reward)
-    
+
     agent_qlearning.ChangeParameters(reward,laby,next_action)
     print("\n Changing parameters...\n")
     print("\n Quality at current position, Epsilon, Lambda :\n",agent_qlearning.Quality[i,j],agent_qlearning.Epsilon,agent_qlearning.Lambda)

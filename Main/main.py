@@ -22,14 +22,37 @@ Gamma=0.3
 laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
 laby.create_random_environment()
 laby.show()
-agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
-New_system=System(laby,agent)
+
+#Random
+
+random_agent = AgentRandom()
+#With General Agent Class :
+#random_agent=Agent(AgentRandom,None)
+random_system=System(laby,random_agent)
+
+List_of_Total_Rewards=[]
+for i in range(Nb_episodes):
+    List_of_Total_Rewards+=[random_system.runEpisode(maxActionCount)]
+    #random_system.laby.show()
+print("Rewards:",List_of_Total_Rewards)
+print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
+
+
+
+
+
+#QLearning
+
+qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
+#With General Agent Class :
+#qlearning_agent=Agent(AgentQLearning,[Epsilon,Lambda,Gamma,laby])
+qlearning_system=System(laby,qlearning_agent)
 
 List_of_Total_Rewards=[]
 for i in range(Nb_episodes):
     Lambda=1
     Epsilon=1
-    List_of_Total_Rewards+=[New_system.runEpisode(maxActionCount)]
-    #New_system.laby.show()
+    List_of_Total_Rewards+=[qlearning_system.runEpisode(maxActionCount)]
+    #qlearning_system.laby.show()
 print("Rewards:",List_of_Total_Rewards)
 print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
