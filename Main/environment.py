@@ -160,32 +160,32 @@ class ENV:
         #North and South
 
             if (x==0):
-                if (states[x+1,y]!=1): # Not a wall in the South
+                if (states[x+1,y]!=1) and (states[x+1,y]!=3): # Not a wall or starting position in the South
                     possible_actions.append([1,0])
             if (x==width-1):
-                if (states[x-1,y]!=1): # Not a wall in the North
+                if (states[x-1,y]!=1) and (states[x-1,y]!=3): # Not a wall or starting position in the North
                     possible_actions.append([-1,0])
 
         #West and East
 
             if (y==0):
-                if (states[x,y+1]!=1): # Not a wall in the East
+                if (states[x,y+1]!=1) and (states[x,y+1]!=3): # Not a wall or starting position in the East
                     possible_actions.append([0,1])
             if (y==length-1):
-                if (states[x,y-1]!=1): # Not a wall in the West
+                if (states[x,y-1]!=1) and (states[x,y-1]!=3): # Not a wall or starting position in the West
                     possible_actions.append([0,-1])
 
         #If the agent is within the maze
         else:
 
             for i in [-1,1]:
-                if (states[x+i,y]!=1): #Not a wall in the North then not a wall in the South
+                if (states[x+i,y]!=1) and (states[x+i,y]!=3): #Not a wall or starting position in the North then not a wall in the South
                     possible_actions.append([i,0])
 
         #West and East
 
             for j in [-1,1]:
-                if (states[x,y+j]!=1): #Not a wall in the West then not a wall in the East
+                if (states[x,y+j]!=1) and (states[x,y+j]!=3): #Not a wall or starting position in the West then not a wall in the East
                     possible_actions.append([0,j])
         #['N', 'S', 'O', 'E'] corresponds to [[-1,0],[1,0],[0,-1],[0,1]]
         #which are relative motions from the current position
@@ -273,7 +273,7 @@ class ENV:
         #Choosing a random initial state to start with
         random_index=random.randint(0,len(initialStates_list)-1)
         #Initial state not in a corner
-        while (initialStates_list[random_index]==[0,0]) or (initialStates_list[random_index]==[width-1,length-1]):
+        while (initialStates_list[random_index]==[0,0]) or (initialStates_list[random_index]==[width-1,length-1]) or (initialStates_list[random_index]==[0,length-1]) or (initialStates_list[random_index]==[width-1,0]):
             random_index=random.randint(0,len(initialStates_list)-1)
         self.current_position = initialStates_list[random_index]
         start_position = self.current_position
