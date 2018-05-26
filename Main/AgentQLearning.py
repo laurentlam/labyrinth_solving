@@ -15,38 +15,44 @@ class AgentQLearning:
         #Quality matrix :
         length=laby.length
         width=laby.width
-        #Creating quality matrix (size of environment) : every direction is possible at first
-        self.Quality=numpy.zeros((laby.width,laby.length,4))
 
-        # Quality = self.Quality.tolist()
+        #Creating quality matrix (size of environment) : every direction is possible at first
+
+        dt = numpy.dtype([('North', numpy.int),('East', numpy.int),('South', numpy.int),('West', numpy.int)])
+        self.Quality=numpy.zeros((laby.width,laby.length),dt)
+
+        #Note for the type of the Matrix :
+
+            #Numpy array of shape length*width
+            #Each element is a 4-array of numpy.int type
+
+            #To get to the Quality_list of the position (x,y), do self.Quality[x,y]
+            #Example : self.Quality[x,y]=(0,0,0,0) at first
 
         #Representing [N,E,S,W] Actions
+        #Warning : does this really correspond (x,y is not i,j !)
         List_all_actions = [[0,1],[1,0],[0,-1],[-1,0]]
         #We put strictly negative quality in impossible actions, knowing they won't become positive in the process.
         for i in range(width):
             for j in range(length):
                 #We create the following variable not to go in laby 4 time for the same thing.
+                ######### print("i,j=:\n",i,j)
                 possible_actions_ij=laby.possibleActions([i,j])
+                ######### print("\n possible_actions:\n",possible_actions_ij)
+                ######### print("\n List_all_actions\n",List_all_actions)
                 for k in range(4):
+                    ######### print("\n Une matrice de QUALITE (AVANT):\n",self.Quality[i,j])
                     if List_all_actions[k] in possible_actions_ij:
-                        self.Quality[i][j][k] = 0
+                        self.Quality[i,j][k] = 0
                     else:
-                        self.Quality[i][j][k] = -10
-        # self.Quality = Quality
+                        self.Quality[i,j][k] = -10
+                    ######### print("\n Une matrice de QUALITE (APRES):\n",self.Quality[i,j])
+
         self.Epsilon=Epsilon
         self.Lambda=Lambda
         self.Gamma = Gamma
 
-    #StartState is not useful anymore since current_position is an attribute of laby.
-    def startState(self, laby):
-        """Start an episode with initial labyrinthe, return position of start
-        Args:
-            laby : The initial maze created
-        Returns:
-            The starting position of the agent
-        """
-        return(laby.current_position)
-
+    #TO TEST
     def maxQuality(self,laby):
 
         """ returns (value,index(value) with best value for the current position in Quality matrix"""
@@ -63,7 +69,7 @@ class AgentQLearning:
 
 
 
-
+    #Ultimate testing is with runStep() ENV method
     def nextAction(self,laby):
         """ returns a, next action. s'=a(s) """
         List_all_actions=[[0,1],[1,0],[0,-1],[-1,0]] #North,East,South,West
@@ -88,9 +94,12 @@ class AgentQLearning:
     #STILL TO CHANGE
     def ChangeParameters(self,reward,laby,action_index):
         # current_position = self.startState(laby)
-        current_position=laby.current_position
+        if action_index not in [0,1,2,3]:
+            print("Error")
+            return None
+        [x,y]=laby.current_position
         max_current_quality=self.maxQuality(laby)[0]
-        self.Quality[current_position[0]][current_position[1]][action_index]=self.Lambda*(reward+self.Gamma*max_current_quality[0]+(1-self.Lambda)*self.Quality[current_position[0][current_position[1]][action_index])
+        self.Quality[x,y][action_index]=self.Lambda*(reward+self.Gamma*max_current_quality[0]+(1-self.Lambda)*self.Quality[x,y][action_index])
         self.Epsilon = 0.99*self.Epsilon
         self.Lambda = 0.99*self.Lambda
 
@@ -122,3 +131,6 @@ if __name__=="__main__":
     #__init__()
     agent_qlearning=AgentQLearning(Epsilon,Lambda,Gamma,laby)
     # print(vars(agent_qlearning))
+    [x,y]=laby.current_position
+    print([x,y])
+    print(agent_qlearning.Quality[x,y])
