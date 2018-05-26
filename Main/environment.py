@@ -20,7 +20,7 @@ class state:
          We assume here that to a state is given a unique reward.
          That can be done with the List_of_Rewards below """
 
-         List_of_Rewards=[2,-1000,-100,50000]
+         List_of_Rewards=[10,-1000,0,50000]
          return (List_of_Rewards[int(self.name_index)])
 
     def arrival_state(self):
@@ -123,12 +123,21 @@ class ENV:
                    termStates.append([i,j])
         return(termStates)
 
+    def State(self,position):
+
+        """ Returns the name_index of the state of the given position, meaning the state of the given position"""
+
+        [i,j]=position
+        name_index=int(self.states[i,j])
+        return name_index
+
 
     def currentState(self):
+
         """Returns the name_index of the current state, meaning the state of the current position"""
-        current_name_index=int(self.states[self.current_position[0],self.current_position[1]])
-        #if current_state is a state value (4 for example), then currentState will become currentPosition.
-        return(current_name_index)
+
+        current_name_index=self.State(self.current_position)
+        return current_name_index
 
 
     def possibleActions(self,position):
@@ -179,7 +188,17 @@ class ENV:
         return(possible_actions)
         #Note : if possible_actions is empty, the agent is blocked and the maze can't be solved --> error case.
 
+    def next_position(self,next_action):
+
+        """ returns the next position of the agent if next_action is applied"""
+
+        [i,j]=self.current_position
+        i+=next_action[0]
+        j+=next_action[1]
+        return [i,j]
+
     def runStep(self, next_action):
+
          """Perform the action in the state to change the position and get the reward
          Args:
              action : The action to do at the current state
@@ -187,12 +206,12 @@ class ENV:
              The current position is updated
              Return the total associated reward
          """
+
          #Checking if the action is in the possible_actions
          if next_action not in self.possibleActions(self.current_position):
              return NULL
          # 1) Next position of the agent
-         self.current_position[0]+=next_action[0]
-         self.current_position[1]+=next_action[1]
+         self.current_position=self.next_position(next_action)
          # 2) Reward
          reward=0
          #next_state_index = self.currentState()
