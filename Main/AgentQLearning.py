@@ -3,6 +3,10 @@ import random
 from environment import ENV
 from environment import state
 
+#For tests
+from system import System
+#For tests
+
 class AgentQLearning:
 
     """ QLearning Agent"""
@@ -36,17 +40,12 @@ class AgentQLearning:
         for i in range(width):
             for j in range(length):
                 #We create the following variable not to go in laby 4 time for the same thing.
-                ######### print("i,j=:\n",i,j)
                 possible_actions_ij=laby.possibleActions([i,j])
-                ######### print("\n possible_actions:\n",possible_actions_ij)
-                ######### print("\n List_all_actions\n",List_all_actions)
                 for k in range(4):
-                    ######### print("\n Une matrice de QUALITE (AVANT):\n",self.Quality[i,j])
                     if List_all_actions[k] in possible_actions_ij:
                         self.Quality[i,j][k] = 0
                     else:
                         self.Quality[i,j][k] = -10
-                    ######### print("\n Une matrice de QUALITE (APRES):\n",self.Quality[i,j])
 
         self.Epsilon=Epsilon
         self.Lambda=Lambda
@@ -57,8 +56,6 @@ class AgentQLearning:
 
         """ returns (value,index(value)) with best value for the position in Quality matrix"""
 
-        #amax,argmax
-        # [i,j]=self.startState(laby)
         [i,j]=position
         Quality=self.Quality
 
@@ -81,8 +78,9 @@ class AgentQLearning:
         List_all_actions = [[-1,0],[0,1],[1,0],[0,-1]] #North,East,South,West
         #Possible actions in Quality Matrix
         actions = laby.possibleActions([i,j])
+
         if actions==[]:
-            print("No possible action")
+            print("No possible action (in nextAction)")
             print(laby.show())
             return None
         random_value=random.random()
@@ -95,34 +93,35 @@ class AgentQLearning:
         else:
             #Chosing acute Action
             current_position=laby.current_position
-            (max_current_quality,index_max_current_quality)=self.maxQuality([i,j])
+            [max_current_quality,index_max_current_quality]=self.maxQuality([i,j])
             #Going from index in Quality matrix to action
             action=List_all_actions[index_max_current_quality]
 
         if action in actions:
             return action
         else:
-            print("Error : invalid action\n")
+            print("\n Error : invalid action (in nextAction)\n")
+            print(" possible actions :\n", actions)
             return None
 
 
-    #STILL TO CHANGE
-    def ChangeParameters(self,reward,laby,action):
-        [i,j]=laby.current_position # We call it once since it is used multiple times
+    def ChangeParameters(self,reward,laby,action,position):
+        [i,j]=position
 
         #Error case : given action is not a possible action
         if action not in laby.possibleActions([i,j]):
-            print("Error : invalid action\n")
+            print("Error : invalid action (in ChangeParameters)\n")
+            print("possible actions:\n",laby.possibleActions([i,j]))
+            print("action :",action)
             return None
 
         List_all_actions = [[-1,0],[0,1],[1,0],[0,-1]] #North,East,South,West
         action_index=List_all_actions.index(action)
-        print("action_index of given action:\n",action_index)
         if self.Quality[i,j][action_index]>=0:
+            next_position=laby.next_position(action)
             #The quality matrix is changed only if quality is already positive, otherwise action is also impossible (double check)
-            max_current_quality=self.maxQuality([i,j])[0]
-            print("\n max_current_quality: \n",max_current_quality)
-            self.Quality[i,j][action_index]=self.Lambda*(reward+self.Gamma*max_current_quality+(1-self.Lambda)*self.Quality[i,j][action_index])
+            max_quality=self.maxQuality(next_position)[0]
+            self.Quality[i,j][action_index]=self.Lambda*(reward+self.Gamma*max_quality)+(1-self.Lambda)*self.Quality[i,j][action_index]
 
         self.Epsilon = 0.99*self.Epsilon
         self.Lambda = 0.99*self.Lambda
@@ -159,11 +158,11 @@ if __name__=="__main__":
     laby.create_random_environment()
 
     #__init__()
-    agent_qlearning=AgentQLearning(Epsilon,Lambda,Gamma,laby)
+    qlearning_agent=AgentQLearning(Epsilon,Lambda,Gamma,laby)
     # print(vars(agent_qlearning))
     [i,j]=laby.current_position
     print("\n current position: \n",[i,j])
-    print("\n Quality at current position:\n",agent_qlearning.Quality[i,j])
+    print("\n Quality at current position:\n",qlearning_agent.Quality[i,j])
 
     #maxQuality()
     # for k in range(SIZE):
@@ -172,19 +171,20 @@ if __name__=="__main__":
     #         print("\n Associated quality matrix :\n",agent_qlearning.Quality[k,l])
     #         print("value and index of maximum Quality for the chosen position",agent_qlearning.maxQuality([k,l]))
 
-    #nextAction()
-    next_action=agent_qlearning.nextAction(laby)
-    print("\n next action is :\n",next_action)
+    #nextAction() -->Problem when algorithm has started
+    laby.show()
+    next_action=qlearning_agent.nextAction(laby)
+    print("next action is: ",next_action)
 
     #ChangeParameters()
     [i,j]=laby.current_position
-    next_action=agent_qlearning.nextAction(laby)
-    print("\ Quality at current position, Epsilon, Lambda :\n",agent_qlearning.Quality[i,j],agent_qlearning.Epsilon,agent_qlearning.Lambda)
+    next_action=qlearning_agent.nextAction(laby)
+    print("Quality at current position, Epsilon, Lambda :",qlearning_agent.Quality[i,j],qlearning_agent.Epsilon,qlearning_agent.Lambda)
 
     next_position=laby.next_position(next_action)
     reward=state(laby.State(next_position)).reward()
     print("reward of next state:\n",reward)
 
-    agent_qlearning.ChangeParameters(reward,laby,next_action)
-    print("\n Changing parameters...\n")
-    print("\n Quality at current position, Epsilon, Lambda :\n",agent_qlearning.Quality[i,j],agent_qlearning.Epsilon,agent_qlearning.Lambda)
+    qlearning_agent.ChangeParameters(reward,laby,next_action)
+    print("Changing parameters...\n")
+    print("Quality at current position, Epsilon, Lambda : ",qlearning_agent.Quality[i,j],qlearning_agent.Epsilon,qlearning_agent.Lambda)

@@ -143,6 +143,8 @@ class ENV:
     def possibleActions(self,position):
         """ Finds all possible motions (actions) from the current position of the agent."""
 
+
+        # List_of_states=["o","x","s","e"]
         possible_actions=[]
         states = self.states
         [x,y] = position
@@ -152,37 +154,39 @@ class ENV:
         #if (current_state==1) or (current_state==3):
         #    return (NULL)
             #NULL value is chosen because empty list is for another error case (see above at next return)
-        #if Agent on the boarder of the maze
+
+        #if Agent on the border of the maze
         if ((x==0) or (x==width-1) or (y==0) or (y==length-1)):
         #North and South
-            j=0
+
             if (x==0):
-                if (states[position[0]+1,position[1]]!=1):
-                    possible_actions.append([1,j])
+                if (states[x+1,y]!=1): # Not a wall in the South
+                    possible_actions.append([1,0])
             if (x==width-1):
-                if (states[position[0]-1,position[1]]!=1):
-                    possible_actions.append([-1,j])
+                if (states[x-1,y]!=1): # Not a wall in the North
+                    possible_actions.append([-1,0])
 
         #West and East
-            i=0
+
             if (y==0):
-                if (states[position[0],position[1]+1]!=1):
-                    possible_actions.append([i,1])
+                if (states[x,y+1]!=1): # Not a wall in the East
+                    possible_actions.append([0,1])
             if (y==length-1):
-                if (states[position[0],position[1]-1]!=1):
-                    possible_actions.append([i,-1])
+                if (states[x,y-1]!=1): # Not a wall in the West
+                    possible_actions.append([0,-1])
+
         #If the agent is within the maze
         else:
-            j=0
+
             for i in [-1,1]:
-                if (states[position[0]+i,position[1]]!=1):
-                    possible_actions.append([i,j])
+                if (states[x+i,y]!=1): #Not a wall in the North then not a wall in the South
+                    possible_actions.append([i,0])
 
         #West and East
-            i=0
+
             for j in [-1,1]:
-                if (states[position[0],position[1]+j]!=1):
-                    possible_actions.append([i,j])
+                if (states[x,y+j]!=1): #Not a wall in the West then not a wall in the East
+                    possible_actions.append([0,j])
         #['N', 'S', 'O', 'E'] corresponds to [[-1,0],[1,0],[0,-1],[0,1]]
         #which are relative motions from the current position
         return(possible_actions)
@@ -214,7 +218,8 @@ class ENV:
 
          #Checking if the action is in the possible_actions
          if next_action not in self.possibleActions(self.current_position):
-             return NULL
+             print("next_action is not a possible action (runStep)")
+             return None
          # 1) Next position of the agent
          self.current_position=self.next_position(next_action)
          # 2) Reward
@@ -264,7 +269,7 @@ class ENV:
         #Creation of a list of the initial states
         initialStates_list = self.initialStates()
         if (len(initialStates_list)<2):
-            return(NULL)
+            return None
         #Choosing a random initial state to start with
         random_index=random.randint(0,len(initialStates_list)-1)
         #Initial state not in a corner

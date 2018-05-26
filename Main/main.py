@@ -23,19 +23,19 @@ laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
 laby.create_random_environment()
 laby.show()
 
-#Random
+#Random : uncomment when General Class Agent Programming is implemented
 
-random_agent = AgentRandom()
-#With General Agent Class :
-#random_agent=Agent(AgentRandom,None)
-random_system=System(laby,random_agent)
-
-List_of_Total_Rewards=[]
-for i in range(Nb_episodes):
-    List_of_Total_Rewards+=[random_system.runEpisode(maxActionCount)]
-    #random_system.laby.show()
-print("Rewards:",List_of_Total_Rewards)
-print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
+# random_agent = AgentRandom()
+# #With General Agent Class :
+# #random_agent=Agent(AgentRandom,None)
+# random_system=System(laby,random_agent)
+#
+# List_of_Total_Rewards=[]
+# for i in range(Nb_episodes):
+#     List_of_Total_Rewards+=[random_system.runEpisode(maxActionCount)]
+#     #random_system.laby.show()
+# print("Rewards:",List_of_Total_Rewards)
+# print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
 
 
 
@@ -53,6 +53,8 @@ for i in range(Nb_episodes):
     Lambda=1
     Epsilon=1
     List_of_Total_Rewards+=[qlearning_system.runEpisode(maxActionCount)]
-    #qlearning_system.laby.show()
+    qlearning_system.laby.show()
+    [i,j]=qlearning_system.laby.current_position
+    print(qlearning_system.agent.Quality[i,j])
 print("Rewards:",List_of_Total_Rewards)
 print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
