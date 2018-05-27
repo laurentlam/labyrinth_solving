@@ -36,7 +36,8 @@ class AgentQLearning:
 
         #Representing [N,E,S,W] Actions (careful: usual x,y is not i,j)
         List_all_actions = [[-1,0],[0,1],[1,0],[0,-1]]
-        #We put strictly negative quality in impossible actions, to treat them differently in the process.
+        #We put huge negative value in impossible actions, to treat them differently in the process.
+        #######################################################################
         for i in range(width):
             for j in range(length):
                 #We create the following variable not to go in laby 4 time for the same thing.
@@ -45,7 +46,8 @@ class AgentQLearning:
                     if List_all_actions[k] in possible_actions_ij:
                         self.Quality[i,j][k] = 0
                     else:
-                        self.Quality[i,j][k] = -10
+                        self.Quality[i,j][k] = -1e6
+        #######################################################################
         self.Epsilon=Epsilon
         self.Lambda=Lambda
         self.Gamma = Gamma
@@ -56,7 +58,9 @@ class AgentQLearning:
         """ returns (value,index(value)) with best value for the position in Quality matrix"""
 
         [i,j]=position
+        List_all_actions = [[-1,0],[0,1],[1,0],[0,-1]] #North,East,South,West
         Quality=self.Quality
+
         max_current_quality=Quality[i,j][0]
         index_max_current_quality=0
         for k in range(1,4):
@@ -72,34 +76,38 @@ class AgentQLearning:
     def nextAction(self,laby):
 
         """ returns a, next action as s'=a(s) """
-        [i,j]=laby.current_position #attribute is used two times so we call it once
+        [i,j]=laby.current_position #attribute is used multiple times so we call it once
         List_all_actions = [[-1,0],[0,1],[1,0],[0,-1]] #North,East,South,West
         #Possible actions in Quality Matrix
-        actions = laby.possibleActions([i,j])
+        possible_actions = laby.possibleActions([i,j])
 
-        if actions==[]:
+        if possible_actions==[]:
             print("No possible action (in nextAction)")
             print(laby.show())
             return None
+
+        # Playing random : whether it's discovery (random wandering in the maze), whether it's driven by Quality maximisation
         random_value=random.random()
 
         if random_value<self.Epsilon:
-            #Chosing random Action
-
-            action = actions[random.randint(0,len(actions)-1)]
+            # Chosing random Action : wandering in the maze
+            action = possible_actions[random.randint(0,len(possible_actions)-1)]
 
         else:
-            #Chosing acute Action
-            current_position=laby.current_position
+            # Chosing acute Action : driven by Quality maximisation
+
             [max_current_quality,index_max_current_quality]=self.maxQuality([i,j])
+
             #Going from index in Quality matrix to action
             action=List_all_actions[index_max_current_quality]
 
-        if action in actions:
+
+
+        if action in possible_actions:
             return action
         else:
             print("\n Error : invalid action (in nextAction)\n")
-            print(" possible actions :\n", actions)
+            print(" possible actions :\n", possible_actions)
             return None
 
 
@@ -122,11 +130,13 @@ class AgentQLearning:
         List_all_actions = [[-1,0],[0,1],[1,0],[0,-1]] #North,East,South,West
         action_index=List_all_actions.index(action)
 
-        if self.Quality[i,j][action_index]>=0:
-            #The quality matrix is changed only if quality is already positive, otherwise action is also impossible (double check)
-            next_position=laby.next_position([i,j],action)
-            max_quality=self.maxQuality(next_position)[0] #####
-            self.Quality[i,j][action_index]=self.Lambda*(reward+self.Gamma*max_quality)+(1-self.Lambda)*self.Quality[i,j][action_index]
+################################################################################
+        #if self.Quality[i,j][action_index]>=0:
+        #The quality matrix is changed only if quality is already positive, otherwise action is also impossible (double check)
+        next_position=laby.next_position([i,j],action)
+        max_quality=self.maxQuality(next_position)[0]
+        self.Quality[i,j][action_index]=self.Lambda*(reward+self.Gamma*max_quality)+(1-self.Lambda)*self.Quality[i,j][action_index]
+################################################################################
 
         self.Epsilon = 0.99*self.Epsilon
         self.Lambda = 0.99*self.Lambda

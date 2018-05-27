@@ -37,7 +37,7 @@ def runMain():
     maxActionCount=100
     Epsilon=1
     Lambda=1
-    Gamma=0.6
+    Gamma=0.5
 
     SIZE=10
 
@@ -54,6 +54,7 @@ def runMain():
     #Initialising system
     qlearning_system=System(laby,qlearning_agent)
     initial_position=qlearning_system.laby.current_position
+
     #RUNNING ALGORITHM
     List_of_Total_Rewards=[]
 

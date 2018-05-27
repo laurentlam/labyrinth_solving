@@ -19,8 +19,10 @@ class state:
          """ Calculates the reward of the Agent going to this state.
          We assume here that to a state is given a unique reward.
          That can be done with the List_of_Rewards below """
-
-         List_of_Rewards=[10,-1000,0,50000]
+################################################################################
+         #List_of_Rewards=[10,-1000,0,50000]
+         List_of_Rewards=[-1,-1000,-10,50000]
+################################################################################
          return (List_of_Rewards[int(self.name_index)])
 
     def arrival_state(self):
@@ -141,7 +143,8 @@ class ENV:
 
 
     def possibleActions(self,position):
-        """ Finds all possible motions (actions) from the current position of the agent."""
+
+        """ Finds all possible motions (actions) from a given position in the maze"""
 
 
         # List_of_states=["o","x","s","e"]=[hole,wall,start,end]=[0,1,2,3]
@@ -179,53 +182,56 @@ class ENV:
         else:
 
             for i in [-1,1]:
-                if (states[x+i,y]!=1) and (states[x+i,y]!=2): #Not a wall or starting position in the North then not a wall in the South
+                if (states[x+i,y]!=1) and (states[x+i,y]!=2): #Not a wall or starting position in the North then in the South
                     possible_actions.append([i,0])
 
         #West and East
 
             for j in [-1,1]:
-                if (states[x,y+j]!=1) and (states[x,y+j]!=2): #Not a wall or starting position in the West then not a wall in the East
+                if (states[x,y+j]!=1) and (states[x,y+j]!=2): #Not a wall or starting position in the West then in the East
                     possible_actions.append([0,j])
+
         #['N', 'S', 'O', 'E'] corresponds to [[-1,0],[1,0],[0,-1],[0,1]]
         #which are relative motions from the current position
         return(possible_actions)
         #Note : if possible_actions is empty, the agent is blocked and the maze can't be solved --> error case.
 
-    def next_position(self,position,next_action):
+    def next_position(self,position,action):
 
-        """ returns the next position of the agent if next_action is applied
+        """ returns the next position from position if action is applied
         Args:
-            next_action : The action to do at the current state
+            action : The action to do at the current state
         Returns:
             next_position : the position of the agent if the action was applied
         """
 
         [i,j]=position
-        i+=next_action[0]
-        j+=next_action[1]
+        i+=action[0]
+        j+=action[1]
         return [i,j]
 
-    def runStep(self, next_action):
+    def runStep(self, action):
 
          """Perform the action in the state to change the position and get the reward
          Args:
-             next_action : The action to do at the current state
+             action : The action to do at the current state
          Returns:
              The current position is updated
              Return the total associated reward
          """
 
-         #Checking if the action is in the possible_actions
-         if next_action not in self.possibleActions(self.current_position):
-             print("next_action is not a possible action (runStep)")
+         # Checking if the action is in the possible_actions
+         if action not in self.possibleActions(self.current_position):
+             print("action is not a possible action (runStep)")
              return None
-         # 1) Next position of the agent
-         self.current_position=self.next_position(self.current_position,next_action)
-         # 2) Reward
-         reward=0
-         reward+=state(self.State(self.current_position)).reward()
 
+         # 1) Next position of the agent
+         self.current_position=self.next_position(self.current_position,action)
+
+         # 2) reward : reward from the new state of the agent
+         reward=state(self.State(self.current_position)).reward()
+
+         #returning : the reward
          return reward
 
     def create_random_environment(self):
@@ -312,13 +318,3 @@ class ENV:
         initialStates_list = [start_position[0],start_position[1]]
         #States of the environment are now fully randomly created in accordance with every restriction
         self.states=states
-
-
-        #Warning : rewards() is a method on an ENV class, not an attribute : no initialization is necessary.
-        # #Initialization of rewards by default
-        # self.rewards = numpy.full((width,length),-1)
-        # self.rewards[start_position[0],start_position[1]] = -10
-        # self.rewards[arrival_position[0],arrival_position[1]] = 1000
-
-
-#testing environment initialization and plotting

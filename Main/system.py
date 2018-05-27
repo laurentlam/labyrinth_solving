@@ -10,6 +10,7 @@ class System:
 
 
     def runEpisode(self, maxActionCount):
+
         """runs an episode of the agent searching for the arrival
         while showing the process step by step,
         returning the total reward of its steps"""
@@ -24,19 +25,30 @@ class System:
             laby=self.laby
             action=self.agent.nextAction(laby) #Already a General Agent Class method
             position_before_step=laby.current_position #This variable is needed because runStep changes the current position
+
+            # Moving the agent and calculating the subsequent reward
             reward = laby.runStep(action)
+            if reward==None: #runStep found no possible action, so the reward is None
+                print("runEpisode is aware that runStep found no possible action")
+                return totalReward
             totalReward+=reward
-            self.laby=laby
+            self.laby.current_position=laby.current_position #Only change in laby from runStep()
 
-            self.agent.ChangeParameters(reward,laby,action,position_before_step)
-            #With General Agent Class :
-            #self.agent.updatePolicy(reward,next_action,position_before_step)
+            # Updating the policy of the agent after action is chosen and applied
+            agent=self.agent
+            agent.ChangeParameters(reward,laby,action,position_before_step)
+            self.agent=agent
+            # With General Agent Class :
+            #self.agent.updatePolicy(reward,action,position_before_step)
 
+            # Updating criterias for the while() loop
             state = self.laby.currentState()
-            #Don't forget the laby is actualized by runStep method
             ActionCount+=1
-            # if (ActionCount%10 == 0):
+
+        # If the agent arrived
         if (laby.isTerminalState(state)):
             print("Victory!","Reward:",totalReward)
             WinningRewards+=[totalReward]
-        return(totalReward)
+
+        # Returning total reward (sum of the reward of every step)
+        return totalReward
