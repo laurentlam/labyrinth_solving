@@ -46,7 +46,6 @@ class AgentQLearning:
                         self.Quality[i,j][k] = 0
                     else:
                         self.Quality[i,j][k] = -10
-
         self.Epsilon=Epsilon
         self.Lambda=Lambda
         self.Gamma = Gamma
@@ -58,7 +57,6 @@ class AgentQLearning:
 
         [i,j]=position
         Quality=self.Quality
-
         max_current_quality=Quality[i,j][0]
         index_max_current_quality=0
         for k in range(1,4):
