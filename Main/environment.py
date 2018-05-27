@@ -144,7 +144,7 @@ class ENV:
         """ Finds all possible motions (actions) from the current position of the agent."""
 
 
-        # List_of_states=["o","x","s","e"]
+        # List_of_states=["o","x","s","e"]=[hole,wall,start,end]=[0,1,2,3]
         possible_actions=[]
         states = self.states
         [x,y] = position
@@ -179,20 +179,20 @@ class ENV:
         else:
 
             for i in [-1,1]:
-                if (states[x+i,y]!=1) and (states[x+i,y]!=3): #Not a wall or starting position in the North then not a wall in the South
+                if (states[x+i,y]!=1) and (states[x+i,y]!=2): #Not a wall or starting position in the North then not a wall in the South
                     possible_actions.append([i,0])
 
         #West and East
 
             for j in [-1,1]:
-                if (states[x,y+j]!=1) and (states[x,y+j]!=3): #Not a wall or starting position in the West then not a wall in the East
+                if (states[x,y+j]!=1) and (states[x,y+j]!=2): #Not a wall or starting position in the West then not a wall in the East
                     possible_actions.append([0,j])
         #['N', 'S', 'O', 'E'] corresponds to [[-1,0],[1,0],[0,-1],[0,1]]
         #which are relative motions from the current position
         return(possible_actions)
         #Note : if possible_actions is empty, the agent is blocked and the maze can't be solved --> error case.
 
-    def next_position(self,next_action):
+    def next_position(self,position,next_action):
 
         """ returns the next position of the agent if next_action is applied
         Args:
@@ -201,7 +201,7 @@ class ENV:
             next_position : the position of the agent if the action was applied
         """
 
-        [i,j]=self.current_position
+        [i,j]=position
         i+=next_action[0]
         j+=next_action[1]
         return [i,j]
@@ -221,7 +221,7 @@ class ENV:
              print("next_action is not a possible action (runStep)")
              return None
          # 1) Next position of the agent
-         self.current_position=self.next_position(next_action)
+         self.current_position=self.next_position(self.current_position,next_action)
          # 2) Reward
          reward=0
          reward+=state(self.State(self.current_position)).reward()

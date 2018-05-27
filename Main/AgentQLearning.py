@@ -106,6 +106,12 @@ class AgentQLearning:
 
 
     def ChangeParameters(self,reward,laby,action,position):
+
+        """   This method changes Epsilon, Lambda
+        and the Quality of the transition from actual position of the agent
+        to the next position (given by the action)  """
+
+
         [i,j]=position
 
         #Error case : given action is not a possible action
@@ -117,10 +123,11 @@ class AgentQLearning:
 
         List_all_actions = [[-1,0],[0,1],[1,0],[0,-1]] #North,East,South,West
         action_index=List_all_actions.index(action)
+
         if self.Quality[i,j][action_index]>=0:
-            next_position=laby.next_position(action)
             #The quality matrix is changed only if quality is already positive, otherwise action is also impossible (double check)
-            max_quality=self.maxQuality(next_position)[0]
+            next_position=laby.next_position([i,j],action)
+            max_quality=self.maxQuality(next_position)[0] #####
             self.Quality[i,j][action_index]=self.Lambda*(reward+self.Gamma*max_quality)+(1-self.Lambda)*self.Quality[i,j][action_index]
 
         self.Epsilon = 0.99*self.Epsilon
@@ -130,21 +137,7 @@ class AgentQLearning:
 
         """ This method changes the policy of a general agent (according to the General Agent Class)"""
 
-        self.ChangeParameters(reward,laby,action)
-
-#Architecture
-    #Algorithm : Refreshing quality matrix step by step
-
-        #Finding agent position (s)
-        #Begin loop (condition : not arrived OR nb_steps<nb_steps_max)
-
-            #CHOSING NEXT ACTION (nextAction method) : random and chosen depending on epsilon factor
-
-            #Random value as 0<value<epsilon : Chosing random action from s position to (unknown) s' position
-            #Random value as 1>value>epsilon : Chosing acute action from s position to s' position with best quality Q(s,s')
-
-            #REFRESHING PARAMETERS AND QUALITY MATRIX : ChangeParameters() method
-
+        self.ChangeParameters(reward,laby,action,position)
 
 #TESTING
 

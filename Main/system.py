@@ -21,24 +21,21 @@ class System:
         WinningRewards=[]
 
         while ((ActionCount<maxActionCount) and not(laby.isTerminalState(state))):
-            print("Step:",ActionCount)
-            print("state:\n",state)
             laby=self.laby
-            next_action=self.agent.nextAction(laby) #Already a General Agent Class method
+            action=self.agent.nextAction(laby) #Already a General Agent Class method
             position_before_step=laby.current_position #This variable is needed because runStep changes the current position
-            reward = laby.runStep(next_action)
+            reward = laby.runStep(action)
             totalReward+=reward
             self.laby=laby
 
-            self.agent.ChangeParameters(reward,laby,next_action,position_before_step)
+            self.agent.ChangeParameters(reward,laby,action,position_before_step)
             #With General Agent Class :
-            #self.agent.updatePolicy(reward,next_action)
+            #self.agent.updatePolicy(reward,next_action,position_before_step)
 
             state = self.laby.currentState()
             #Don't forget the laby is actualized by runStep method
             ActionCount+=1
             # if (ActionCount%10 == 0):
-            laby.show()
         if (laby.isTerminalState(state)):
             print("Victory!","Reward:",totalReward)
             WinningRewards+=[totalReward]

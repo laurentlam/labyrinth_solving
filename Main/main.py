@@ -6,22 +6,9 @@ from AgentQLearning import AgentQLearning
 from AgentRandom import AgentRandom
 from system import System
 
-#Variables initialisations
-SIZE=10
-Nb_episodes=10
-maxActionCount=100
-Epsilon=1
-Lambda=1
-Gamma=0.3
-
-#STEPS
 
 #Initializing System
 
-#Initializing Environment
-laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
-laby.create_random_environment()
-laby.show()
 
 #Random : uncomment when General Class Agent Programming is implemented
 
@@ -42,19 +29,38 @@ laby.show()
 
 
 #QLearning
+def runMain():
 
-qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
-#With General Agent Class :
-#qlearning_agent=Agent(AgentQLearning,[Epsilon,Lambda,Gamma,laby])
-qlearning_system=System(laby,qlearning_agent)
-
-List_of_Total_Rewards=[]
-for i in range(Nb_episodes):
-    Lambda=1
+    #INITIALISATION
+    #Variables initialisations
+    Nb_episodes=1000
+    maxActionCount=100
     Epsilon=1
-    List_of_Total_Rewards+=[qlearning_system.runEpisode(maxActionCount)]
-    qlearning_system.laby.show()
-    [i,j]=qlearning_system.laby.current_position
-    print(qlearning_system.agent.Quality[i,j])
-print("Rewards:",List_of_Total_Rewards)
-print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
+    Lambda=1
+    Gamma=0.6
+
+    SIZE=10
+
+    #Initialising Environment
+    laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
+    laby.create_random_environment()
+    laby.show()
+
+    #Initialising agent
+    qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
+    #With General Agent Class :
+    #qlearning_agent=Agent(AgentQLearning,[Epsilon,Lambda,Gamma,laby])
+
+    #Initialising system
+    qlearning_system=System(laby,qlearning_agent)
+    initial_position=qlearning_system.laby.current_position
+    #RUNNING ALGORITHM
+    List_of_Total_Rewards=[]
+
+    for k in range(Nb_episodes):
+        qlearning_system.laby.current_position=initial_position
+        List_of_Total_Rewards+=[qlearning_system.runEpisode(maxActionCount)]
+
+    print("Rewards:",List_of_Total_Rewards)
+    print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
+    return qlearning_system.agent.Quality
