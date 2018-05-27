@@ -38,7 +38,8 @@ class System:
             #Don't forget the laby is actualized by runStep method
             ActionCount+=1
             # if (ActionCount%10 == 0):
-            laby.show()
+            #laby.show()
+            #print(self.agent.Quality[laby.current_position])
         if (laby.isTerminalState(state)):
             print("Victory!","Reward:",totalReward)
             WinningRewards+=[totalReward]

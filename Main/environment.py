@@ -179,13 +179,13 @@ class ENV:
         else:
 
             for i in [-1,1]:
-                if (states[x+i,y]!=1) and (states[x+i,y]!=3): #Not a wall or starting position in the North then not a wall in the South
+                if (states[x+i,y]!=1) and (states[x+i,y]!=2): #Not a wall or starting position in the North then not a wall in the South
                     possible_actions.append([i,0])
 
         #West and East
 
             for j in [-1,1]:
-                if (states[x,y+j]!=1) and (states[x,y+j]!=3): #Not a wall or starting position in the West then not a wall in the East
+                if (states[x,y+j]!=1) and (states[x,y+j]!=2): #Not a wall or starting position in the West then not a wall in the East
                     possible_actions.append([0,j])
         #['N', 'S', 'O', 'E'] corresponds to [[-1,0],[1,0],[0,-1],[0,1]]
         #which are relative motions from the current position

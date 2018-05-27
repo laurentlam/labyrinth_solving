@@ -47,14 +47,16 @@ qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
 #With General Agent Class :
 #qlearning_agent=Agent(AgentQLearning,[Epsilon,Lambda,Gamma,laby])
 qlearning_system=System(laby,qlearning_agent)
-
+initial_position = qlearning_system.laby.current_position
 List_of_Total_Rewards=[]
 for i in range(Nb_episodes):
-    Lambda=1
-    Epsilon=1
+    #Lambda=1
+    #Epsilon=1
     List_of_Total_Rewards+=[qlearning_system.runEpisode(maxActionCount)]
-    qlearning_system.laby.show()
-    [i,j]=qlearning_system.laby.current_position
-    print(qlearning_system.agent.Quality[i,j])
+    #qlearning_system.laby.show()
+    [x,y]=qlearning_system.laby.current_position
+    #print(qlearning_system.agent.Quality[x,y])
+    qlearning_system.laby.current_position=initial_position
+print(qlearning_system.agent.Quality)
 print("Rewards:",List_of_Total_Rewards)
 print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
