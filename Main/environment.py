@@ -296,11 +296,14 @@ class ENV:
         #creation of the arrival (substitution to a starting state)
         initialStates_list.pop(random_index) #list of starts without the agent starting position
         random_index=random.randint(0,len(initialStates_list)-1)
-        #Terminal state not in a corner
-        while (initialStates_list[random_index]==[0,0]) or (initialStates_list[random_index]==[width-1,length-1]):
+
+        #Terminal state not in a corner #### NOT WORKING --> Fixed ?
+        corners=[[0,0],[width-1,length-1],[width-1,0],[0,length-1]]
+        while initialStates_list[random_index] in corners:
             random_index=random.randint(0,len(initialStates_list)-1)
         arrival_position = initialStates_list[random_index]
         states[arrival_position[0],arrival_position[1]] = 3
+
         #Making the terminal state accessible
         if (arrival_position[0]==0):
             states[arrival_position[0]+1,arrival_position[1]]=0

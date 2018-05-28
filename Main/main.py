@@ -33,13 +33,13 @@ def runMain():
 
     #INITIALISATION
     #Variables initialisations
-    Nb_episodes=1000
+    Nb_episodes=200
     maxActionCount=100
     Epsilon=1
     Lambda=1
-    Gamma=0.5
+    Gamma=0.6
 
-    SIZE=10
+    SIZE=7
 
     #Initialising Environment
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
