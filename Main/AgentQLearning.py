@@ -62,13 +62,17 @@ class AgentQLearning:
         Quality=self.Quality
 
         max_current_quality=Quality[i,j][0]
-        index_max_current_quality=0
+        index_max_current_quality=[0]
         for k in range(1,4):
             if max_current_quality<Quality[i,j][k]:
                 max_current_quality=Quality[i,j][k]
-                index_max_current_quality=k
+                index_max_current_quality=[k]
+            else if max_current_quality==Quality[i,j][k]:
+                index_max_current_quality.append(k)
 
-        return [max_current_quality,index_max_current_quality]
+        return [max_current_quality,index_max_current_quality[random.randint(0,len(index_max_current_quality)-1)]]
+        # Index of maximum quality is chosen randomly in all possible indexes of max Quality
+        # in order to add discovery where multiple routes are possible for the agent.
 
 
 
