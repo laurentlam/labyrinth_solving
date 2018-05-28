@@ -33,13 +33,13 @@ def runMain():
 
     #INITIALISATION
     #Variables initialisations
-    Nb_episodes=200
+    Nb_episodes=100
     maxActionCount=100
     Epsilon=1
     Lambda=1
-    Gamma=0.6
+    Gamma=0.5
 
-    SIZE=7
+    SIZE=5
 
     #Initialising Environment
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
@@ -64,4 +64,18 @@ def runMain():
 
     print("Rewards:",List_of_Total_Rewards)
     print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
+    Ratio_victory=[0,0,0,0]
+
+    for k in range(4):
+        for x in range(len(List_of_Total_Rewards)//4):
+            debut=len(List_of_Total_Rewards)//4*k
+            if List_of_Total_Rewards[debut+x]>10000:
+                Ratio_victory[k]+=1
+        Ratio_victory[k]/=len(List_of_Total_Rewards)//4
+
+    print("Le ratio du nombre de victoires est : \n")
+    print("Dans le premier quart de tests :",Ratio_victory[0],"\n")
+    print("Dans le deuxième quart de tests :",Ratio_victory[1],"\n")
+    print("Dans le troisième quart de tests :",Ratio_victory[2],"\n")
+    print("Dans le quatrième quart de tests :",Ratio_victory[3],"\n")
     return qlearning_system.agent.Quality

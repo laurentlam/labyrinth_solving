@@ -67,7 +67,7 @@ class AgentQLearning:
             if max_current_quality<Quality[i,j][k]:
                 max_current_quality=Quality[i,j][k]
                 index_max_current_quality=[k]
-            else if max_current_quality==Quality[i,j][k]:
+            elif max_current_quality==Quality[i,j][k]:
                 index_max_current_quality.append(k)
 
         return [max_current_quality,index_max_current_quality[random.randint(0,len(index_max_current_quality)-1)]]
