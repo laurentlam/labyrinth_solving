@@ -86,8 +86,8 @@ class AgentQLearning:
         possible_actions = laby.possibleActions([i,j])
 
         if possible_actions==[]:
-            print("No possible action (in nextAction)")
-            print(laby.show())
+            #print("No possible action (in nextAction)")
+            #print(laby.show())
             return None
 
         # Playing random : whether it's discovery (random wandering in the maze), whether it's driven by Quality maximisation
@@ -177,19 +177,19 @@ if __name__=="__main__":
     #         print("value and index of maximum Quality for the chosen position",agent_qlearning.maxQuality([k,l]))
 
     #nextAction() -->Problem when algorithm has started
-    laby.show()
+    #laby.show()
     next_action=qlearning_agent.nextAction(laby)
     print("next action is: ",next_action)
 
     #ChangeParameters()
     [i,j]=laby.current_position
     next_action=qlearning_agent.nextAction(laby)
-    print("Quality at current position, Epsilon, Lambda :",qlearning_agent.Quality[i,j],qlearning_agent.Epsilon,qlearning_agent.Lambda)
+    #print("Quality at current position, Epsilon, Lambda :",qlearning_agent.Quality[i,j],qlearning_agent.Epsilon,qlearning_agent.Lambda)
 
     next_position=laby.next_position(next_action)
     reward=state(laby.State(next_position)).reward()
-    print("reward of next state:\n",reward)
+    #print("reward of next state:\n",reward)
 
     qlearning_agent.ChangeParameters(reward,laby,next_action)
-    print("Changing parameters...\n")
-    print("Quality at current position, Epsilon, Lambda : ",qlearning_agent.Quality[i,j],qlearning_agent.Epsilon,qlearning_agent.Lambda)
+    #print("Changing parameters...\n")
+    #print("Quality at current position, Epsilon, Lambda : ",qlearning_agent.Quality[i,j],qlearning_agent.Epsilon,qlearning_agent.Lambda)

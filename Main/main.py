@@ -6,6 +6,7 @@ from AgentQLearning import AgentQLearning
 from AgentRandom import AgentRandom
 from system import System
 
+import matplotlib.pyplot as plt
 
 #Initializing System
 
@@ -29,17 +30,17 @@ from system import System
 
 
 #QLearning
-def runMain():
+def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
 
     #INITIALISATION
     #Variables initialisations
-    Nb_episodes=100
-    maxActionCount=100
+    #Nb_episodes=100
+    #maxActionCount=100
     Epsilon=1
     Lambda=1
-    Gamma=0.5
+    #Gamma=0.5
 
-    SIZE=5
+    #SIZE=5
 
     #Initialising Environment
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
@@ -64,18 +65,39 @@ def runMain():
 
     print("Rewards:",List_of_Total_Rewards)
     print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
-    Ratio_victory=[0,0,0,0]
+    Ratio_victory=[0,0,0,0,0,0,0,0,0,0]
 
-    for k in range(4):
-        for x in range(len(List_of_Total_Rewards)//4):
-            debut=len(List_of_Total_Rewards)//4*k
+    for k in range(10):
+        for x in range(len(List_of_Total_Rewards)//10):
+            debut=len(List_of_Total_Rewards)//10*k
             if List_of_Total_Rewards[debut+x]>10000:
                 Ratio_victory[k]+=1
-        Ratio_victory[k]/=len(List_of_Total_Rewards)//4
+        Ratio_victory[k]/=len(List_of_Total_Rewards)//10
 
     print("Le ratio du nombre de victoires est : \n")
-    print("Dans le premier quart de tests :",Ratio_victory[0],"\n")
-    print("Dans le deuxième quart de tests :",Ratio_victory[1],"\n")
-    print("Dans le troisième quart de tests :",Ratio_victory[2],"\n")
-    print("Dans le quatrième quart de tests :",Ratio_victory[3],"\n")
+    for i in range(10):
+        print("Dans le ",i,"ième dixième de tests :",Ratio_victory[i],"\n")
     return qlearning_system.agent.Quality
+    return(Ratio_victory)
+
+#Test correlation between SIZE and Gamma and Nb_episodes
+#SIZE,Gamma,Nb_episodes,maxActionCount
+SIZE=10
+Gamma = 0.01
+List_Gamma = [0.01]
+Nb_episodes=500
+maxActionCount=500
+List_RatioVictory_1=[]
+List_RatioVictory_2=[]
+List_RatioVictory_3=[]
+List_RatioVictory_4=[]
+##    List_Gamma += [Gamma+i*0.01]
+#    List_RatioVictory+=[runMain(SIZE,Gamma+i*0.01,Nb_episodes,maxActionCount)[3]]
+#plt.plot(List_RatioVictory,List_Gamma)
+#plt.xlabel('Gamma')
+#plt.ylabel('Ratio Victory')
+#plt.show()
+
+    #print("Ratio step",i+1,":",List_RatioVictory[i])
+
+Q=runMain(SIZE,Gamma,Nb_episodes,maxActionCount)

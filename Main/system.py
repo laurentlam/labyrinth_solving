@@ -1,4 +1,8 @@
 from environment import ENV
+import os
+import time
+debugLevel=1
+
 
 class System:
     """System is the combination of an environment (ENV class) and an agent (General Agent Class)"""
@@ -14,7 +18,6 @@ class System:
         """runs an episode of the agent searching for the arrival
         while showing the process step by step,
         returning the total reward of its steps"""
-
         totalReward=0;
         ActionCount=0
         state = self.laby.currentState()
@@ -44,10 +47,16 @@ class System:
             # Updating criterias for the while() loop
             state = self.laby.currentState()
             ActionCount+=1
+            if debugLevel>0:
+                print("Step:",ActionCount)
+                os.system('clear')
+                laby.show()
+                time.sleep(0.1)
 
         # If the agent arrived
         if (laby.isTerminalState(state)):
-            print("Victory!","Reward:",totalReward)
+            if debugLevel>0:
+                print("Victory!","Reward:",totalReward)
             WinningRewards+=[totalReward]
 
         # Returning total reward (sum of the reward of every step)
