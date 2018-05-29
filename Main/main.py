@@ -7,7 +7,7 @@ from AgentRandom import AgentRandom
 from system import System
 
 import matplotlib.pyplot as plt
-
+random_env=0
 #Initializing System
 
 
@@ -24,8 +24,16 @@ import matplotlib.pyplot as plt
 #     #random_system.laby.show()
 # print("Rewards:",List_of_Total_Rewards)
 # print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
+    #Initializing Environment
+if random_env>0:
+    laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
+    laby.create_random_environment()
+else:
+    SIZE = 15
+    laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
+    laby.create_existing_environment('labyrinthe_main2.txt')
 
-
+laby.show()
 
 
 
@@ -34,18 +42,10 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
 
     #INITIALISATION
     #Variables initialisations
-    #Nb_episodes=100
-    #maxActionCount=100
+
     Epsilon=1
     Lambda=1
-    #Gamma=0.5
 
-    #SIZE=5
-
-    #Initialising Environment
-    laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
-    laby.create_random_environment()
-    laby.show()
 
     #Initialising agent
     qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
@@ -58,7 +58,6 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
 
     #RUNNING ALGORITHM
     List_of_Total_Rewards=[]
-
     for k in range(Nb_episodes):
         qlearning_system.laby.current_position=initial_position
         List_of_Total_Rewards+=[qlearning_system.runEpisode(maxActionCount)]
@@ -83,21 +82,20 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
 #Test correlation between SIZE and Gamma and Nb_episodes
 #SIZE,Gamma,Nb_episodes,maxActionCount
 SIZE=10
-Gamma = 0.01
-List_Gamma = [0.01]
-Nb_episodes=500
-maxActionCount=500
+Gamma = 0.99
+List_Gamma = []
+Nb_episodes=5000
+maxActionCount=5000
 List_RatioVictory_1=[]
-List_RatioVictory_2=[]
-List_RatioVictory_3=[]
-List_RatioVictory_4=[]
-##    List_Gamma += [Gamma+i*0.01]
-#    List_RatioVictory+=[runMain(SIZE,Gamma+i*0.01,Nb_episodes,maxActionCount)[3]]
-#plt.plot(List_RatioVictory,List_Gamma)
-#plt.xlabel('Gamma')
-#plt.ylabel('Ratio Victory')
-#plt.show()
-
+"""
+for i in range(100):
+    List_Gamma += [Gamma+i*0.01]
+    List_RatioVictory=runMain(SIZE,Gamma+i*0.01,Nb_episodes,maxActionCount)
+    List_RatioVictory_4+=[List_RatioVictory[3]]
+plt.plot(List_RatioVictory,List_Gamma)
+plt.xlabel('Gamma')
+plt.ylabel('Ratio Victory')
+plt.show()
+"""
     #print("Ratio step",i+1,":",List_RatioVictory[i])
-
-Q=runMain(SIZE,Gamma,Nb_episodes,maxActionCount)
+runMain(SIZE,0.99,Nb_episodes,maxActionCount)

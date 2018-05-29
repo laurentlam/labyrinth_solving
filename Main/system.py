@@ -3,7 +3,6 @@ import os
 import time
 debugLevel=1
 
-
 class System:
     """System is the combination of an environment (ENV class) and an agent (General Agent Class)"""
 
@@ -48,8 +47,8 @@ class System:
             state = self.laby.currentState()
             ActionCount+=1
             if debugLevel>0:
-                print("Step:",ActionCount)
                 os.system('clear')
+                print("Step:",ActionCount)
                 laby.show()
                 time.sleep(0.1)
 

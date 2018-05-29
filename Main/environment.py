@@ -69,7 +69,7 @@ class ENV:
         Plus, the current position of the agent is visualised"""
 
         #5 states exists : hole (can go), wall (can't go), start and end as :
-        List_of_states=["o","x","s","e"]
+        List_of_states=[".","x","s","e"]
         #conversion to python classical matrix
         List_to_print=self.states.tolist()
         #conversion of each state to its associated character
@@ -156,37 +156,107 @@ class ENV:
         #checking if there is no misplacement of the agent
         #if (current_state==1) or (current_state==3):
         #    return (NULL)
-            #NULL value is chosen because empty list is for another error case (see above at next return)
+        #NULL value is chosen because empty list is for another error case (see above at next return)
 
         #if Agent on the border of the maze
         if ((x==0) or (x==width-1) or (y==0) or (y==length-1)):
         #North and South
-
+            #North
             if (x==0):
-                if (states[x+1,y]!=1) and (states[x+1,y]!=2): # Not a wall or starting position in the South
-                    possible_actions.append([1,0])
+                #North West
+                if (y==0):
+                    if (states[x+1,y]!=1) and (states[x+1,y]!=2): # Not a wall or starting position in the South
+                        possible_actions.append([1,0])
+                    if (states[x,y+1]!=1) and (states[x,y+1]!=2): #Not a wall or starting position in the West then in the East
+                            possible_actions.append([0,1])
+                #North East
+                elif (y==length-1):
+                    if (states[x+1,y]!=1) and (states[x+1,y]!=2): # Not a wall or starting position in the South
+                        possible_actions.append([1,0])
+                    if (states[x,y-1]!=1) and (states[x,y-1]!=2): #Not a wall or starting position in the West then in the East
+                            possible_actions.append([0,-1])
+                #North else
+                else:
+                    if (states[x+1,y]!=1) and (states[x+1,y]!=2): # Not a wall or starting position in the South
+                        possible_actions.append([1,0])
+                    for j in [-1,1]:
+                        if (states[x,y+j]!=1) and (states[x,y+j]!=2): #Not a wall or starting position in the West then in the East
+                            possible_actions.append([0,j])
+            #South
             if (x==width-1):
-                if (states[x-1,y]!=1) and (states[x-1,y]!=2): # Not a wall or starting position in the North
-                    possible_actions.append([-1,0])
+                #South West
+                if (y==0):
+                    if (states[x-1,y]!=1) and (states[x-1,y]!=2): # Not a wall or starting position in the South
+                        possible_actions.append([-1,0])
+                    if (states[x,y+1]!=1) and (states[x,y+1]!=2): #Not a wall or starting position in the West then in the East
+                            possible_actions.append([0,1])
+                #South East
+                elif (y==length-1):
+                    if (states[x-1,y]!=1) and (states[x-1,y]!=2): # Not a wall or starting position in the South
+                        possible_actions.append([-1,0])
+                    if (states[x,y-1]!=1) and (states[x,y-1]!=2): #Not a wall or starting position in the West then in the East
+                            possible_actions.append([0,-1])
+                #South else
+                else:
+                    if (states[x-1,y]!=1) and (states[x-1,y]!=2): # Not a wall or starting position in the South
+                        possible_actions.append([-1,0])
+                    for j in [-1,1]:
+                        if (states[x,y+j]!=1) and (states[x,y+j]!=2): #Not a wall or starting position in the West then in the East
+                            possible_actions.append([0,j])
+
 
         #West and East
-
+            #West
             if (y==0):
-                if (states[x,y+1]!=1) and (states[x,y+1]!=2): # Not a wall or starting position in the East
-                    possible_actions.append([0,1])
+                #North West
+                if (x==0):
+                    if (states[x+1,y]!=1) and (states[x+1,y]!=2): # Not a wall or starting position in the South
+                        possible_actions.append([1,0])
+                    if (states[x,y+1]!=1) and (states[x,y+1]!=2): #Not a wall or starting position in the West then in the East
+                            possible_actions.append([0,1])
+                #South West
+                elif (x==width-1):
+                    if (states[x-1,y]!=1) and (states[x-1,y]!=2): # Not a wall or starting position in the South
+                        possible_actions.append([-1,0])
+                    if (states[x,y+1]!=1) and (states[x,y+1]!=2): #Not a wall or starting position in the West then in the East
+                            possible_actions.append([0,1])
+                #West else
+                else:
+                    if (states[x,y+1]!=1) and (states[x,y+1]!=2): #Not a wall or starting position in the West then in the East
+                            possible_actions.append([0,1])
+                    for i in [-1,1]:
+                        if (states[x+i,y]!=1) and (states[x+i,y]!=2): #Not a wall or starting position in the North then in the South
+                            possible_actions.append([i,0])
+            #East
             if (y==length-1):
-                if (states[x,y-1]!=1) and (states[x,y-1]!=2): # Not a wall or starting position in the West
-                    possible_actions.append([0,-1])
+                if (x==0):
+                    if (states[x+1,y]!=1) and (states[x+1,y]!=2): # Not a wall or starting position in the South
+                        possible_actions.append([1,0])
+                    if (states[x,y-1]!=1) and (states[x,y-1]!=2): #Not a wall or starting position in the West then in the East
+                            possible_actions.append([0,-1])
+                #South East
+                elif (x==width-1):
+                    if (states[x-1,y]!=1) and (states[x-1,y]!=2): # Not a wall or starting position in the South
+                        possible_actions.append([-1,0])
+                    if (states[x,y-1]!=1) and (states[x,y-1]!=2): #Not a wall or starting position in the West then in the East
+                            possible_actions.append([0,-1])
+                #East else
+                else:
+                    if (states[x,y-1]!=1) and (states[x,y-1]!=2): #Not a wall or starting position in the West then in the East
+                            possible_actions.append([0,-1])
+                    for i in [-1,1]:
+                        if (states[x+i,y]!=1) and (states[x+i,y]!=2): #Not a wall or starting position in the North then in the South
+                            possible_actions.append([i,0])
+
 
         #If the agent is within the maze
         else:
-
+            #North and South
             for i in [-1,1]:
                 if (states[x+i,y]!=1) and (states[x+i,y]!=2): #Not a wall or starting position in the North then in the South
                     possible_actions.append([i,0])
 
-        #West and East
-
+            #West and East
             for j in [-1,1]:
                 if (states[x,y+j]!=1) and (states[x,y+j]!=2): #Not a wall or starting position in the West then in the East
                     possible_actions.append([0,j])
@@ -321,3 +391,16 @@ class ENV:
         initialStates_list = [start_position[0],start_position[1]]
         #States of the environment are now fully randomly created in accordance with every restriction
         self.states=states
+
+    def create_existing_environment(self,fichier_labyrinthe):
+        """Lecture du fichier de labyrinthe"""
+        grille = []
+        fichier = open(fichier_labyrinthe, "r")
+        ligne = fichier.readline()
+        while ligne != ".\n":
+            ligne_grille = []
+            for case in ligne.split(" "):
+                ligne_grille.append(int(case))
+            grille.append(ligne_grille)
+            ligne = fichier.readline()
+        self.states=numpy.array(grille)
