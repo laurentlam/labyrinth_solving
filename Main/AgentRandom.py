@@ -33,10 +33,13 @@ class AgentRandom:
 
         return(action)
 
-    def updatePolicy():
-
-        """ This method changes the policy of a general agent (according to the General Agent Class)
-        Here the policy is constant (random)"""
+    # We don't use a general agent class for now as we only have two agents
+    ############################################################################
+    # def updatePolicy():
+    #
+    #     """ This method changes the policy of a general agent (according to the General Agent Class)
+    #     Here the policy is constant (random)"""
+    ############################################################################
 
 #TESTING
 

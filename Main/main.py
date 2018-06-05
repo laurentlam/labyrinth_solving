@@ -4,11 +4,14 @@ import matplotlib.pyplot as plt
 
 from environment import ENV
 from environment import state
-#########################################
 from AgentQLearning import AgentQLearning
 from AgentRandom import AgentRandom
-#########################################
-from Agents import Agent
+
+# We don't use a general agent class for now as we only have two agents
+################################################################################
+#from Agents import Agent
+################################################################################
+
 from system import System
 
 random_env=1
@@ -48,13 +51,13 @@ laby.show()
 
 def OptimalRoute(Agent,Quality_Matrix,starting_position):
 
-    """ Deturns the optimal route to finish the maze with maximum reward, given a quality matrix and starting from a given position"""
+    """ Returns the optimal route to finish the maze with maximum reward, given a quality matrix and starting from a given position"""
 
     [i,j]=starting_position
     Optimal_Route=[[i,j]]
 
     for k in range(len(Quality_Matrix)):
-        next_action_index=Agent.agent.maxQuality([i,j])[1]
+        next_action_index=Agent.maxQuality([i,j])[1]
         List_all_actions = [[-1,0],[0,1],[1,0],[0,-1]] #North,East,South,West
         [di,dj]=List_all_actions[next_action_index]
         i+=di
@@ -78,17 +81,19 @@ def QualityEvolution(SIZE,Gamma,Nb_episodes,maxActionCount):
 
     # Initialising agent
     # Without General Agent Class :
-    # qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
+    qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
+
     # With General Agent Class :
-    qlearning_agent=Agent(AgentQLearning,[Epsilon,Lambda,Gamma,laby])
+    ############################################################################
+    #qlearning_agent=Agent(AgentQLearning,[Epsilon,Lambda,Gamma,laby])
+    ############################################################################
 
     # Initialising system
     qlearning_system=System(laby,qlearning_agent)
     initial_position=qlearning_system.laby.current_position
 
     # Running algorithm and getting data
-
-    Quality=[qlearning_system.agent.agent.Quality]
+    Quality=[qlearning_system.agent.Quality]
 
     # Start of algorithm loop
     for k in range(Nb_episodes):
@@ -100,11 +105,11 @@ def QualityEvolution(SIZE,Gamma,Nb_episodes,maxActionCount):
 
     # Pre-processing the data, i.e. chosing what we want, from Quality
 
-    #Finding the best route after processing (last Quality matrix)
+    # Finding the best route after processing (last Quality matrix)
     Optimal_Route=OptimalRoute(qlearning_system.agent,Quality[-1],initial_position)
     Quality_Optimal_Route=[[]]*len(Quality)
 
-    #Extracting Quality_Optimal_Route
+    # Extracting Quality_Optimal_Route
     for l in range(len(Optimal_Route)-1):
 
         [i,j]=Optimal_Route[l] # Fixed position in the optimal route
@@ -117,10 +122,10 @@ def QualityEvolution(SIZE,Gamma,Nb_episodes,maxActionCount):
         List_all_actions = [[-1,0],[0,1],[1,0],[0,-1]] #North,East,South,West
         action_index=List_all_actions.index(action)
 
-        #Extracting Quality_Optimal_Route from Quality
+        # Extracting Quality_Optimal_Route from Quality
         for t in range(len(Quality)):
             Quality_Optimal_Route[t].append(Quality[t][i,j][action_index])
-        #End of extraction
+        # End of extraction
 
 ################################################################################ DOESN'T WORK YET
     # Plotting Quality Evolution (Processing data internally)
@@ -143,24 +148,27 @@ def QualityEvolution(SIZE,Gamma,Nb_episodes,maxActionCount):
 
 def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
 
-    #INITIALISATION
-    #Variables initialisations
+    # INITIALISATION
+    # Variables initialisations
 
     Epsilon=1
     Lambda=1
 
 
-    #Initialising agent
-    #Without General Agent Class
-    #qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
-    #With General Agent Class :
-    qlearning_agent=Agent(AgentQLearning,[Epsilon,Lambda,Gamma,laby])
+    # Initialising agent
+    # Without General Agent Class
+    qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
 
-    #Initialising system
+    # With General Agent Class :
+    ############################################################################
+    #qlearning_agent=Agent(AgentQLearning,[Epsilon,Lambda,Gamma,laby])
+    ############################################################################
+
+    # Initialising system
     qlearning_system=System(laby,qlearning_agent)
     initial_position=qlearning_system.laby.current_position
 
-    #RUNNING ALGORITHM
+    # RUNNING ALGORITHM
     List_of_Total_Rewards=[]
     for k in range(Nb_episodes):
         qlearning_system.laby.current_position=initial_position

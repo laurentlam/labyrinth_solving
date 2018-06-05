@@ -39,11 +39,14 @@ class System:
 
             # Updating the policy of the agent after action is chosen and applied
             # Without General Agent Class :
-            #agent=self.agent
-            #agent.ChangeParameters(reward,laby,action,position_before_step)
-            #self.agent=agent
+            agent=self.agent
+            agent.ChangeParameters(reward,laby,action,position_before_step)
+            self.agent=agent
+
+            ####################################################################
             # With General Agent Class :
-            self.agent.updatePolicyGeneral(reward,self.laby,action,position_before_step)
+            #self.agent.updatePolicyGeneral(reward,self.laby,action,position_before_step)
+            ####################################################################
 
             # Updating criterias for the while() loop
             state = self.laby.currentState()

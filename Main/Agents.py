@@ -9,6 +9,11 @@ from AgentRandom import AgentRandom
 from environment import ENV
 from environment import state
 
+
+# We don't use a general agent class for now as we only have two agents
+
+################################################################################
+
 class Agent:
 
     """ General class for agent : attribute is an agent, unique method is nextAction."""
@@ -38,6 +43,7 @@ class Agent:
         agent_name.updatePolicy(reward,laby,action,position)
         self.agent=agent_name
 
+################################################################################
 
 #TESTING
 
