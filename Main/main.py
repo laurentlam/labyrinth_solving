@@ -39,7 +39,7 @@ random_env=0
 # Chosing random OR existing environment
 
 if random_env>0:
-    SIZE = 5
+    SIZE = 10
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
     laby.create_random_environment()
 else:
@@ -197,8 +197,8 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
 
 #Test correlation between SIZE and Gamma and Nb_episodes
 #SIZE,Gamma,Nb_episodes,maxActionCount
-SIZE=5
-Gamma = 0.8
+SIZE=10
+Gamma = 0.99
 List_Gamma = []
 Nb_episodes=1000
 maxActionCount=1000
