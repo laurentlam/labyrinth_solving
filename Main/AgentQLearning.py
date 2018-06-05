@@ -134,18 +134,15 @@ class AgentQLearning:
         List_all_actions = [[-1,0],[0,1],[1,0],[0,-1]] #North,East,South,West
         action_index=List_all_actions.index(action)
 
-################################################################################
-        #if self.Quality[i,j][action_index]>=0:
-        #The quality matrix is changed only if quality is already positive, otherwise action is also impossible (double check)
+
         next_position=laby.next_position([i,j],action)
         max_quality=self.maxQuality(next_position)[0]
         self.Quality[i,j][action_index]=self.Lambda*(reward+self.Gamma*max_quality)+(1-self.Lambda)*self.Quality[i,j][action_index]
-################################################################################
 
         self.Epsilon = 0.99*self.Epsilon
         self.Lambda = 0.99*self.Lambda
 
-    def updatePolicy(reward,laby,action):
+    def updatePolicy(self,reward,laby,action,position):
 
         """ This method changes the policy of a general agent (according to the General Agent Class)"""
 

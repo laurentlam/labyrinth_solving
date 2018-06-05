@@ -1,7 +1,7 @@
 from environment import ENV
 import os
 import time
-debugLevel=1
+debugLevel=0
 
 class System:
     """System is the combination of an environment (ENV class) and an agent (General Agent Class)"""
@@ -25,23 +25,24 @@ class System:
 
         while ((ActionCount<maxActionCount) and not(laby.isTerminalState(state))):
             laby=self.laby
-            action=self.agent.nextAction(laby) #Already a General Agent Class method
-            position_before_step=laby.current_position #This variable is needed because runStep changes the current position
+            action=self.agent.nextAction(laby) # Already a General Agent Class method
+            position_before_step=laby.current_position # This variable is needed because runStep changes the current position
 
             # Moving the agent and calculating the subsequent reward
             reward = laby.runStep(action)
-            if reward==None: #runStep found no possible action, so the reward is None
+            if reward==None: # runStep found no possible action, so the reward is None
                 print("runEpisode is aware that runStep found no possible action")
                 return totalReward
             totalReward+=reward
             self.laby.current_position=laby.current_position #Only change in laby from runStep()
 
             # Updating the policy of the agent after action is chosen and applied
-            agent=self.agent
-            agent.ChangeParameters(reward,laby,action,position_before_step)
-            self.agent=agent
+            # Without General Agent Class :
+            #agent=self.agent
+            #agent.ChangeParameters(reward,laby,action,position_before_step)
+            #self.agent=agent
             # With General Agent Class :
-            #self.agent.updatePolicy(reward,action,position_before_step)
+            self.agent.updatePolicy(reward,self.laby,action,position_before_step)
 
             # Updating criterias for the while() loop
             state = self.laby.currentState()

@@ -7,7 +7,7 @@ from AgentRandom import AgentRandom
 
 #Import environment class
 from environment import ENV
-from environment import State
+from environment import state
 
 class Agent:
 
@@ -31,11 +31,11 @@ class Agent:
         return self.agent.nextAction(laby)
 
 
-    def updatePolicy(self,reward,action):
+    def updatePolicy(self,reward,laby,action,position):
 
         """ This method updates the policy of the agent at a certain position, considering a given reward"""
 
-        self.agent.updatePolicy(reward,self.laby,action)
+        self.agent.updatePolicy(reward,laby,action,position)
 
 
 #TESTING
