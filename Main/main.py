@@ -35,7 +35,7 @@ random_env=1
 # Chosing random OR existing environment
 
 if random_env>0:
-    SIZE = 10
+    SIZE = 5
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
     laby.create_random_environment()
 else:
@@ -186,30 +186,30 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
         Ratio_victory[k]/=len(List_of_Total_Rewards)//4
 
     #print("Le ratio du nombre de victoires est : \n")
-    #for i in range(4):
-    #    print("Dans le ",i,"ième dixième de tests :",Ratio_victory[i],"\n")
+    for i in range(4):
+        print("Dans le ",i,"ième dixième de tests :",Ratio_victory[i],"\n")
     #return qlearning_system.agent.Quality
     return(Ratio_victory)
 
 #Test correlation between SIZE and Gamma and Nb_episodes
 #SIZE,Gamma,Nb_episodes,maxActionCount
-SIZE=10
-Gamma = 0.00
+SIZE=5
+Gamma = 0.80
 List_Gamma = []
-Nb_episodes=1000
-maxActionCount=1000
+Nb_episodes=100
+maxActionCount=100
 List_RatioVictory_1=[]
-
-for i in range(100):
+"""
+for i in range(50):
     List_Gamma += [Gamma+i*0.01]
     List_RatioVictory=runMain(SIZE,Gamma+i*0.01,Nb_episodes,maxActionCount)
     List_RatioVictory_1+=[List_RatioVictory[3]]
 print("Done.")
-plt.plot(List_Gamma,List_RatioVictory_1)
+plt.plot(List_Gamma,List_RatioVictory_1,'bo')
 plt.xlabel('Gamma')
 plt.ylabel('Ratio Victory')
 plt.show()
-
+"""
     #print("Ratio step",i+1,":",List_RatioVictory[i])
-#runMain(SIZE,0.99,Nb_episodes,maxActionCount)
+runMain(SIZE,Gamma,Nb_episodes,maxActionCount)
 #Quality_Optimal_Route=QualityEvolution(SIZE,0.99,Nb_episodes,maxActionCount)

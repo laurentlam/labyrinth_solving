@@ -1,7 +1,6 @@
 from environment import ENV
 import os
 import time
-from Agents import Agent
 debugLevel=0
 
 class System:
