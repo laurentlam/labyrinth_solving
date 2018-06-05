@@ -11,7 +11,7 @@ from AgentRandom import AgentRandom
 from Agents import Agent
 from system import System
 
-random_env=0
+random_env=1
 
 #Random : uncomment when General Class Agent Programming is implemented
 
@@ -32,6 +32,7 @@ random_env=0
 # Chosing random OR existing environment
 
 if random_env>0:
+    SIZE = 10
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
     laby.create_random_environment()
 else:
@@ -165,41 +166,42 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
         qlearning_system.laby.current_position=initial_position
         List_of_Total_Rewards+=[qlearning_system.runEpisode(maxActionCount)]
 
-    print("Rewards:",List_of_Total_Rewards)
-    print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
-    Ratio_victory=[0,0,0,0,0,0,0,0,0,0]
+    #print("Rewards:",List_of_Total_Rewards)
+    #print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
+    Ratio_victory=[0,0,0,0]
 
-    for k in range(10):
-        for x in range(len(List_of_Total_Rewards)//10):
-            debut=len(List_of_Total_Rewards)//10*k
+    for k in range(4):
+        for x in range(len(List_of_Total_Rewards)//4):
+            debut=len(List_of_Total_Rewards)//4*k
             if List_of_Total_Rewards[debut+x]>10000:
                 Ratio_victory[k]+=1
-        Ratio_victory[k]/=len(List_of_Total_Rewards)//10
+        Ratio_victory[k]/=len(List_of_Total_Rewards)//4
 
-    print("Le ratio du nombre de victoires est : \n")
-    for i in range(10):
-        print("Dans le ",i,"ième dixième de tests :",Ratio_victory[i],"\n")
-    return qlearning_system.agent.Quality
+    #print("Le ratio du nombre de victoires est : \n")
+    #for i in range(4):
+    #    print("Dans le ",i,"ième dixième de tests :",Ratio_victory[i],"\n")
+    #return qlearning_system.agent.Quality
     return(Ratio_victory)
 
 #Test correlation between SIZE and Gamma and Nb_episodes
 #SIZE,Gamma,Nb_episodes,maxActionCount
-SIZE=5
-Gamma = 0.5
+SIZE=10
+Gamma = 0.00
 List_Gamma = []
 Nb_episodes=1000
 maxActionCount=1000
 List_RatioVictory_1=[]
-"""
+
 for i in range(100):
     List_Gamma += [Gamma+i*0.01]
     List_RatioVictory=runMain(SIZE,Gamma+i*0.01,Nb_episodes,maxActionCount)
-    List_RatioVictory_4+=[List_RatioVictory[3]]
-plt.plot(List_RatioVictory,List_Gamma)
+    List_RatioVictory_1+=[List_RatioVictory[3]]
+print("Done.")
+plt.plot(List_Gamma,List_RatioVictory_1)
 plt.xlabel('Gamma')
 plt.ylabel('Ratio Victory')
 plt.show()
-"""
+
     #print("Ratio step",i+1,":",List_RatioVictory[i])
 #runMain(SIZE,0.99,Nb_episodes,maxActionCount)
-Quality_Optimal_Route=QualityEvolution(SIZE,0.99,Nb_episodes,maxActionCount)
+#Quality_Optimal_Route=QualityEvolution(SIZE,0.99,Nb_episodes,maxActionCount)

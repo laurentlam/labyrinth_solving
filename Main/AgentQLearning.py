@@ -139,7 +139,7 @@ class AgentQLearning:
         max_quality=self.maxQuality(next_position)[0]
         self.Quality[i,j][action_index]=self.Lambda*(reward+self.Gamma*max_quality)+(1-self.Lambda)*self.Quality[i,j][action_index]
 
-        self.Epsilon = 0.99*self.Epsilon
+        #self.Epsilon = 0.99*self.Epsilon
         self.Lambda = 0.99*self.Lambda
 
     def updatePolicy(self,reward,laby,action,position):
