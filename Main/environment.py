@@ -19,10 +19,12 @@ class state:
          """ Calculates the reward of the Agent going to this state.
          We assume here that to a state is given a unique reward.
          That can be done with the List_of_Rewards below """
+
 ################################################################################
          #List_of_Rewards=[10,-1000,0,50000]
          List_of_Rewards=[-1,-1000,-10,50000]
 ################################################################################
+
          return (List_of_Rewards[int(self.name_index)])
 
     def arrival_state(self):
