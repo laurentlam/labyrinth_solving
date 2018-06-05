@@ -34,8 +34,9 @@ class Agent:
     def updatePolicy(self,reward,laby,action,position):
 
         """ This method updates the policy of the agent at a certain position, considering a given reward"""
-
-        self.agent.updatePolicy(reward,laby,action,position)
+        agent_name=self.agent
+        agent_name.updatePolicy(reward,laby,action,position)
+        self.agent=agent_name
 
 
 #TESTING
