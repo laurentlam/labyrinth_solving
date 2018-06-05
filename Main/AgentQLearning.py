@@ -153,7 +153,7 @@ class AgentQLearning:
 
     def updatePolicy(self,reward,laby,action,position):
 
-        """ This method changes the policy of a general agent (according to the General Agent Class)"""
+        """ This method changes the policy of a general agent : it can be called from a General Agent Class (see Agents.py) """
 
         self.ChangeParameters(reward,laby,action,position)
 

@@ -31,7 +31,7 @@ class Agent:
         return self.agent.nextAction(laby)
 
 
-    def updatePolicy(self,reward,laby,action,position):
+    def updatePolicyGeneral(self,reward,laby,action,position):
 
         """ This method updates the policy of the agent at a certain position, considering a given reward"""
         agent_name=self.agent

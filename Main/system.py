@@ -1,6 +1,7 @@
 from environment import ENV
 import os
 import time
+from Agents import Agent
 debugLevel=0
 
 class System:
@@ -42,7 +43,7 @@ class System:
             #agent.ChangeParameters(reward,laby,action,position_before_step)
             #self.agent=agent
             # With General Agent Class :
-            self.agent.updatePolicy(reward,self.laby,action,position_before_step)
+            self.agent.updatePolicyGeneral(reward,self.laby,action,position_before_step)
 
             # Updating criterias for the while() loop
             state = self.laby.currentState()
