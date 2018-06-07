@@ -20,8 +20,12 @@ debugLevel=0
 #Random : uncomment when General Class Agent Programming is implemented
 
 # random_agent = AgentRandom()
-# #With General Agent Class :
+
+#With General Agent Class :
+################################################################################
 # #random_agent=Agent(AgentRandom,None)
+################################################################################
+
 # random_system=System(laby,random_agent)
 #
 # List_of_Total_Rewards=[]
@@ -50,15 +54,15 @@ laby.show()
 
 # QLearning
 
-def OptimalRoute(Agent,Quality_Matrix,starting_position):
+def OptimalRoute(System,Quality_Matrix,starting_position):
 
     """ Returns the optimal route to finish the maze with maximum reward, given a quality matrix and starting from a given position"""
 
     [i,j]=starting_position
     Optimal_Route=[[i,j]]
 
-    for k in range(len(Quality_Matrix)):
-        next_action_index=Agent.maxQuality([i,j])[1]
+    while System.laby.states[i,j]!=3:
+        next_action_index=System.agent.maxQuality([i,j])[1]
         List_all_actions = [[-1,0],[0,1],[1,0],[0,-1]] #North,East,South,West
         [di,dj]=List_all_actions[next_action_index]
         i+=di
@@ -100,14 +104,14 @@ def QualityEvolution(SIZE,Gamma,Nb_episodes,maxActionCount):
     for k in range(Nb_episodes):
         qlearning_system.laby.current_position=initial_position
         qlearning_system.runEpisode(maxActionCount)
-        Quality.append(qlearning_system.agent.agent.Quality)
+        Quality.append(qlearning_system.agent.Quality)
     # End of algorithm loop
 
 
     # Pre-processing the data, i.e. chosing what we want, from Quality
 
     # Finding the best route after processing (last Quality matrix)
-    Optimal_Route=OptimalRoute(qlearning_system.agent,Quality[-1],initial_position)
+    Optimal_Route=OptimalRoute(qlearning_system,Quality[-1],initial_position)
     Quality_Optimal_Route=[[]]*len(Quality)
 
     # Extracting Quality_Optimal_Route
@@ -143,7 +147,7 @@ def QualityEvolution(SIZE,Gamma,Nb_episodes,maxActionCount):
 
 
     # Returning data to be processed
-    return Quality_Optimal_Route
+    return [Optimal_Route,Quality_Optimal_Route]
 
 
 
@@ -212,5 +216,40 @@ plt.ylabel('Ratio Victory')
 plt.show()
 """
     #print("Ratio step",i+1,":",List_RatioVictory[i])
-runMain(SIZE,Gamma,Nb_episodes,maxActionCount,debugLevel)
-#Quality_Optimal_Route=QualityEvolution(SIZE,0.99,Nb_episodes,maxActionCount)
+#runMain(SIZE,Gamma,Nb_episodes,maxActionCount)
+if __name__=="__main__":
+    SIZE=5
+    Gamma = 0.8
+    Nb_episodes=1000
+    maxActionCount=1000
+    initial_position=qlearning_system.laby.current_position
+    for k in range(Nb_episodes):
+        qlearning_system.laby.current_position=initial_position
+        List_of_Total_Rewards+=[qlearning_system.runEpisode(maxActionCount)]
+    Optimal_Route=OptimalRoute(qlearning_system,qlearning_system.agent.Quality,initial_position)
+
+def runOptimalRoute():
+
+    # INITIALISATION
+    # Variables initialisations
+
+    Epsilon=1
+    Lambda=1
+    Gamma = 0.85
+    SIZE=5
+    Nb_episodes=5000
+    maxActionCount=5000
+
+    # Initialising agent
+    # Without General Agent Class :
+    qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
+
+    # Initialising system
+    qlearning_system=System(laby,qlearning_agent)
+    initial_position=qlearning_system.laby.current_position
+
+    for k in range(Nb_episodes):
+        qlearning_system.laby.current_position=initial_position
+        qlearning_system.runEpisode(maxActionCount)
+    Optimal_Route=OptimalRoute(qlearning_system,qlearning_system.agent.Quality,initial_position)
+    return Optimal_Route
