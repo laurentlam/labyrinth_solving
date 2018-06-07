@@ -5,7 +5,6 @@ from environment import state
 
 #For tests
 from system import System
-#For tests
 
 class AgentQLearning:
 
@@ -151,14 +150,6 @@ class AgentQLearning:
         #self.Epsilon = 0.99*self.Epsilon
         self.Lambda = 0.99*self.Lambda
 
-    # We don't use a general agent class for now as we only have two agents
-    ############################################################################
-    # def updatePolicy(self,reward,laby,action,position):
-    #
-    #     """ This method changes the policy of a general agent : it can be called from a General Agent Class (see Agents.py) """
-    #
-    #     self.ChangeParameters(reward,laby,action,position)
-    ############################################################################
 
 #TESTING
 

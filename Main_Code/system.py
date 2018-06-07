@@ -1,7 +1,7 @@
 from environment import ENV
 import os
 import time
-debugLevel=1
+debugLevel=0
 
 class System:
     """System is the combination of an environment (ENV class) and an agent (General Agent Class)"""

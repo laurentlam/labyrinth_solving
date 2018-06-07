@@ -14,27 +14,12 @@ from AgentRandom import AgentRandom
 
 from system import System
 
-random_env=1
+random_env=0
 debugLevel=0
 
-#Random : uncomment when General Class Agent Programming is implemented
+#Random :
 
 # random_agent = AgentRandom()
-
-#With General Agent Class :
-################################################################################
-# #random_agent=Agent(AgentRandom,None)
-################################################################################
-
-# random_system=System(laby,random_agent)
-#
-# List_of_Total_Rewards=[]
-# for i in range(Nb_episodes):
-#     List_of_Total_Rewards+=[random_system.runEpisode(maxActionCount)]
-#     #random_system.laby.show()
-# print("Rewards:",List_of_Total_Rewards)
-# print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
-    #Initializing Environment
 
 
 # Chosing random OR existing environment
@@ -46,7 +31,7 @@ if random_env>0:
 else:
     SIZE = 15
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
-    laby.create_existing_environment('labyrinthe_main2.txt')
+    laby.create_existing_environment('labyrinthe_produit.txt')
 
 laby.show()
 
@@ -218,6 +203,7 @@ plt.show()
     #print("Ratio step",i+1,":",List_RatioVictory[i])
 #runMain(SIZE,Gamma,Nb_episodes,maxActionCount)
 if __name__=="__main__":
+
     SIZE=5
     Gamma = 0.8
     Nb_episodes=1000
