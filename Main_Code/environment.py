@@ -378,7 +378,8 @@ class ENV:
         while (initialStates_list[random_index]==[0,0]) or (initialStates_list[random_index]==[width-1,length-1]) or (initialStates_list[random_index]==[0,length-1]) or (initialStates_list[random_index]==[width-1,0]):
             random_index=random.randint(0,len(initialStates_list)-1)
         self.current_position = initialStates_list[random_index]
-        # Making the initial state accessible
+        start_position = self.current_position
+        #Making the initial state accessible
         if (start_position[0]==0):
             states[start_position[0]+1,start_position[1]]=0
         if (start_position[0]==width-1):
