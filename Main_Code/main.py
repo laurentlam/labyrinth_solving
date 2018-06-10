@@ -205,15 +205,15 @@ if test_cor>0:
     for i in range(9):
         List_Gamma += [Gamma+i*0.1]
         print("Gamma:",Gamma+i*0.1)
-        #List_RatioVictory=runMain(SIZE,Gamma+i*0.1,Nb_episodes,maxActionCount)
-        #List_RatioVictory_1+=[max(List_RatioVictory)]
+        List_RatioVictory=runMain(SIZE,Gamma+i*0.1,Nb_episodes,maxActionCount)
+        List_RatioVictory_1+=[max(List_RatioVictory)]
 
     List_Gamma += [0.99]
-    #List_RatioVictory=runMain(SIZE,0.99,Nb_episodes,maxActionCount)
-    #List_RatioVictory_1+=[max(List_RatioVictory)]
+    List_RatioVictory=runMain(SIZE,0.99,Nb_episodes,maxActionCount)
+    List_RatioVictory_1+=[max(List_RatioVictory)]
     print("Done.")
     #Plotting the results
-    plt.plot(List_Gamma,[0.72,0.75,0.74,0.78,0.81,0.85,0.87,0.88,0.90,0.91])
+    plt.plot(List_Gamma,List_RatioVictory_1)
     plt.xlabel('Gamma')
     plt.ylabel('Ratio Victory max')
     plt.show()
