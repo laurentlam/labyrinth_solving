@@ -2,8 +2,8 @@ from environment import ENV
 import os
 import time
 import matplotlib.pyplot as plt
-debugLevel=0
-graphLevel=1
+debugLevel=1
+graphLevel=0
 lastActionLevel=0
 
 class System:

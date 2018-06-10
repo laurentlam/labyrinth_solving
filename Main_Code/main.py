@@ -1,3 +1,18 @@
+#--------------------------HOW TO RUN THE ALGORITHM----------------------------#
+################################################################################
+#
+#
+# 0) set debugLevel=1, graphLevel=0, lastActionLevel=0 at the start of the system.py file
+#
+# 1) launch main.py file (this very file)
+#
+#
+#
+#
+################################################################################
+
+
+
 #-----------------------INCLUDING CLASSES AND METHODS--------------------------#
 ################################################################################
 # INCLUDING MATH AND PLOTTING METHODS
@@ -222,19 +237,3 @@ if test_cor>0:
 #In order to run the algorithm at the beginning if necessary
 #Have to adapt the initial Variables
 ################################################################################
-
-
-
-"""
-if __name__=="__main__":
-
-    SIZE=5
-    Gamma = 0.8
-    Nb_episodes=1000
-    maxActionCount=1000
-    initial_position=qlearning_system.laby.current_position
-    for k in range(Nb_episodes):
-        qlearning_system.laby.current_position=initial_position
-        List_of_Total_Rewards+=[qlearning_system.runEpisode(maxActionCount)]
-    Optimal_Route=OptimalRoute(qlearning_system,qlearning_system.agent.Quality,initial_position)
-"""
