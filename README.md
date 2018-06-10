@@ -1,7 +1,7 @@
 # **Projet IN104: Apprentissage par renforcement**
 
 
-# Arborescence du dossier git : 
+# Arborescence du dossier git :
 
  * Documents
    * Appr_renforcement_valenciennes.pdf
@@ -23,5 +23,4 @@
  * Livrables
    * rapport.docx
    * Conseils.docx
-   * Diaporama.docx
  * README.md
