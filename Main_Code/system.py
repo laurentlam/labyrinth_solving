@@ -26,6 +26,7 @@ class System:
         WinningRewards=[]
 
         ########################################################################
+        #Preparing data to be gathered
         if graphLevel>0:
             TotalRewardList=[]
         ########################################################################
