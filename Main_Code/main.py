@@ -150,7 +150,7 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
     return(Ratio_victory)
 
 #Test correlation between SIZE and Gamma and Nb_episodes
-test_cor = 1
+test_cor = 0
 if test_cor>0:
     Gamma = 0.1
     List_Gamma = []

@@ -82,6 +82,8 @@ class System:
         # Plotting
         if graphLevel>0:
             plt.plot(ActionCountList,TotalRewardList)
+            plt.xlabel("Number of iterations")
+            plt.ylabel("Total reward")
             plt.show()
         ########################################################################
 
