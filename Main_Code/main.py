@@ -36,7 +36,7 @@ laby.show()
 
 
 
-#-------------------------QLEARNING FUNCTIONS----------------------------------#
+#-----------------------------QLEARNING FUNCTIONS------------------------------#
 ################################################################################
 def OptimalRoute(System,Quality_Matrix,starting_position):
 
@@ -66,7 +66,6 @@ def runOptimalRoute():
     Epsilon=1
     Lambda=1
     Gamma = 0.85
-    SIZE=5
     Nb_episodes=5000
     maxActionCount=5000
 
@@ -86,8 +85,27 @@ def runOptimalRoute():
 
 
 
-#-------------------------RUNNING TESTS AND PLOTTING-------------------------#
+#-------------------------RUNNING TESTS AND PLOTTING---------------------------#
 ################################################################################
+def runOne():
+
+    # INITIALISATION
+    # Variables initialisations
+
+    Epsilon=1
+    Lambda=1
+    Gamma = 0.85
+    maxActionCount=5000
+
+    # Initialising agent
+    qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
+
+    # Initialising system
+    qlearning_system=System(laby,qlearning_agent)
+
+    # Running algorithm
+    qlearning_system.runEpisode(maxActionCount)
+
 def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
 
     """ Runs the algorithm.
