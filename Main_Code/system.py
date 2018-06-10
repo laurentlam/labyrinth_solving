@@ -3,7 +3,7 @@ import os
 import time
 import matplotlib.pyplot as plt
 debugLevel=0
-graphLevel=1
+graphLevel=0
 
 class System:
     """System is the combination of an environment (ENV class) and an agent (General Agent Class)"""

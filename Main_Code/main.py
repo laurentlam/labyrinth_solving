@@ -104,6 +104,7 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
     # Initialising system
     qlearning_system=System(laby,qlearning_agent)
     initial_position=qlearning_system.laby.current_position
+    laby.show()
 
     # RUNNING ALGORITHM
     List_of_Total_Rewards=[]
@@ -124,7 +125,8 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
             if List_of_Total_Rewards[debut+x]>10000:
                 Ratio_victory[k]+=1
         Ratio_victory[k]/=len(List_of_Total_Rewards)//4
-
+    # Agent getting back into starting position at the end
+    qlearning_system.laby.current_position=initial_position
     #print("Le ratio du nombre de victoires est : \n")
     for i in range(4):
         print("Dans le ",i,"ième dixième de tests :",Ratio_victory[i],"\n")
@@ -136,15 +138,14 @@ test_cor = 1
 if test_cor>0:
     Gamma = 0.1
     List_Gamma = []
-    Nb_episodes=10
-    maxActionCount=10
+    Nb_episodes=2000
+    maxActionCount=2000
     List_RatioVictory_1=[]
     #Running the agent for each value of Gamma (from 0.05 to 0.99)
     for i in range(3):
         List_Gamma += [Gamma+i*0.4]
         List_RatioVictory=runMain(SIZE,Gamma+i*0.4,Nb_episodes,maxActionCount)
         List_RatioVictory_1+=[List_RatioVictory[3]]
-        laby.show()
     List_Gamma += [0.99]
     List_RatioVictory=runMain(SIZE,0.99,Nb_episodes,maxActionCount)
     List_RatioVictory_1+=[List_RatioVictory[3]]
