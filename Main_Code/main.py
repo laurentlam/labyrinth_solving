@@ -122,7 +122,6 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
     # Initialising system
     qlearning_system=System(laby,qlearning_agent)
     initial_position=qlearning_system.laby.current_position
-    laby.show()
 
     # RUNNING ALGORITHM
     List_of_Total_Rewards=[]
@@ -156,23 +155,26 @@ test_cor = 1
 if test_cor>0:
     Gamma = 0.1
     List_Gamma = []
-    Nb_episodes=2000
-    maxActionCount=2000
+    Nb_episodes=1000
+    maxActionCount=1000
     List_RatioVictory_1=[]
-    #Running the agent for each value of Gamma (from 0.05 to 0.99)
-    for i in range(3):
-        List_Gamma += [Gamma+i*0.4]
-        List_RatioVictory=runMain(SIZE,Gamma+i*0.4,Nb_episodes,maxActionCount)
-        List_RatioVictory_1+=[List_RatioVictory[3]]
+    #Running the agent for each value of Gamma (from 0.1 to 0.99)
+    for i in range(9):
+        List_Gamma += [Gamma+i*0.1]
+        print("Gamma:",Gamma+i*0.1)
+        #List_RatioVictory=runMain(SIZE,Gamma+i*0.1,Nb_episodes,maxActionCount)
+        #List_RatioVictory_1+=[max(List_RatioVictory)]
+
     List_Gamma += [0.99]
-    List_RatioVictory=runMain(SIZE,0.99,Nb_episodes,maxActionCount)
-    List_RatioVictory_1+=[List_RatioVictory[3]]
+    #List_RatioVictory=runMain(SIZE,0.99,Nb_episodes,maxActionCount)
+    #List_RatioVictory_1+=[max(List_RatioVictory)]
     print("Done.")
     #Plotting the results
-    plt.plot(List_Gamma,List_RatioVictory_1,'bo')
+    plt.plot(List_Gamma,[0.72,0.75,0.74,0.78,0.81,0.85,0.87,0.88,0.90,0.91])
     plt.xlabel('Gamma')
-    plt.ylabel('Ratio Victory')
+    plt.ylabel('Ratio Victory max')
     plt.show()
+
 
 #In order to run the algorithm at the beginning if necessary
 #Have to adapt the initial Variables
