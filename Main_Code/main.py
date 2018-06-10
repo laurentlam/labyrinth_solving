@@ -19,8 +19,7 @@ from system import System
 #-------------------------CREATING ENVIRONMENT---------------------------------#
 ################################################################################
 # Chosing random OR existing environment
-random_env=0
-
+random_env=1
 if random_env>0:
     SIZE = 10
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
@@ -28,7 +27,7 @@ if random_env>0:
 else:
     SIZE = 15
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
-    laby.create_existing_environment('labyrinthe_produit.txt')
+    laby.create_existing_environment('Main_Code/labyrinthe_produit.txt')
 
 # Printing initial maze
 laby.show()
@@ -151,19 +150,23 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
     return(Ratio_victory)
 
 #Test correlation between SIZE and Gamma and Nb_episodes
-test_cor = 0
+test_cor = 1
 if test_cor>0:
-    Gamma = 0.01
+    Gamma = 0.1
     List_Gamma = []
-    Nb_episodes=3000
-    maxActionCount=3000
+    Nb_episodes=10
+    maxActionCount=10
     List_RatioVictory_1=[]
-    #Running the agent for each value of Gamma (from 0.01 to 0.99)
-    for i in range(99):
-        List_Gamma += [Gamma+i*0.01]
-        List_RatioVictory=runMain(SIZE,Gamma+i*0.01,Nb_episodes,maxActionCount)
+    #Running the agent for each value of Gamma (from 0.05 to 0.99)
+    for i in range(3):
+        List_Gamma += [Gamma+i*0.4]
+        List_RatioVictory=runMain(SIZE,Gamma+i*0.4,Nb_episodes,maxActionCount)
         List_RatioVictory_1+=[List_RatioVictory[3]]
-        print("Done.")
+        laby.show()
+    List_Gamma += [0.99]
+    List_RatioVictory=runMain(SIZE,0.99,Nb_episodes,maxActionCount)
+    List_RatioVictory_1+=[List_RatioVictory[3]]
+    print("Done.")
     #Plotting the results
     plt.plot(List_Gamma,List_RatioVictory_1,'bo')
     plt.xlabel('Gamma')
