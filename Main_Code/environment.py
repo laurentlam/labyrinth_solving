@@ -1,5 +1,5 @@
 # '''''' Environment and state classes ''''''
-#numpy is needed for matrix operations ---> Need to use pure 2D-list manipulation
+#numpy is needed for matrix operations
 import numpy
 #random is needed for random initialisations
 import random
@@ -20,10 +20,7 @@ class state:
          We assume here that to a state is given a unique reward.
          That can be done with the List_of_Rewards below """
 
-################################################################################
-         #List_of_Rewards=[10,-1000,0,50000]
          List_of_Rewards=[-1,-1000,-10,50000]
-################################################################################
 
          return (List_of_Rewards[int(self.name_index)])
 
@@ -51,7 +48,9 @@ class state:
 
 
 class ENV:
+    
     def __init__(self,width,length,states,current_position):
+
         """An environment is defined by its shape (width and length) ,
         its states wich is a numpy matrix (array) of indexes of states (name_index of each state),
         and the current position of the agent."""

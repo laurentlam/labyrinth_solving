@@ -1,28 +1,21 @@
-#INCLUDING AGENT FILES AND ENVIRONMENT FILES
+# INCLUDING MATH AND PLOTTING METHODS
 import numpy
 import matplotlib.pyplot as plt
 
+# INCLUDING AGENT FILES AND ENVIRONMENT FILES
 from environment import ENV
 from environment import state
 from AgentQLearning import AgentQLearning
 from AgentRandom import AgentRandom
 
-# We don't use a general agent class for now as we only have two agents
-################################################################################
-#from Agents import Agent
-################################################################################
-
+# INCLUDING SYSTEM FILE
 from system import System
 
 
 
-#Random :
-
-# random_agent = AgentRandom()
-
-
 # Chosing random OR existing environment
 random_env=0
+
 if random_env>0:
     SIZE = 10
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
@@ -38,7 +31,7 @@ laby.show()
 
 
 # QLearning
-# Returns the optimal route of any starting position, given a quality matrix and a system
+
 def OptimalRoute(System,Quality_Matrix,starting_position):
 
     """ Returns the optimal route to finish the maze with maximum reward, given a quality matrix and starting from a given position"""
@@ -56,7 +49,39 @@ def OptimalRoute(System,Quality_Matrix,starting_position):
 
     return Optimal_Route
 
+
+def runOptimalRoute():
+    """ Returns the optimal route of an already created laby (see random_env parameter above),
+    by launching the algorithm """
+
+    # INITIALISATION
+    # Variables initialisations
+
+    Epsilon=1
+    Lambda=1
+    Gamma = 0.85
+    SIZE=5
+    Nb_episodes=5000
+    maxActionCount=5000
+
+    # Initialising agent
+    qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
+
+    # Initialising system
+    qlearning_system=System(laby,qlearning_agent)
+    initial_position=qlearning_system.laby.current_position
+
+    for k in range(Nb_episodes):
+        qlearning_system.laby.current_position=initial_position
+        qlearning_system.runEpisode(maxActionCount)
+    Optimal_Route=OptimalRoute(qlearning_system,qlearning_system.agent.Quality,initial_position)
+    return Optimal_Route
+
+
 def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
+
+    """ Runs the algorithm.
+    It allows us to change significant parameters and analyse their influence on algorithm."""
 
     # INITIALISATION
     # Variables initialisations
@@ -97,33 +122,6 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
         print("Dans le ",i,"ième dixième de tests :",Ratio_victory[i],"\n")
     #return qlearning_system.agent.Quality
     return(Ratio_victory)
-
-def runOptimalRoute():
-
-    # INITIALISATION
-    # Variables initialisations
-
-    Epsilon=1
-    Lambda=1
-    Gamma = 0.85
-    SIZE=5
-    Nb_episodes=5000
-    maxActionCount=5000
-
-    # Initialising agent
-    # Without General Agent Class :
-    qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
-
-    # Initialising system
-    qlearning_system=System(laby,qlearning_agent)
-    initial_position=qlearning_system.laby.current_position
-
-    for k in range(Nb_episodes):
-        qlearning_system.laby.current_position=initial_position
-        qlearning_system.runEpisode(maxActionCount)
-    Optimal_Route=OptimalRoute(qlearning_system,qlearning_system.agent.Quality,initial_position)
-    return Optimal_Route
-
 
 #Test correlation between SIZE and Gamma and Nb_episodes
 test_cor = 0
