@@ -107,7 +107,9 @@ def runOne():
     qlearning_system=System(laby,qlearning_agent)
 
     # Running algorithm
+    initial_position=qlearning_system.laby.current_position
     qlearning_system.runEpisode(maxActionCount)
+    qlearning_system.laby.current_position=initial_position
 
 def lastAction():
 
@@ -123,7 +125,7 @@ def lastAction():
     Lambda=1
     Gamma = 0.8
     maxActionCount=5000
-    Nb_episodes=5000
+    Nb_episodes=500
 
     # Initialising agent
     qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
@@ -141,8 +143,7 @@ def lastAction():
 
     #PLOTTING
     Episodes=[i for i in range(Nb_episodes)]
-    Mean_last_action=mean(List_of_last_actions)
-    plt.plot(Episodes,Mean_last_actions)
+    plt.plot(Episodes,List_of_last_actions)
     plt.xlabel("Number of episodes")
     plt.ylabel("Number of actions to get to the end")
     plt.show()
