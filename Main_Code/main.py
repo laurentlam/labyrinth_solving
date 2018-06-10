@@ -88,12 +88,16 @@ def runOptimalRoute():
 ################################################################################
 def runOne():
 
+    """ This function plots the graph of total reward through an episode
+    Note : don't forget to put the graph_level of system.py to 1
+    """
+
     # INITIALISATION
     # Variables initialisations
 
-    Epsilon=1
+    Epsilon=0.3
     Lambda=1
-    Gamma = 0.85
+    Gamma = 0.5
     maxActionCount=5000
 
     # Initialising agent
@@ -104,6 +108,44 @@ def runOne():
 
     # Running algorithm
     qlearning_system.runEpisode(maxActionCount)
+
+def lastAction():
+
+    """
+    This function plots the number of actions through Nb_episodes.
+    Note : don't forget to put to 1 the lastActionLevel in system.py
+    """
+
+    # INITIALISATION
+    # Variables initialisations
+
+    Epsilon=1
+    Lambda=1
+    Gamma = 0.8
+    maxActionCount=5000
+    Nb_episodes=5000
+
+    # Initialising agent
+    qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
+
+    # Initialising system
+    qlearning_system=System(laby,qlearning_agent)
+    initial_position=qlearning_system.laby.current_position
+
+    # RUNNING ALGORITHM
+    List_of_last_actions=[]
+    for k in range(Nb_episodes):
+        qlearning_system.laby.current_position=initial_position
+        List_of_last_actions.append(qlearning_system.runEpisode(maxActionCount))
+    qlearning_system.laby.current_position=initial_position
+
+    #PLOTTING
+    Episodes=[i for i in range(Nb_episodes)]
+    Mean_last_action=mean(List_of_last_actions)
+    plt.plot(Episodes,Mean_last_actions)
+    plt.xlabel("Number of episodes")
+    plt.ylabel("Number of actions to get to the end")
+    plt.show()
 
 def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
 
