@@ -1,13 +1,16 @@
+################################################################################
 #--------------------------HOW TO RUN THE ALGORITHM----------------------------#
 ################################################################################
 #
+# 1) set debugLevel=1, graphLevel=0, lastActionLevel=0 at the start of the system.py file
 #
-# 0) set debugLevel=1, graphLevel=0, lastActionLevel=0 at the start of the system.py file
+# 2) set test_cor=1 at the end of the main.py file (start of the last paragraph)
 #
-# 1) launch main.py file (this very file)
+# 3) Due to OS issues, set the following at line 68 of system :
+#                                       - MAC/LINUX : set os.system("clear")
+#                                       - WINDOWS : set os.system("cls")
 #
-#
-#
+# 3) launch main.py file (this very file)
 #
 ################################################################################
 
@@ -209,12 +212,12 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
     return(Ratio_victory)
 
 #Test correlation between SIZE and Gamma and Nb_episodes
-test_cor = 0
+test_cor = 1
 if test_cor>0:
-    Gamma = 0.1
+    Gamma = 0.5
     List_Gamma = []
-    Nb_episodes=1000
-    maxActionCount=1000
+    Nb_episodes=100
+    maxActionCount=100
     List_RatioVictory_1=[]
     #Running the agent for each value of Gamma (from 0.1 to 0.99)
     for i in range(9):
