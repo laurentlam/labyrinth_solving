@@ -84,6 +84,5 @@ class System:
             plt.show()
         ########################################################################
 
-
         # Returning total reward (sum of the reward of every step)
         return totalReward

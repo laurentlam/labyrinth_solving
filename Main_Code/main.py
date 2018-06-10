@@ -1,3 +1,5 @@
+#-----------------------INCLUDING CLASSES AND METHODS--------------------------#
+################################################################################
 # INCLUDING MATH AND PLOTTING METHODS
 import numpy
 import matplotlib.pyplot as plt
@@ -10,9 +12,12 @@ from AgentRandom import AgentRandom
 
 # INCLUDING SYSTEM FILE
 from system import System
+################################################################################
 
 
 
+#-------------------------CREATING ENVIRONMENT---------------------------------#
+################################################################################
 # Chosing random OR existing environment
 random_env=0
 
@@ -25,13 +30,14 @@ else:
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
     laby.create_existing_environment('labyrinthe_produit.txt')
 
-#Printing initial maze
+# Printing initial maze
 laby.show()
+################################################################################
 
 
 
-# QLearning
-
+#-------------------------QLEARNING FUNCTIONS----------------------------------#
+################################################################################
 def OptimalRoute(System,Quality_Matrix,starting_position):
 
     """ Returns the optimal route to finish the maze with maximum reward, given a quality matrix and starting from a given position"""
@@ -76,8 +82,12 @@ def runOptimalRoute():
         qlearning_system.runEpisode(maxActionCount)
     Optimal_Route=OptimalRoute(qlearning_system,qlearning_system.agent.Quality,initial_position)
     return Optimal_Route
+################################################################################
 
 
+
+#-------------------------RUNNING TESTS AND PLOTTING-------------------------#
+################################################################################
 def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
 
     """ Runs the algorithm.
@@ -88,7 +98,6 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
 
     Epsilon=1
     Lambda=1
-
 
     # Initialising agent
     qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
@@ -145,6 +154,10 @@ if test_cor>0:
 
 #In order to run the algorithm at the beginning if necessary
 #Have to adapt the initial Variables
+################################################################################
+
+
+
 """
 if __name__=="__main__":
 
