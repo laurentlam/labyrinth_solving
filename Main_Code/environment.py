@@ -63,6 +63,7 @@ class ENV:
         self.states=states
         #current position of the agent
         self.current_position=current_position
+        self.initial_position=[0,0]
 
     def show(self):
         """This method prints on the screen the matrix of states of the environment.
@@ -355,6 +356,7 @@ class ENV:
             random_index=random.randint(0,len(initialStates_list)-1)
         self.current_position = initialStates_list[random_index]
         start_position = self.current_position
+        self.initial_position = start_position
         #Making the initial state accessible
         if (start_position[0]==0):
             states[start_position[0]+1,start_position[1]]=0
