@@ -3,7 +3,8 @@ import os
 import time
 import matplotlib.pyplot as plt
 debugLevel=0
-graphLevel=0
+graphLevel=1
+lastActionLevel=0
 
 class System:
     """System is the combination of an environment (ENV class) and an agent (General Agent Class)"""
@@ -19,6 +20,7 @@ class System:
         """runs an episode of the agent searching for the arrival
         while showing the process step by step,
         returning the total reward of its steps"""
+
         totalReward=0;
         ActionCount=0
         state = self.laby.currentState()
@@ -29,6 +31,8 @@ class System:
         #Preparing data to be gathered
         if graphLevel>0:
             TotalRewardList=[]
+        if lastActionLevel>0:
+            last_action=maxActionCount
         ########################################################################
 
         while ((ActionCount<maxActionCount) and not(laby.isTerminalState(state))):
@@ -76,14 +80,21 @@ class System:
         if (laby.isTerminalState(state)):
             if debugLevel>0:
                 print("Victory!","Reward:",totalReward)
+            if lastActionLevel>0:
+                last_action=ActionCount
             WinningRewards+=[totalReward]
 
         ########################################################################
         # Plotting
         if graphLevel>0:
             plt.plot(ActionCountList,TotalRewardList)
+            plt.xlabel("Number of iterations")
+            plt.ylabel("Total reward")
             plt.show()
         ########################################################################
 
         # Returning total reward (sum of the reward of every step)
-        return totalReward
+        if lastActionLevel>0:
+            return last_action
+        else:
+            return totalReward
