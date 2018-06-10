@@ -1,7 +1,9 @@
 from environment import ENV
 import os
 import time
+import matplotlib.pyplot as plt
 debugLevel=0
+graphLevel=1
 
 class System:
     """System is the combination of an environment (ENV class) and an agent (General Agent Class)"""
@@ -23,6 +25,11 @@ class System:
         laby=self.laby
         WinningRewards=[]
 
+        ########################################################################
+        if graphLevel>0:
+            TotalRewardList=[]
+        ########################################################################
+
         while ((ActionCount<maxActionCount) and not(laby.isTerminalState(state))):
             laby=self.laby
             action=self.agent.nextAction(laby) # Already a General Agent Class method
@@ -34,18 +41,20 @@ class System:
                 print("runEpisode is aware that runStep found no possible action")
                 return totalReward
             totalReward+=reward
-            self.laby.current_position=laby.current_position #Only change in laby from runStep()
+
+            ####################################################################
+            #Gathering data
+            if graphLevel>0:
+                TotalRewardList.append(totalReward)
+            ####################################################################
+
+            self.laby.current_position=laby.current_position # Only change in laby from runStep()
 
             # Updating the policy of the agent after action is chosen and applied
             # Without General Agent Class :
             agent=self.agent
             agent.ChangeParameters(reward,laby,action,position_before_step)
             self.agent=agent
-
-            ####################################################################
-            # With General Agent Class :
-            #self.agent.updatePolicyGeneral(reward,self.laby,action,position_before_step)
-            ####################################################################
 
             # Updating criterias for the while() loop
             state = self.laby.currentState()
@@ -56,11 +65,24 @@ class System:
                 laby.show()
                 time.sleep(0.1)
 
+        ########################################################################
+        # Preparing plotting
+        if graphLevel>0:
+            ActionCountList=[i for i in range(ActionCount)]
+        ########################################################################
+
         # If the agent arrived
         if (laby.isTerminalState(state)):
             if debugLevel>0:
                 print("Victory!","Reward:",totalReward)
             WinningRewards+=[totalReward]
+
+        ########################################################################
+        # Plotting
+        if graphLevel>0:
+            plt.plot(ActionCountList,TotalRewardList)
+            plt.show()
+        ########################################################################
 
         # Returning total reward (sum of the reward of every step)
         return totalReward
