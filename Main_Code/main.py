@@ -14,8 +14,7 @@ from AgentRandom import AgentRandom
 
 from system import System
 
-random_env=0
-debugLevel=0
+
 
 #Random :
 
@@ -23,7 +22,7 @@ debugLevel=0
 
 
 # Chosing random OR existing environment
-
+random_env=0
 if random_env>0:
     SIZE = 10
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
@@ -33,6 +32,7 @@ else:
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
     laby.create_existing_environment('labyrinthe_produit.txt')
 
+#Printing initial maze
 laby.show()
 
 
@@ -80,6 +80,9 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
 
     #print("Rewards:",List_of_Total_Rewards)
     #print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
+
+    # Calculating the ratio between the number of victories and the number of episodes
+    # Dividing the number of episodes into 4 parts to distinguish 4 phases
     Ratio_victory=[0,0,0,0]
 
     for k in range(4):
@@ -94,28 +97,6 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
         print("Dans le ",i,"ième dixième de tests :",Ratio_victory[i],"\n")
     #return qlearning_system.agent.Quality
     return(Ratio_victory)
-
-#Test correlation between SIZE and Gamma and Nb_episodes
-#SIZE,Gamma,Nb_episodes,maxActionCount
-SIZE=8
-Gamma = 0.99
-List_Gamma = []
-Nb_episodes=2000
-maxActionCount=2000
-List_RatioVictory_1=[]
-"""
-for i in range(50):
-    List_Gamma += [Gamma+i*0.01]
-    List_RatioVictory=runMain(SIZE,Gamma+i*0.01,Nb_episodes,maxActionCount)
-    List_RatioVictory_1+=[List_RatioVictory[3]]
-print("Done.")
-plt.plot(List_Gamma,List_RatioVictory_1,'bo')
-plt.xlabel('Gamma')
-plt.ylabel('Ratio Victory')
-plt.show()
-"""
-    #print("Ratio step",i+1,":",List_RatioVictory[i])
-#runMain(SIZE,Gamma,Nb_episodes,maxActionCount)
 
 def runOptimalRoute():
 
@@ -143,6 +124,30 @@ def runOptimalRoute():
     Optimal_Route=OptimalRoute(qlearning_system,qlearning_system.agent.Quality,initial_position)
     return Optimal_Route
 
+
+#Test correlation between SIZE and Gamma and Nb_episodes
+test_cor = 0
+if test_cor>0:
+    Gamma = 0.01
+    List_Gamma = []
+    Nb_episodes=3000
+    maxActionCount=3000
+    List_RatioVictory_1=[]
+    #Running the agent for each value of Gamma (from 0.01 to 0.99)
+    for i in range(99):
+        List_Gamma += [Gamma+i*0.01]
+        List_RatioVictory=runMain(SIZE,Gamma+i*0.01,Nb_episodes,maxActionCount)
+        List_RatioVictory_1+=[List_RatioVictory[3]]
+        print("Done.")
+    #Plotting the results
+    plt.plot(List_Gamma,List_RatioVictory_1,'bo')
+    plt.xlabel('Gamma')
+    plt.ylabel('Ratio Victory')
+    plt.show()
+
+#In order to run the algorithm at the beginning if necessary
+#Have to adapt the initial Variables
+"""
 if __name__=="__main__":
 
     SIZE=5
@@ -154,3 +159,4 @@ if __name__=="__main__":
         qlearning_system.laby.current_position=initial_position
         List_of_Total_Rewards+=[qlearning_system.runEpisode(maxActionCount)]
     Optimal_Route=OptimalRoute(qlearning_system,qlearning_system.agent.Quality,initial_position)
+"""

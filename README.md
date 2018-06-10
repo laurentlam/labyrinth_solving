@@ -21,6 +21,6 @@
    * main.py
    * system.py
  * Livrables
-   * rapport.docx
+   * rapport.pdf
    * Conseils.docx
  * README.md
