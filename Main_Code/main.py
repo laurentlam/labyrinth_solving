@@ -188,7 +188,7 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
     List_of_Total_Rewards=[]
     for k in range(Nb_episodes):
         qlearning_system.laby.current_position=initial_position
-        List_of_Total_Rewards+=[qlearning_system.runEpisode(maxActionCount)]
+        List_of_Total_Rewards+=[qlearning_system.runEpisode(maxActionCount,k,Nb_episodes)]
 
     #print("Rewards:",List_of_Total_Rewards)
     #print("Max reward:",max(List_of_Total_Rewards),"Min reward",min(List_of_Total_Rewards))
@@ -214,27 +214,25 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
 #Test correlation between SIZE and Gamma and Nb_episodes
 test_cor = 1
 if test_cor>0:
-    Gamma = 0.5
-    List_Gamma = []
+    Gamma = 0.8
+    # List_Gamma = []
     Nb_episodes=100
     maxActionCount=100
     List_RatioVictory_1=[]
     #Running the agent for each value of Gamma (from 0.1 to 0.99)
-    for i in range(9):
-        List_Gamma += [Gamma+i*0.1]
-        print("Gamma:",Gamma+i*0.1)
-        List_RatioVictory=runMain(SIZE,Gamma+i*0.1,Nb_episodes,maxActionCount)
-        List_RatioVictory_1+=[max(List_RatioVictory)]
 
-    List_Gamma += [0.99]
-    List_RatioVictory=runMain(SIZE,0.99,Nb_episodes,maxActionCount)
-    List_RatioVictory_1+=[max(List_RatioVictory)]
-    print("Done.")
-    #Plotting the results
-    plt.plot(List_Gamma,List_RatioVictory_1)
-    plt.xlabel('Gamma')
-    plt.ylabel('Ratio Victory max')
-    plt.show()
+    List_RatioVictory=runMain(SIZE,Gamma,Nb_episodes,maxActionCount)
+    # List_RatioVictory_1+=[max(List_RatioVictory)]
+
+    # List_Gamma += [0.99]
+    # List_RatioVictory=runMain(SIZE,0.99,Nb_episodes,maxActionCount)
+    # List_RatioVictory_1+=[max(List_RatioVictory)]
+    # print("Done.")
+    # #Plotting the results
+    # plt.plot(List_Gamma,List_RatioVictory_1)
+    # plt.xlabel('Gamma')
+    # plt.ylabel('Ratio Victory max')
+    # plt.show()
 
 
 #In order to run the algorithm at the beginning if necessary

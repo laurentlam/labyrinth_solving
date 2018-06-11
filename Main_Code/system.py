@@ -15,7 +15,7 @@ class System:
         self.agent=agent
 
 
-    def runEpisode(self, maxActionCount):
+    def runEpisode(self, maxActionCount,k,Nb_episodes):
 
         """runs an episode of the agent searching for the arrival
         while showing the process step by step,
@@ -65,10 +65,11 @@ class System:
             state = self.laby.currentState()
             ActionCount+=1
             if debugLevel>0:
-                os.system('clear')
-                print("Step:",ActionCount)
-                laby.show()
-                time.sleep(0.1)
+                if k==0 or k==Nb_episodes-1:
+                    os.system('cls')
+                    print("Step:",ActionCount,"    Episode:",k)
+                    laby.show()
+                    time.sleep(0.1)
 
         ########################################################################
         # Preparing plotting
