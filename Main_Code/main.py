@@ -114,7 +114,7 @@ def runOne():
     # Variables initialisations
 
     Epsilon=0.3
-    Lambda=1
+    Lambda=0.8
     Gamma = 0.5
     maxActionCount=5000
 
@@ -140,7 +140,7 @@ def lastAction():
     # Variables initialisations
 
     Epsilon=1
-    Lambda=1
+    Lambda=0.8
     Gamma = 0.8
     maxActionCount=5000
     Nb_episodes=500
@@ -175,7 +175,7 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
     # Variables initialisations
 
     Epsilon=1
-    Lambda=1
+    Lambda=0.8
 
     # Initialising agent
     qlearning_agent = AgentQLearning(Epsilon,Lambda,Gamma,laby)
@@ -207,7 +207,7 @@ def runMain(SIZE,Gamma,Nb_episodes,maxActionCount):
     qlearning_system.laby.current_position=initial_position
     #print("Le ratio du nombre de victoires est : \n")
     for i in range(4):
-        print("Dans le ",i,"ième dixième de tests :",Ratio_victory[i],"\n")
+        print("Dans le ",i+1,"ième quart de tests :",Ratio_victory[i],"\n")
     #return qlearning_system.agent.Quality
     return(Ratio_victory)
 
