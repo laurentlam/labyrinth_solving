@@ -37,7 +37,7 @@ from system import System
 #-------------------------CREATING ENVIRONMENT---------------------------------#
 ################################################################################
 # Chosing random OR existing environment
-random_env=1
+random_env=0
 if random_env>0:
     SIZE = 10
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
@@ -45,7 +45,7 @@ if random_env>0:
 else:
     SIZE = 15
     laby=ENV(SIZE,SIZE,numpy.zeros((SIZE,SIZE)),[0,0])
-    laby.create_existing_environment('Main_Code/labyrinthe_produit.txt')
+    laby.create_existing_environment('labyrinthe_produit.txt')
 
 # Printing initial maze
 laby.show()
@@ -216,8 +216,8 @@ test_cor = 1
 if test_cor>0:
     Gamma = 0.8
     # List_Gamma = []
-    Nb_episodes=100
-    maxActionCount=100
+    Nb_episodes=200
+    maxActionCount=500
     List_RatioVictory_1=[]
     #Running the agent for each value of Gamma (from 0.1 to 0.99)
 
