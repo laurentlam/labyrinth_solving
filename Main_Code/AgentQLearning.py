@@ -148,7 +148,7 @@ class AgentQLearning:
         self.Quality[i,j][action_index]=self.Lambda*(reward+self.Gamma*max_quality)+(1-self.Lambda)*self.Quality[i,j][action_index]
 
         self.Epsilon = 0.99*self.Epsilon
-        self.Lambda = 0.99*self.Lambda
+        # self.Lambda = 0.99*self.Lambda
 
 
 #TESTING
