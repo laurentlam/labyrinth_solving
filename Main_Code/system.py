@@ -66,10 +66,16 @@ class System:
             ActionCount+=1
             if debugLevel>0:
                 if k==0 or k==Nb_episodes-1:
-                    os.system('cls')
-                    print("Step:",ActionCount,"    Episode:",k)
-                    laby.show()
-                    time.sleep(0.1)
+                    if k==0 and ActionCount%10==0:
+                        os.system('cls')
+                        print("Step:",ActionCount,"    Episode:",k)
+                        laby.show()
+                        time.sleep(0.1)
+                    elif k==Nb_episodes-1:
+                        os.system('cls')
+                        print("Step:",ActionCount,"    Episode:",k)
+                        laby.show()
+                        time.sleep(0.1)
 
         ########################################################################
         # Preparing plotting
